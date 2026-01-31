@@ -198,10 +198,15 @@ def scrape_generic_website(venue_id: str, url: str) -> List[Dict]:
 def scrape_instagram_apify(handle: str) -> List[Dict]:
     """Scrape Instagram using Apify (requires API token)."""
     posts = []
+    metrics = get_metrics()
+    source_name = f"instagram-{handle.replace('@', '')}"
     
     token = os.getenv('APIFY_API_TOKEN')
+    metrics.record_source_attempt(source_name, "instagram-apify")
+    
     if not token:
         print(f"  Instagram/{handle}: No APIFY_API_TOKEN, skipping")
+        metrics.record_source_error(source_name, "No APIFY_API_TOKEN configured")
         return posts
     
     try:
@@ -238,10 +243,13 @@ def scrape_instagram_apify(handle: str) -> List[Dict]:
                     "scraped_at": datetime.now().isoformat()
                 })
         
+        metrics.record_source_success(source_name, len(posts))
         print(f"  Instagram/{handle}: Found {len(posts)} beer-related posts")
         
     except Exception as e:
-        print(f"  Instagram/{handle}: Error - {e}")
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  Instagram/{handle}: Error - {error_msg}")
     
     return posts
 

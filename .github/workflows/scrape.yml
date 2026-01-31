@@ -22,11 +22,8 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install requests beautifulsoup4 lxml feedparser python-dateutil
-        # Optional: Apify for Instagram
-        # pip install apify-client
-        # Optional: Instaloader for Instagram (no API key)
-        # pip install instaloader
+        pip install -r requirements.txt
+        pip install -r requirements-scraper.txt
       
     - name: Run scraper
       env:

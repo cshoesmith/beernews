@@ -35,9 +35,39 @@
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
       "last_attempt": "2026-01-31T00:00:00"
+    },
+    "instagram-younghenrys": {
+      "technique": "instagram-apify",
+      "attempts": 0,
+      "successes": 0,
+      "items_found": 0,
+      "errors": [],
+      "first_seen": "2026-01-31T00:00:00",
+      "last_attempt": null,
+      "note": "Requires APIFY_API_TOKEN"
+    },
+    "instagram-batchbrewing": {
+      "technique": "instagram-apify",
+      "attempts": 0,
+      "successes": 0,
+      "items_found": 0,
+      "errors": [],
+      "first_seen": "2026-01-31T00:00:00",
+      "last_attempt": null,
+      "note": "Requires APIFY_API_TOKEN"
+    },
+    "instagram-mountainculture": {
+      "technique": "instagram-apify",
+      "attempts": 0,
+      "successes": 0,
+      "items_found": 0,
+      "errors": [],
+      "first_seen": "2026-01-31T00:00:00",
+      "last_attempt": null,
+      "note": "Requires APIFY_API_TOKEN"
     }
   },
   "runs": [],
   "created_at": "2026-01-31T00:00:00",
-  "note": "Initial metrics - GitHub Actions will update this automatically"
+  "note": "Initial metrics - GitHub Actions will update this automatically. Instagram scraping requires APIFY_API_TOKEN secret."
 }
