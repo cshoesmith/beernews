@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Location button
     document.getElementById('location-toggle').addEventListener('click', getUserLocation);
+    
+    // Metrics toggle button
+    document.getElementById('metrics-toggle').addEventListener('click', toggleMetrics);
 });
 
 function switchTab(tabName) {
@@ -432,4 +435,78 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
               Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     return R * c;
+}
+
+
+function toggleMetrics() {
+    const panel = document.getElementById('metrics-panel');
+    const isHidden = panel.classList.contains('hidden');
+    
+    if (isHidden) {
+        panel.classList.remove('hidden');
+        loadMetrics();
+    } else {
+        panel.classList.add('hidden');
+    }
+}
+
+async function loadMetrics() {
+    const container = document.getElementById('metrics-content');
+    container.innerHTML = 'Loading metrics...';
+    
+    try {
+        const response = await fetch(`${API_BASE}/metrics`);
+        const data = await response.json();
+        
+        if (data.error) {
+            container.innerHTML = `<p class="empty-state">Metrics not available yet. Run scraper to generate data.</p>`;
+            return;
+        }
+        
+        let html = '';
+        
+        // Overall stats
+        html += `
+            <div style="margin-bottom: 20px; padding: 16px; background: #f0fdf4; border-radius: 8px;">
+                <strong>Overall Success Rate: ${data.overall?.success_rate || 0}%</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-light);">
+                    ${data.overall?.total_successes || 0} successes from ${data.overall?.total_attempts || 0} attempts
+                    (${data.overall?.total_items || 0} items found)
+                </span>
+            </div>
+        `;
+        
+        // Individual sources
+        if (data.sources && Object.keys(data.sources).length > 0) {
+            html += '<div class="metrics-sources">';
+            for (const [sourceName, sourceData] of Object.entries(data.sources)) {
+                const statusClass = sourceData.status || 'new';
+                const statusIcon = statusClass === 'active' ? '✓' : statusClass === 'struggling' ? '⚠' : '?';
+                
+                html += `
+                    <div class="metric-source ${statusClass}">
+                        <div>
+                            <div class="metric-name">${statusIcon} ${sourceName}</div>
+                            <div class="metric-tech">${sourceData.technique}</div>
+                        </div>
+                        <div class="metric-stats">
+                            <div class="metric-success">${sourceData.success_rate}% success</div>
+                            <div class="metric-items">${sourceData.items_found} items (${sourceData.attempts} attempts)</div>
+                            ${sourceData.recent_items > 0 ? `<div style="font-size: 0.75rem; color: var(--success);">+${sourceData.recent_items} recently</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+        } else {
+            html += '<p class="empty-state">No metrics data yet. Run the scraper to collect productivity data.</p>';
+        }
+        
+        html += `<p style="margin-top: 16px; font-size: 0.8rem; color: var(--text-light);">Generated: ${new Date(data.generated_at).toLocaleString('en-AU')}</p>`;
+        
+        container.innerHTML = html;
+        
+    } catch (err) {
+        container.innerHTML = `<p class="empty-state">Error loading metrics: ${err.message}</p>`;
+    }
 }

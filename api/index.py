@@ -216,3 +216,22 @@ def get_stats():
         "popular_suburbs": list(set(v.suburb for v in engine.venues.values())),
         "last_updated": last_updated
     })
+
+
+
+@app.route('/api/metrics')
+def get_metrics():
+    """Get scraper productivity metrics."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+        from scripts.scraper_metrics import get_metrics as get_scraper_metrics
+        
+        metrics = get_scraper_metrics()
+        summary = metrics.get_summary()
+        
+        return jsonify(summary)
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "message": "Metrics not available yet. Run scraper to generate metrics."
+        }), 500

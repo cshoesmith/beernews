@@ -42,6 +42,7 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from data import SYDNEY_VENUES, SYDNEY_BEERS, SYDNEY_POSTS
+from scraper_metrics import get_metrics
 
 # Configuration
 DATA_FILE = Path(__file__).parent.parent / "data" / "dynamic_updates.json"
@@ -70,6 +71,10 @@ def scrape_website_batch_brewing() -> List[Dict]:
     """Scrape Batch Brewing's website for new releases."""
     url = "https://www.batchbrewingcompany.com.au/"
     posts = []
+    metrics = get_metrics()
+    source_name = "batch-brewing-website"
+    
+    metrics.record_source_attempt(source_name, "website-beautifulsoup")
     
     try:
         headers = {
@@ -99,10 +104,13 @@ def scrape_website_batch_brewing() -> List[Dict]:
                     "scraped_at": datetime.now().isoformat()
                 })
         
+        metrics.record_source_success(source_name, len(posts))
         print(f"  Batch Brewing: Found {len(posts)} potential new releases")
         
     except Exception as e:
-        print(f"  Batch Brewing: Error - {e}")
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  Batch Brewing: Error - {error_msg}")
     
     return posts
 
@@ -110,6 +118,10 @@ def scrape_website_mountain_culture() -> List[Dict]:
     """Scrape Mountain Culture website."""
     url = "https://mountainculture.com.au/"
     posts = []
+    metrics = get_metrics()
+    source_name = "mountain-culture-website"
+    
+    metrics.record_source_attempt(source_name, "website-beautifulsoup")
     
     try:
         headers = {
@@ -131,16 +143,23 @@ def scrape_website_mountain_culture() -> List[Dict]:
                         "scraped_at": datetime.now().isoformat()
                     })
         
+        metrics.record_source_success(source_name, len(posts))
         print(f"  Mountain Culture: Found {len(posts)} items")
         
     except Exception as e:
-        print(f"  Mountain Culture: Error - {e}")
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  Mountain Culture: Error - {error_msg}")
     
     return posts[:5]  # Limit results
 
 def scrape_generic_website(venue_id: str, url: str) -> List[Dict]:
     """Generic website scraper for any venue."""
     posts = []
+    metrics = get_metrics()
+    source_name = f"{venue_id}-website"
+    
+    metrics.record_source_attempt(source_name, "website-generic")
     
     try:
         headers = {
@@ -165,8 +184,12 @@ def scrape_generic_website(venue_id: str, url: str) -> List[Dict]:
                         "scraped_at": datetime.now().isoformat()
                     })
         
+        metrics.record_source_success(source_name, len(posts))
+        
     except Exception as e:
-        print(f"  {venue_id}: Error - {e}")
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  {venue_id}: Error - {error_msg}")
     
     return posts[:3]
 
@@ -323,6 +346,10 @@ def main():
     print(f"Started: {datetime.now().isoformat()}")
     print()
     
+    # Initialize metrics
+    metrics = get_metrics()
+    metrics.record_run_start()
+    
     cache = load_cache()
     all_posts = []
     
@@ -404,6 +431,19 @@ def main():
     cache['last_run'] = datetime.now().isoformat()
     save_cache(cache)
     
+    # Record metrics
+    metrics.record_run_end(len(unique_posts))
+    metrics.save()
+    
+    # Show productivity summary
+    print()
+    print("=" * 60)
+    print("Productivity Summary")
+    print("=" * 60)
+    summary = metrics.get_summary()
+    for source_name, data in summary['sources'].items():
+        status_icon = "✓" if data['status'] == 'active' else "⚠" if data['status'] == 'struggling' else "?"
+        print(f"  {status_icon} {source_name}: {data['success_rate']}% success ({data['items_found']} items)")
     print()
     print("Done!")
 
