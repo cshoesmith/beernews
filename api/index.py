@@ -197,6 +197,15 @@ def get_stats():
     new_beers = engine.get_new_releases(7)
     venues_with_new = engine.get_venues_with_new_releases(7)
     
+    # Get last updated time from data module or use current time
+    try:
+        from data import SYDNEY_POSTS
+        # Use the most recent post date as proxy for last update
+        latest_post = max(SYDNEY_POSTS, key=lambda p: p.posted_at)
+        last_updated = latest_post.posted_at.isoformat()
+    except:
+        last_updated = datetime.now().isoformat()
+    
     return jsonify({
         "total_venues": len(engine.venues),
         "total_beers": len(engine.beers),
@@ -204,7 +213,8 @@ def get_stats():
         "venues_with_new_releases": len(venues_with_new),
         "breweries": len([v for v in engine.venues.values() if v.type == "brewery"]),
         "bars": len([v for v in engine.venues.values() if v.type == "bar"]),
-        "popular_suburbs": list(set(v.suburb for v in engine.venues.values()))
+        "popular_suburbs": list(set(v.suburb for v in engine.venues.values())),
+        "last_updated": last_updated
     })
 
 

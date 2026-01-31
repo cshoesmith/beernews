@@ -62,8 +62,31 @@ async function loadStats() {
         document.getElementById('stat-new').textContent = stats.new_releases_7d;
         document.getElementById('stat-breweries').textContent = stats.breweries;
         document.getElementById('stat-bars').textContent = stats.bars;
+        
+        // Show last updated time
+        if (stats.last_updated) {
+            const updateTime = new Date(stats.last_updated);
+            const now = new Date();
+            const hoursAgo = Math.floor((now - updateTime) / (1000 * 60 * 60));
+            const daysAgo = Math.floor(hoursAgo / 24);
+            
+            let timeText;
+            if (hoursAgo < 1) {
+                timeText = 'Just now';
+            } else if (hoursAgo < 24) {
+                timeText = `${hoursAgo}h ago`;
+            } else if (daysAgo === 1) {
+                timeText = 'Yesterday';
+            } else {
+                timeText = `${daysAgo} days ago`;
+            }
+            
+            document.getElementById('last-updated').textContent = 
+                `🔄 Data updated: ${timeText} (${updateTime.toLocaleDateString('en-AU', {hour: '2-digit', minute:'2-digit'})})`;
+        }
     } catch (err) {
         console.error('Failed to load stats:', err);
+        document.getElementById('last-updated').textContent = 'Unable to check last update';
     }
 }
 
@@ -139,15 +162,39 @@ function createRecommendationCard(rec) {
         ? `<span class="distance">📍 ${rec.distance_km.toFixed(1)} km away</span>` 
         : '';
     
-    const beerList = rec.new_beers.map(beer => `
+    const beerList = rec.new_beers.map(beer => {
+        const releaseDate = new Date(beer.release_date);
+        const now = new Date();
+        const daysAgo = Math.floor((now - releaseDate) / (1000 * 60 * 60 * 24));
+        const hoursAgo = Math.floor((now - releaseDate) / (1000 * 60 * 60));
+        
+        let timeText;
+        if (hoursAgo < 1) {
+            timeText = 'Just now';
+        } else if (hoursAgo < 24) {
+            timeText = `${hoursAgo}h ago`;
+        } else if (daysAgo === 1) {
+            timeText = 'Yesterday';
+        } else {
+            timeText = `${daysAgo} days ago`;
+        }
+        
+        const dateStr = releaseDate.toLocaleDateString('en-AU', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short'
+        });
+        
+        return `
         <div class="beer-item">
             <div class="beer-info">
                 <div class="beer-name">${beer.name}</div>
                 <div class="beer-details">${beer.style} • ${beer.abv}% ABV</div>
+                <div class="beer-time">📅 ${dateStr} • ${timeText}</div>
             </div>
             <span class="beer-badge">NEW</span>
         </div>
-    `).join('');
+    `}).join('');
     
     const posts = rec.relevant_posts.map(post => `
         <div class="post-content">${post.content}</div>
@@ -219,6 +266,30 @@ async function loadNewReleases() {
             const card = document.createElement('div');
             card.className = 'beer-card';
             
+            const releaseDate = new Date(beer.release_date);
+            const now = new Date();
+            const daysAgo = Math.floor((now - releaseDate) / (1000 * 60 * 60 * 24));
+            const hoursAgo = Math.floor((now - releaseDate) / (1000 * 60 * 60));
+            
+            let timeText;
+            if (hoursAgo < 1) {
+                timeText = 'Just now';
+            } else if (hoursAgo < 24) {
+                timeText = `${hoursAgo}h ago`;
+            } else if (daysAgo === 1) {
+                timeText = 'Yesterday';
+            } else {
+                timeText = `${daysAgo} days ago`;
+            }
+            
+            const dateStr = releaseDate.toLocaleDateString('en-AU', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
             card.innerHTML = `
                 <div class="beer-card-header">
                     <div>
@@ -229,6 +300,11 @@ async function loadNewReleases() {
                         </div>
                         ${brewery ? `<div style="margin-top: 8px;"><a href="#" class="brewery-link" data-venue="${brewery.id}">${brewery.name}</a>, ${brewery.suburb}</div>` : ''}
                     </div>
+                </div>
+                <div style="margin-top: 12px; padding: 8px 12px; background: #f0fdf4; border-radius: 6px; border-left: 3px solid var(--success);">
+                    <span style="font-size: 0.9rem; color: var(--success); font-weight: 500;">
+                        📅 Released: ${dateStr} • ${timeText}
+                    </span>
                 </div>
                 ${beer.description ? `<p style="margin-top: 12px; color: var(--text-light);">${beer.description}</p>` : ''}
             `;
