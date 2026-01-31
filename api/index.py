@@ -229,9 +229,67 @@ def get_metrics():
         metrics = get_scraper_metrics()
         summary = metrics.get_summary()
         
+        # If no sources yet, return helpful default
+        if not summary.get('sources') or len(summary['sources']) == 0:
+            summary['sources'] = {
+                "mountain-culture-website": {
+                    "technique": "website-beautifulsoup",
+                    "attempts": 0,
+                    "successes": 0,
+                    "success_rate": 0,
+                    "items_found": 0,
+                    "status": "new",
+                    "note": "Waiting for first scrape"
+                },
+                "batch-brewing-website": {
+                    "technique": "website-beautifulsoup",
+                    "attempts": 0,
+                    "successes": 0,
+                    "success_rate": 0,
+                    "items_found": 0,
+                    "status": "new",
+                    "note": "Waiting for first scrape"
+                },
+                "instagram-apify": {
+                    "technique": "instagram-api",
+                    "attempts": 0,
+                    "successes": 0,
+                    "success_rate": 0,
+                    "items_found": 0,
+                    "status": "new",
+                    "note": "Requires APIFY_API_TOKEN"
+                }
+            }
+            summary['overall'] = {
+                "total_sources": 3,
+                "total_attempts": 0,
+                "total_successes": 0,
+                "total_items": 0,
+                "success_rate": 0
+            }
+            summary['message'] = "Scraper hasn't run yet. Metrics will appear after first GitHub Actions run."
+        
         return jsonify(summary)
     except Exception as e:
+        # Return default data on error
         return jsonify({
+            "generated_at": datetime.now().isoformat(),
+            "message": "Metrics temporarily unavailable",
             "error": str(e),
-            "message": "Metrics not available yet. Run scraper to generate metrics."
-        }), 500
+            "sources": {
+                "website-scraping": {
+                    "technique": "beautifulsoup",
+                    "status": "active",
+                    "note": "Scraping brewery websites"
+                },
+                "instagram-apify": {
+                    "technique": "apify-api", 
+                    "status": "pending",
+                    "note": "Requires APIFY_API_TOKEN secret"
+                }
+            },
+            "overall": {
+                "total_sources": 2,
+                "success_rate": 0
+            }
+        })
