@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sydney Beer Aggregator 🍺</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍺 Sydney Beer Aggregator</h1>
+            <p class="subtitle">Discover new beer releases at Sydney's best breweries & bars</p>
+        </header>
+
+        <div class="stats-bar" id="stats">
+            <div class="stat">
+                <span class="stat-value" id="stat-venues">-</span>
+                <span class="stat-label">Venues</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="stat-new">-</span>
+                <span class="stat-label">New This Week</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="stat-breweries">-</span>
+                <span class="stat-label">Breweries</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="stat-bars">-</span>
+                <span class="stat-label">Bars</span>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="suburb-filter">Suburb</label>
+                <select id="suburb-filter">
+                    <option value="">All Suburbs</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="style-filter">Beer Style</label>
+                <select id="style-filter">
+                    <option value="">All Styles</option>
+                    <option value="IPA">IPA</option>
+                    <option value="DDH IPA">DDH IPA</option>
+                    <option value="NEIPA">NEIPA</option>
+                    <option value="DDH NEIPA">DDH NEIPA</option>
+                    <option value="Triple IPA">Triple IPA</option>
+                    <option value="Cold IPA">Cold IPA</option>
+                    <option value="Pale Ale">Pale Ale</option>
+                    <option value="Golden Ale">Golden Ale</option>
+                    <option value="Lager">Lager</option>
+                    <option value="Sour">Sour</option>
+                    <option value="Kettle Sour">Kettle Sour</option>
+                    <option value="Fruited Sour">Fruited Sour</option>
+                    <option value="Berliner Weisse">Berliner Weisse</option>
+                    <option value="Imperial Stout">Imperial Stout</option>
+                    <option value="Ginger Beer">Ginger Beer</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="location-toggle">📍 Use My Location</label>
+                <button id="location-toggle" class="btn-secondary">Get Location</button>
+            </div>
+        </div>
+
+        <div id="location-status" class="location-status hidden"></div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="recommendations">🎯 Recommendations</button>
+            <button class="tab" data-tab="new-releases">🆕 New Releases</button>
+            <button class="tab" data-tab="venues">📍 All Venues</button>
+        </div>
+
+        <div id="content-recommendations" class="tab-content active">
+            <div class="loading" id="rec-loading">Finding the best spots for you...</div>
+            <div id="recommendations-list"></div>
+        </div>
+
+        <div id="content-new-releases" class="tab-content">
+            <div class="loading" id="beers-loading">Loading new releases...</div>
+            <div id="beers-list"></div>
+        </div>
+
+        <div id="content-venues" class="tab-content">
+            <div class="loading" id="venues-loading">Loading venues...</div>
+            <div id="venues-list"></div>
+        </div>
+
+        <footer>
+            <p>Built for Sydney beer lovers 🍻 | Data from social feeds</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
