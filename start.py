@@ -17,7 +17,7 @@ def open_browser():
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("🍺 Sydney Beer Aggregator")
+    print("Sydney Beer Aggregator")
     print("=" * 60)
     print("\nStarting server at http://localhost:5000")
     print("Press Ctrl+C to stop\n")
