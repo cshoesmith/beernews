@@ -872,7 +872,16 @@ def load_dynamic_data():
         # Load scraped posts
         for post_data in data.get("posts", []):
             try:
-                posted_at = datetime.fromisoformat(post_data["posted_at"].replace('Z', '+00:00'))
+                # Use posted_at, scraped_at, or now
+                date_str = post_data.get("posted_at") or post_data.get("scraped_at")
+                if date_str:
+                    posted_at = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+                else:
+                    posted_at = datetime.now()
+                
+                # Skip posts older than 14 days
+                if (datetime.now() - posted_at).days > 14:
+                    continue
                 
                 posts.append(SocialPost(
                     id=post_data.get("id", f"dynamic-{posted_at.timestamp()}"),

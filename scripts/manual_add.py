@@ -31,6 +31,10 @@ def save_updates(data):
 
 def interactive_add():
     """Interactive mode for adding beers."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    
     print("=" * 50)
     print("Add New Beer Release")
     print("=" * 50)

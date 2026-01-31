@@ -395,7 +395,8 @@ def main():
         print("\nSample posts:")
         for post in unique_posts[:3]:
             venue_name = post.get('venue_id', 'unknown')
-            print(f"  - [{venue_name}] {post['content'][:80]}...")
+            content = post['content'][:80].encode('ascii', 'ignore').decode()
+            print(f"  - [{venue_name}] {content}...")
     else:
         print("No new posts found")
     
