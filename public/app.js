@@ -481,7 +481,7 @@ async function loadMetrics() {
             html += '<div class="metrics-sources">';
             for (const [sourceName, sourceData] of Object.entries(data.sources)) {
                 const statusClass = sourceData.status || 'new';
-                const statusIcon = statusClass === 'active' ? '✓' : statusClass === 'struggling' ? '⚠' : '?';
+                const statusIcon = statusClass === 'active' ? '●' : statusClass === 'struggling' ? '▲' : '○';
                 
                 html += `
                     <div class="metric-source ${statusClass}">

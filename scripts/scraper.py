@@ -442,7 +442,7 @@ def main():
     print("=" * 60)
     summary = metrics.get_summary()
     for source_name, data in summary['sources'].items():
-        status_icon = "✓" if data['status'] == 'active' else "⚠" if data['status'] == 'struggling' else "?"
+        status_icon = "[OK]" if data['status'] == 'active' else "[!]" if data['status'] == 'struggling' else "[?]"
         print(f"  {status_icon} {source_name}: {data['success_rate']}% success ({data['items_found']} items)")
     print()
     print("Done!")
