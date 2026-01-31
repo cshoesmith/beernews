@@ -21,15 +21,23 @@ jobs:
         python-version: '3.11'
         
     - name: Install dependencies
-      run: pip install requests beautifulsoup4 python-dateutil
+      run: |
+        pip install requests beautifulsoup4 lxml feedparser python-dateutil
+        # Optional: Apify for Instagram
+        # pip install apify-client
+        # Optional: Instaloader for Instagram (no API key)
+        # pip install instaloader
       
     - name: Run scraper
-      run: python scripts/scrape.py
+      env:
+        # Add API keys as GitHub secrets for production use
+        APIFY_API_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
+      run: python scripts/scraper.py
       
     - name: Check for changes
       id: git-check
       run: |
-        git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+        git diff --quiet data/ || echo "changed=true" >> $GITHUB_OUTPUT
         
     - name: Commit and push if changed
       if: steps.git-check.outputs.changed == 'true'
@@ -39,3 +47,8 @@ jobs:
         git add data/
         git commit -m "Update beer data - $(date -u '+%Y-%m-%d %H:%M UTC')"
         git push
+        
+    - name: Trigger Vercel redeploy
+      if: steps.git-check.outputs.changed == 'true'
+      run: |
+        echo "Changes pushed. Vercel will auto-deploy."

@@ -827,3 +827,84 @@ SYDNEY_POSTS = [
         post_url="https://instagram.com/p/vwx234"
     ),
 ]
+
+
+# ==================== DYNAMIC DATA LOADING ====================
+
+def load_dynamic_data():
+    """Load dynamic updates from scraper/manual entries."""
+    import json
+    from pathlib import Path
+    
+    dynamic_file = Path(__file__).parent / "data" / "dynamic_updates.json"
+    
+    if not dynamic_file.exists():
+        return [], []
+    
+    try:
+        with open(dynamic_file) as f:
+            data = json.load(f)
+        
+        beers = []
+        posts = []
+        
+        # Load manual beers
+        for beer_data in data.get("manual_beers", []):
+            try:
+                # Parse release date
+                release_date = datetime.fromisoformat(beer_data["release_date"].replace('Z', '+00:00'))
+                # Check if still "new" (within 7 days)
+                is_new = (datetime.now() - release_date).days <= 7
+                
+                beers.append(Beer(
+                    id=beer_data["id"],
+                    name=beer_data["name"],
+                    brewery_id=beer_data["brewery_id"],
+                    style=beer_data.get("style"),
+                    abv=beer_data.get("abv"),
+                    description=beer_data.get("description"),
+                    release_date=release_date,
+                    is_new_release=is_new
+                ))
+            except Exception as e:
+                print(f"Error loading beer {beer_data.get('id')}: {e}")
+        
+        # Load scraped posts
+        for post_data in data.get("posts", []):
+            try:
+                posted_at = datetime.fromisoformat(post_data["posted_at"].replace('Z', '+00:00'))
+                
+                posts.append(SocialPost(
+                    id=post_data.get("id", f"dynamic-{posted_at.timestamp()}"),
+                    venue_id=post_data["venue_id"],
+                    platform=post_data.get("platform", "unknown"),
+                    content=post_data["content"],
+                    posted_at=posted_at,
+                    mentions_beers=post_data.get("mentions_beers", []),
+                    post_url=post_data.get("post_url")
+                ))
+            except Exception as e:
+                print(f"Error loading post: {e}")
+        
+        return beers, posts
+        
+    except Exception as e:
+        print(f"Error loading dynamic data: {e}")
+        return [], []
+
+# Merge dynamic data
+_DYNAMIC_BEERS, _DYNAMIC_POSTS = load_dynamic_data()
+
+# Add dynamic beers to list (avoiding duplicates by ID)
+_existing_ids = {b.id for b in SYDNEY_BEERS}
+for beer in _DYNAMIC_BEERS:
+    if beer.id not in _existing_ids:
+        SYDNEY_BEERS.append(beer)
+
+# Add dynamic posts to list
+_existing_post_ids = {p.id for p in SYDNEY_POSTS}
+for post in _DYNAMIC_POSTS:
+    if post.id not in _existing_post_ids:
+        SYDNEY_POSTS.append(post)
+
+print(f"[Data] Loaded {len(_DYNAMIC_BEERS)} dynamic beers, {len(_DYNAMIC_POSTS)} dynamic posts")
