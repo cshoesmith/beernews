@@ -7,6 +7,10 @@ on:
   # Allow manual trigger
   workflow_dispatch:
 
+# Grant write permissions to push data updates
+permissions:
+  contents: write
+
 jobs:
   scrape-and-update:
     runs-on: ubuntu-latest
@@ -14,6 +18,11 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
+      with:
+        # Persist credentials so we can push
+        persist-credentials: true
+        # Fetch full history
+        fetch-depth: 0
       
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -38,11 +47,16 @@ jobs:
         
     - name: Commit and push if changed
       if: steps.git-check.outputs.changed == 'true'
+      env:
+        # Use the built-in GITHUB_TOKEN for authentication
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add data/
         git commit -m "Update beer data - $(date -u '+%Y-%m-%d %H:%M UTC')"
+        # Use HTTPS with token for push
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         git push
         
     - name: Trigger Vercel redeploy
