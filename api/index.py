@@ -218,6 +218,17 @@ def get_stats():
     })
 
 
-# WSGI handler for Vercel
-# Vercel looks for 'app' as the default handler
-# If you need to use a different name, specify it in vercel.json
+# Vercel WSGI handler
+# This wraps the Flask app for Vercel serverless functions
+try:
+    from vercel_wsgi import handle
+    
+    def handler(event, context):
+        return handle(app, event, context)
+except ImportError:
+    # Fallback if vercel_wsgi not available
+    def handler(event, context):
+        return {
+            "statusCode": 200,
+            "body": "API ready"
+        }
