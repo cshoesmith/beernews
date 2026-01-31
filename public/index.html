@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f59e0b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Sydney Beer Aggregator 🍺</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,9 +84,9 @@
         <div id="location-status" class="location-status hidden"></div>
 
         <div class="tabs">
-            <button class="tab active" data-tab="recommendations">🎯 Recommendations</button>
-            <button class="tab" data-tab="new-releases">🆕 New Releases</button>
-            <button class="tab" data-tab="venues">📍 All Venues</button>
+            <button class="tab active" data-tab="recommendations"><span class="tab-icon">🎯</span><span class="tab-label">Recommendations</span></button>
+            <button class="tab" data-tab="new-releases"><span class="tab-icon">🆕</span><span class="tab-label">New Releases</span></button>
+            <button class="tab" data-tab="venues"><span class="tab-icon">📍</span><span class="tab-label">Venues</span></button>
         </div>
 
         <div id="content-recommendations" class="tab-content active">
