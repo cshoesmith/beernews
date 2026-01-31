@@ -216,19 +216,3 @@ def get_stats():
         "popular_suburbs": list(set(v.suburb for v in engine.venues.values())),
         "last_updated": last_updated
     })
-
-
-# Vercel WSGI handler
-# This wraps the Flask app for Vercel serverless functions
-try:
-    from vercel_wsgi import handle
-    
-    def handler(event, context):
-        return handle(app, event, context)
-except ImportError:
-    # Fallback if vercel_wsgi not available
-    def handler(event, context):
-        return {
-            "statusCode": 200,
-            "body": "API ready"
-        }
