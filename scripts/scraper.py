@@ -412,8 +412,33 @@ def main():
     
     print()
     
-    # 2. Scrape Instagram (if API key available)
-    print("Scraping Instagram (Apify)...")
+    # 2. Scrape Instagram via Meta API (your app)
+    print("Scraping Instagram (Meta API - your app)...")
+    instagram_token = os.getenv('INSTAGRAM_ACCESS_TOKEN')
+    if instagram_token:
+        try:
+            from meta_instagram_scraper import scrape_all_with_meta
+            
+            # Build accounts dict from venues
+            meta_accounts = {}
+            for venue in SYDNEY_VENUES:
+                if venue.instagram_handle:
+                    username = venue.instagram_handle.replace('@', '')
+                    meta_accounts[venue.id] = username
+            
+            posts = scrape_all_with_meta(instagram_token, meta_accounts)
+            all_posts.extend(posts)
+            print(f"  Meta API: Total {len(posts)} posts from all accounts")
+        except Exception as e:
+            print(f"  Meta API: Error - {e}")
+    else:
+        print("  Skipping (no INSTAGRAM_ACCESS_TOKEN)")
+        print("  Set up your Meta app: see META_SETUP.md")
+    
+    print()
+    
+    # 3. Scrape Instagram via Apify (alternative)
+    print("Scraping Instagram (Apify - alternative)...")
     if os.getenv('APIFY_API_TOKEN'):
         for venue in SYDNEY_VENUES:
             if venue.instagram_handle:
