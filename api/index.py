@@ -202,9 +202,17 @@ def get_stats():
         from data import SYDNEY_POSTS
         # Use the most recent post date as proxy for last update
         latest_post = max(SYDNEY_POSTS, key=lambda p: p.posted_at)
-        last_updated = latest_post.posted_at.isoformat()
+        # Ensure timezone-aware datetime
+        last_updated = latest_post.posted_at
+        if last_updated.tzinfo is None:
+            # If naive datetime, assume UTC
+            from datetime import timezone
+            last_updated = last_updated.replace(tzinfo=timezone.utc)
+        last_updated_str = last_updated.isoformat()
     except:
-        last_updated = datetime.now().isoformat()
+        # Use UTC timezone explicitly
+        from datetime import timezone
+        last_updated_str = datetime.now(timezone.utc).isoformat()
     
     return jsonify({
         "total_venues": len(engine.venues),
@@ -214,7 +222,7 @@ def get_stats():
         "breweries": len([v for v in engine.venues.values() if v.type == "brewery"]),
         "bars": len([v for v in engine.venues.values() if v.type == "bar"]),
         "popular_suburbs": list(set(v.suburb for v in engine.venues.values())),
-        "last_updated": last_updated
+        "last_updated": last_updated_str
     })
 
 

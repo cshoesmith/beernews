@@ -68,14 +68,19 @@ async function loadStats() {
         
         // Show last updated time
         if (stats.last_updated) {
+            // Parse the ISO date string
             const updateTime = new Date(stats.last_updated);
             const now = new Date();
-            const hoursAgo = Math.floor((now - updateTime) / (1000 * 60 * 60));
+            
+            // Calculate time difference
+            const diffMs = now - updateTime;
+            const hoursAgo = Math.floor(diffMs / (1000 * 60 * 60));
             const daysAgo = Math.floor(hoursAgo / 24);
             
             let timeText;
             if (hoursAgo < 1) {
-                timeText = 'Just now';
+                const minsAgo = Math.floor(diffMs / (1000 * 60));
+                timeText = minsAgo < 1 ? 'Just now' : `${minsAgo}m ago`;
             } else if (hoursAgo < 24) {
                 timeText = `${hoursAgo}h ago`;
             } else if (daysAgo === 1) {
@@ -84,8 +89,18 @@ async function loadStats() {
                 timeText = `${daysAgo} days ago`;
             }
             
+            // Format local time with timezone indicator
+            const localTimeStr = updateTime.toLocaleString('en-AU', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
+            
             document.getElementById('last-updated').textContent = 
-                `🔄 Data updated: ${timeText} (${updateTime.toLocaleDateString('en-AU', {hour: '2-digit', minute:'2-digit'})})`;
+                `🔄 Data updated: ${timeText} (${localTimeStr})`;
         }
     } catch (err) {
         console.error('Failed to load stats:', err);
@@ -182,10 +197,11 @@ function createRecommendationCard(rec) {
             timeText = `${daysAgo} days ago`;
         }
         
-        const dateStr = releaseDate.toLocaleDateString('en-AU', {
+        const dateStr = releaseDate.toLocaleString('en-AU', {
             weekday: 'short',
             day: 'numeric',
-            month: 'short'
+            month: 'short',
+            timeZoneName: 'short'
         });
         
         return `
@@ -285,12 +301,13 @@ async function loadNewReleases() {
                 timeText = `${daysAgo} days ago`;
             }
             
-            const dateStr = releaseDate.toLocaleDateString('en-AU', {
+            const dateStr = releaseDate.toLocaleString('en-AU', {
                 weekday: 'short',
                 day: 'numeric',
                 month: 'short',
                 hour: '2-digit',
-                minute: '2-digit'
+                minute: '2-digit',
+                timeZoneName: 'short'
             });
             
             card.innerHTML = `
