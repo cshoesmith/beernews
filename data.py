@@ -199,6 +199,16 @@ SYDNEY_VENUES = [
         tags=["craft-beer", "sports-bar", "american-style"]
     ),
     Venue(
+        id="jb-and-sons-manly",
+        name="JB & Sons Manly",
+        type="bar",
+        address="16-18 Darley Rd, Manly",
+        suburb="Manly",
+        location=(-33.7969, 151.2837),
+        instagram_handle="@jbandsonsmanly",
+        tags=["craft-beer", "sports-bar", "beachside", "american-style"]
+    ),
+    Venue(
         id="noble-hops",
         name="Noble Hops",
         type="bar",

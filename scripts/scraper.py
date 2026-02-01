@@ -442,6 +442,7 @@ def main():
             "kicks-brewing": "kicksbrewing",
             "4-pines": "4pinesbeer",
             "white-bay": "whitebaybeerco",
+            "jb-and-sons-manly": "jbandsonsmanly",
         }
         
         for venue_id, username in imginn_accounts.items():
