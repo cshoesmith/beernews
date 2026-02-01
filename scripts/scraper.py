@@ -456,7 +456,36 @@ def main():
     
     print()
     
-    # 4. RSS feeds
+    # 4. Scrape beer enthusiast accounts (these post about multiple breweries)
+    print("Scraping beer enthusiast accounts...")
+    enthusiast_accounts = {
+        "craftbeer-sydney": "craftbeer_sydney",  # Posts about many Sydney breweries
+        "beer-sydney": "beersydney",  # Beer reviews and news
+    }
+    
+    for source_id, username in enthusiast_accounts.items():
+        try:
+            posts = scrape_all_imginn_content(username, source_id)
+            # For enthusiast accounts, we need to extract which brewery they're talking about
+            for post in posts:
+                # Try to detect which brewery is mentioned
+                content_lower = post['content'].lower()
+                for venue in SYDNEY_VENUES:
+                    if venue.instagram_handle:
+                        handle_clean = venue.instagram_handle.replace('@', '').lower()
+                        name_clean = venue.name.lower().replace(' ', '').replace('&', '')
+                        if handle_clean in content_lower or name_clean in content_lower:
+                            post['venue_id'] = venue.id
+                            post['detected_venue'] = venue.name
+                            break
+            all_posts.extend(posts)
+            print(f"  {username}: Found {len(posts)} posts")
+        except Exception as e:
+            print(f"  {username}: Error - {e}")
+    
+    print()
+    
+    # 5. RSS feeds
     print("Scraping RSS feeds...")
     rss_posts = scrape_rss_feeds()
     all_posts.extend(rss_posts)
