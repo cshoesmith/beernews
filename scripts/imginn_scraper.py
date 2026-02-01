@@ -30,17 +30,41 @@ def scrape_imginn_stories(username: str) -> List[Dict]:
     url = f"https://imginn.com/stories/{username}/"
     
     try:
+        # More realistic browser headers
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'https://imginn.com/'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Referer': 'https://www.google.com/',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'cross-site',
+            'Cache-Control': 'max-age=0',
         }
         
-        print(f"  Imginn: Fetching stories for @{username}...")
-        resp = requests.get(url, headers=headers, timeout=15)
+        # Add delay to avoid rate limiting
+        import time
+        time.sleep(2)
         
-        if resp.status_code != 200:
+        print(f"  Imginn: Fetching stories for @{username}...")
+        
+        # Create session for better handling
+        session = requests.Session()
+        session.headers.update(headers)
+        
+        # First visit homepage to get cookies
+        session.get('https://imginn.com/', timeout=10)
+        time.sleep(1)
+        
+        resp = session.get(url, timeout=15)
+        
+        if resp.status_code == 403:
+            print(f"  Imginn: Access denied (403) - site may be blocking scrapers")
+            return posts
+        elif resp.status_code != 200:
             print(f"  Imginn: Failed to fetch (status {resp.status_code})")
             return posts
         
@@ -131,17 +155,41 @@ def scrape_imginn_posts(username: str) -> List[Dict]:
     url = f"https://imginn.com/{username}/"
     
     try:
+        # More realistic browser headers
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'https://imginn.com/'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Referer': 'https://www.google.com/',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'cross-site',
+            'Cache-Control': 'max-age=0',
         }
         
-        print(f"  Imginn: Fetching posts for @{username}...")
-        resp = requests.get(url, headers=headers, timeout=15)
+        # Add delay to avoid rate limiting
+        import time
+        time.sleep(2)
         
-        if resp.status_code != 200:
+        print(f"  Imginn: Fetching posts for @{username}...")
+        
+        # Create session for better handling
+        session = requests.Session()
+        session.headers.update(headers)
+        
+        # First visit homepage to get cookies
+        session.get('https://imginn.com/', timeout=10)
+        time.sleep(1)
+        
+        resp = session.get(url, timeout=15)
+        
+        if resp.status_code == 403:
+            print(f"  Imginn: Access denied (403) - site may be blocking scrapers")
+            return posts
+        elif resp.status_code != 200:
             print(f"  Imginn: Failed to fetch (status {resp.status_code})")
             return posts
         

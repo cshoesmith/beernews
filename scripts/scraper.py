@@ -427,8 +427,14 @@ def main():
     print()
     
     # 3. Scrape Instagram via Imginn (no API key needed)
+    # NOTE: Imginn is currently blocking scrapers (403 Forbidden)
+    # This section is kept for when/if Imginn becomes available again
     print("Scraping Instagram (Imginn - stories and posts)...")
-    if IMGINN_AVAILABLE:
+    print("  Note: Imginn is currently blocking automated access (403 Forbidden)")
+    print("  Skipping Imginn scraping - use Apify method or manual entry")
+    
+    # Disabled until Imginn blocking is resolved
+    if False and IMGINN_AVAILABLE:
         # Map instagram handles to usernames for Imginn
         imginn_accounts = {
             "young-henrys": "younghenrys",
