@@ -214,37 +214,52 @@ def scrape_instagram_apify(handle: str) -> List[Dict]:
         
         client = ApifyClient(token)
         
-        # Run Instagram scraper
+        # Calculate date 7 days ago
+        cutoff_date = datetime.now() - timedelta(days=7)
+        
+        # Run Instagram scraper - get more posts to check dates
         run_input = {
             "usernames": [handle.replace('@', '')],
-            "resultsLimit": 5,
+            "resultsLimit": 20,  # Increased from 5 to get more history
             "includePinnedPosts": False,
         }
         
+        print(f"  Instagram/{handle}: Fetching posts since {cutoff_date.strftime('%Y-%m-%d')}...")
+        
         run = client.actor("apify/instagram-scraper").call(run_input=run_input)
         
+        total_checked = 0
         for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+            total_checked += 1
             caption = item.get('caption', '')
             if not caption:
                 continue
-                
+            
+            # Check post date
+            timestamp_str = item.get('timestamp', datetime.now().isoformat())
+            try:
+                post_date = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                # Skip posts older than 7 days
+                if post_date < cutoff_date:
+                    continue
+            except:
+                # If date parsing fails, include the post anyway
+                pass
+            
             # Check for beer-related keywords
-            beer_keywords = ['beer', 'brew', 'ipa', 'ale', 'stout', 'sour', 'hazy', 'pale', 'lager', 'tap', 'release', 'new', 'drop']
+            beer_keywords = ['beer', 'brew', 'ipa', 'ale', 'stout', 'sour', 'hazy', 'pale', 'lager', 'tap', 'release', 'new', 'drop', 'pouring', 'tapping', 'fresh', 'just', 'limited']
             if any(kw in caption.lower() for kw in beer_keywords):
-                # Convert timestamp
-                timestamp = item.get('timestamp', datetime.now().isoformat())
-                
                 posts.append({
                     "venue_id": None,  # Will be set by caller
                     "platform": "instagram",
                     "content": caption[:500],
                     "post_url": item.get('url'),
-                    "posted_at": timestamp,
+                    "posted_at": timestamp_str,
                     "scraped_at": datetime.now().isoformat()
                 })
         
         metrics.record_source_success(source_name, len(posts))
-        print(f"  Instagram/{handle}: Found {len(posts)} beer-related posts")
+        print(f"  Instagram/{handle}: Checked {total_checked} posts, found {len(posts)} beer-related posts in last 7 days")
         
     except Exception as e:
         error_msg = str(e)
@@ -256,6 +271,10 @@ def scrape_instagram_apify(handle: str) -> List[Dict]:
 def scrape_instagram_instaloader(handle: str) -> List[Dict]:
     """Scrape Instagram using Instaloader (no API key, but can be blocked)."""
     posts = []
+    metrics = get_metrics()
+    source_name = f"instagram-{handle.replace('@', '')}-instaloader"
+    
+    metrics.record_source_attempt(source_name, "instagram-instaloader")
     
     try:
         import instaloader
@@ -266,12 +285,16 @@ def scrape_instagram_instaloader(handle: str) -> List[Dict]:
         
         profile = instaloader.Profile.from_username(L.context, handle.replace('@', ''))
         
+        cutoff_date = datetime.now() - timedelta(days=7)
+        total_checked = 0
+        
         for post in profile.get_posts():
-            if post.date_utc < datetime.now() - timedelta(days=7):
+            total_checked += 1
+            if post.date_utc < cutoff_date:
                 break  # Stop at posts older than 7 days
             
             caption = post.caption or ''
-            beer_keywords = ['beer', 'brew', 'ipa', 'ale', 'stout', 'sour', 'hazy', 'tap', 'release', 'new']
+            beer_keywords = ['beer', 'brew', 'ipa', 'ale', 'stout', 'sour', 'hazy', 'pale', 'lager', 'tap', 'release', 'new', 'drop', 'pouring', 'tapping', 'fresh', 'just', 'limited']
             
             if any(kw in caption.lower() for kw in beer_keywords):
                 posts.append({
@@ -283,13 +306,16 @@ def scrape_instagram_instaloader(handle: str) -> List[Dict]:
                     "scraped_at": datetime.now().isoformat()
                 })
             
-            if len(posts) >= 5:
+            if len(posts) >= 10:  # Increased from 5
                 break
         
-        print(f"  Instaloader/{handle}: Found {len(posts)} posts")
+        metrics.record_source_success(source_name, len(posts))
+        print(f"  Instaloader/{handle}: Checked {total_checked} posts, found {len(posts)} beer posts in last 7 days")
         
     except Exception as e:
-        print(f"  Instaloader/{handle}: Error - {e}")
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  Instaloader/{handle}: Error - {error_msg}")
     
     return posts
 
