@@ -44,6 +44,14 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from data import SYDNEY_VENUES, SYDNEY_BEERS, SYDNEY_POSTS
 from scraper_metrics import get_metrics
 
+# Import Imginn scraper
+try:
+    from imginn_scraper import scrape_all_imginn_content
+    IMGINN_AVAILABLE = True
+except ImportError:
+    IMGINN_AVAILABLE = False
+    print("Warning: imginn_scraper not available")
+
 # Configuration
 DATA_FILE = Path(__file__).parent.parent / "data" / "dynamic_updates.json"
 CACHE_FILE = Path(__file__).parent.parent / "data" / "scraper_cache.json"
@@ -418,7 +426,36 @@ def main():
     
     print()
     
-    # 3. RSS feeds
+    # 3. Scrape Instagram via Imginn (no API key needed)
+    print("Scraping Instagram (Imginn - stories and posts)...")
+    if IMGINN_AVAILABLE:
+        # Map instagram handles to usernames for Imginn
+        imginn_accounts = {
+            "young-henrys": "younghenrys",
+            "batch-brewing": "batchbrewingcompany",
+            "wayward-brewing": "waywardbrewing",
+            "grifter-brewing": "grifterbrewing",
+            "bracket-brewing": "bracketbrewing",
+            "future-brewing": "futurebrewing",
+            "range-brewing": "rangebrewing",
+            "mountain-culture": "mountainculturekatoomba",
+            "kicks-brewing": "kicksbrewing",
+            "4-pines": "4pinesbeer",
+            "white-bay": "whitebaybeerco",
+        }
+        
+        for venue_id, username in imginn_accounts.items():
+            try:
+                posts = scrape_all_imginn_content(username, venue_id)
+                all_posts.extend(posts)
+            except Exception as e:
+                print(f"  Imginn/{username}: Error - {e}")
+    else:
+        print("  Imginn scraper not available")
+    
+    print()
+    
+    # 4. RSS feeds
     print("Scraping RSS feeds...")
     rss_posts = scrape_rss_feeds()
     all_posts.extend(rss_posts)
