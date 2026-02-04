@@ -1,3 +1,9 @@
+# INSTRUCTIONS: Move this file to the beernews_vercel repo
+# Rename it to: .github/workflows/scrape.yml
+#
+# This workflow runs entirely in the beernews_vercel repo (where Vercel is connected)
+# It pulls the scraper code from beernews, runs it, and commits data to beernews_vercel
+
 name: Scrape Beer Updates
 
 on:
@@ -16,13 +22,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repo
+    - name: Checkout vercel repo (current repo)
       uses: actions/checkout@v4
       with:
-        # Persist credentials so we can push
         persist-credentials: true
-        # Fetch full history
         fetch-depth: 0
+        
+    - name: Checkout beernews repo (for scraper code)
+      uses: actions/checkout@v4
+      with:
+        repository: cshoesmith/beernews
+        path: beernews_code
       
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -31,16 +41,18 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-        pip install -r requirements-scraper.txt
+        pip install -r beernews_code/requirements.txt
+        pip install -r beernews_code/requirements-scraper.txt
       
     - name: Run scraper
       env:
-        # Add API keys as GitHub secrets for production use
         APIFY_API_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
         INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-      run: python scripts/scraper.py
-      
+      run: |
+        # Copy scripts to run them
+        cp -r beernews_code/scripts .
+        python scripts/scraper.py
+        
     - name: Check for changes
       id: git-check
       run: |
@@ -48,15 +60,10 @@ jobs:
         
     - name: Commit and push if changed
       if: steps.git-check.outputs.changed == 'true'
-      env:
-        # Use PAT to push to Vercel-connected repo
-        # Add PAT to GitHub Secrets as VERCEL_REPO_PAT
-        PAT: ${{ secrets.VERCEL_REPO_PAT }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add data/
         git commit -m "Update beer data - $(date -u '+%Y-%m-%d %H:%M UTC')"
-        # Push to the repo that Vercel is connected to
-        git remote set-url origin https://x-access-token:${PAT}@github.com/cshoesmith/beernews_vercel.git
         git push
+        echo "Changes pushed. Vercel will auto-deploy."
