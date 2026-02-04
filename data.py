@@ -901,7 +901,8 @@ def load_dynamic_data():
                     content=post_data["content"],
                     posted_at=posted_at,
                     mentions_beers=post_data.get("mentions_beers", []),
-                    post_url=post_data.get("post_url")
+                    post_url=post_data.get("post_url"),
+                    beer_details=post_data.get("beer_details")
                 ))
             except Exception as e:
                 print(f"Error loading post: {e}")
@@ -911,6 +912,25 @@ def load_dynamic_data():
     except Exception as e:
         print(f"Error loading dynamic data: {e}")
         return [], []
+
+# Load beer details cache from Untappd scraping
+def load_beer_details() -> Dict:
+    """Load rich beer details from Untappd scraping."""
+    beer_details_file = Path(__file__).parent / "data" / "beer_details.json"
+    if beer_details_file.exists():
+        try:
+            with open(beer_details_file) as f:
+                return json.load(f)
+        except:
+            pass
+    return {}
+
+# Create lookup by beer name for quick access
+_BEER_DETAILS_CACHE = load_beer_details()
+BEER_DETAILS_BY_NAME: Dict[str, Dict] = {}
+for url, details in _BEER_DETAILS_CACHE.items():
+    if details.get('name'):
+        BEER_DETAILS_BY_NAME[details['name'].lower()] = details
 
 # Merge dynamic data
 _DYNAMIC_BEERS, _DYNAMIC_POSTS = load_dynamic_data()
@@ -927,4 +947,4 @@ for post in _DYNAMIC_POSTS:
     if post.id not in _existing_post_ids:
         SYDNEY_POSTS.append(post)
 
-print(f"[Data] Loaded {len(_DYNAMIC_BEERS)} dynamic beers, {len(_DYNAMIC_POSTS)} dynamic posts")
+print(f"[Data] Loaded {len(_DYNAMIC_BEERS)} dynamic beers, {len(_DYNAMIC_POSTS)} dynamic posts, {len(BEER_DETAILS_BY_NAME)} beer details")

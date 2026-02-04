@@ -23,7 +23,7 @@ import hashlib
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urljoin
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 
 # Third-party imports
 try:
@@ -434,13 +434,86 @@ def find_untappd_venue_id(venue_name: str, venue_address: str = "") -> Optional[
         return None
 
 
-def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str) -> List[Dict]:
-    """Scrape Untappd checkins for a venue.
+def scrape_untappd_beer_details(beer_url: str) -> Dict:
+    """Scrape detailed beer information from Untappd beer page.
     
-    Untappd shows recent checkins which indicates what beers are currently being poured.
-    Example: https://untappd.com/v/hotel-sweeneys/107565
+    Returns: dict with name, brewery, style, abv, ibu, description, label_url
+    """
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        }
+        
+        resp = requests.get(beer_url, headers=headers, timeout=15)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        beer_data = {
+            'name': '',
+            'brewery': '',
+            'style': '',
+            'abv': None,
+            'ibu': None,
+            'description': '',
+            'label_url': '',
+            'untappd_url': beer_url
+        }
+        
+        # Extract beer name
+        name_elem = soup.find('h1', class_='name') or soup.find('h1')
+        if name_elem:
+            beer_data['name'] = name_elem.get_text().strip()
+        
+        # Extract brewery
+        brewery_elem = soup.find('p', class_='brewery') or soup.find('a', href=re.compile(r'/brewery/'))
+        if brewery_elem:
+            beer_data['brewery'] = brewery_elem.get_text().strip()
+        
+        # Extract style
+        style_elem = soup.find('p', class_='style') or soup.find('span', class_='style')
+        if style_elem:
+            beer_data['style'] = style_elem.get_text().strip()
+        
+        # Extract ABV and IBU from details section
+        details = soup.find('div', class_='details') or soup.find('div', class_='beer-details')
+        if details:
+            details_text = details.get_text()
+            
+            # ABV pattern
+            abv_match = re.search(r'(\d+\.?\d*)%?\s*ABV', details_text, re.IGNORECASE)
+            if abv_match:
+                beer_data['abv'] = float(abv_match.group(1))
+            
+            # IBU pattern
+            ibu_match = re.search(r'(\d+)\s*IBU', details_text, re.IGNORECASE)
+            if ibu_match:
+                beer_data['ibu'] = int(ibu_match.group(1))
+        
+        # Extract description
+        desc_elem = soup.find('div', class_='beer-desc') or soup.find('div', class_='description')
+        if desc_elem:
+            beer_data['description'] = desc_elem.get_text().strip()[:500]
+        
+        # Extract label image
+        label_elem = soup.find('img', class_='label') or soup.find('img', class_='beer-label')
+        if label_elem:
+            beer_data['label_url'] = label_elem.get('src', '')
+        
+        return beer_data
+        
+    except Exception as e:
+        print(f"    Error scraping beer details: {e}")
+        return {}
+
+
+def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str, beer_cache: Dict = None) -> Tuple[List[Dict], Dict]:
+    """Scrape Untappd checkins for a venue with rich beer details.
+    
+    Returns: (posts, updated_beer_cache)
     """
     posts = []
+    if beer_cache is None:
+        beer_cache = {}
+    
     metrics = get_metrics()
     source_name = f"untappd-{venue_id}"
     
@@ -457,55 +530,101 @@ def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str) -> List[Dict]:
         resp = requests.get(url, headers=headers, timeout=15)
         soup = BeautifulSoup(resp.text, 'html.parser')
         
-        # Find checkin items - Untappd uses .item class for checkins
-        checkins = soup.find_all('div', class_='item')[:10]  # Get last 10 checkins
+        # Find checkin items
+        checkins = soup.find_all('div', class_='item')[:15]  # Get last 15 checkins
         
         for checkin in checkins:
             try:
-                # Extract beer name
-                beer_elem = checkin.find('p', class_='text') or checkin.find('a', class_='track-click')
+                # Extract beer link and name
+                beer_link_elem = checkin.find('a', href=re.compile(r'/b/'))
+                beer_elem = checkin.find('p', class_='text') or beer_link_elem
+                
                 if not beer_elem:
                     continue
-                    
+                
                 beer_text = beer_elem.get_text().strip()
+                beer_url = None
+                
+                if beer_link_elem:
+                    beer_url = 'https://untappd.com' + beer_link_elem.get('href', '')
+                
+                # Parse beer name and brewery from text (format: "Beer Name by Brewery Name")
+                beer_name = beer_text
+                brewery_name = ""
+                if ' by ' in beer_text:
+                    parts = beer_text.split(' by ', 1)
+                    beer_name = parts[0].strip()
+                    brewery_name = parts[1].strip()
+                
+                # Get rich beer details if we have a URL
+                beer_details = {}
+                if beer_url and beer_url not in beer_cache:
+                    print(f"    Fetching details for: {beer_name}")
+                    beer_details = scrape_untappd_beer_details(beer_url)
+                    if beer_details:
+                        beer_cache[beer_url] = beer_details
+                elif beer_url and beer_url in beer_cache:
+                    beer_details = beer_cache[beer_url]
                 
                 # Extract user name
                 user_elem = checkin.find('a', class_='user')
                 user_name = user_elem.get_text().strip() if user_elem else "Someone"
                 
-                # Extract time (usually in a span with class 'time' or similar)
+                # Extract time
                 time_elem = checkin.find('span', class_='time') or checkin.find('span', class_='created_at')
                 time_text = time_elem.get_text().strip() if time_elem else "recently"
                 
-                # Extract rating if available
+                # Extract rating
                 rating_elem = checkin.find('span', class_='rating')
                 rating = rating_elem.get_text().strip() if rating_elem else None
                 
-                # Build content
-                content = f"🍺 {user_name} is drinking {beer_text} at this venue ({time_text})"
+                # Build enriched content
+                content = f"🍺 {user_name} is drinking {beer_name}"
+                if brewery_name:
+                    content += f" by {brewery_name}"
+                content += f" ({time_text})"
                 if rating:
                     content += f" - Rated {rating}"
                 
-                posts.append({
+                # Add style and ABV if available
+                if beer_details.get('style'):
+                    content += f"\n📋 {beer_details['style']}"
+                    if beer_details.get('abv'):
+                        content += f" | {beer_details['abv']}% ABV"
+                
+                post = {
                     "venue_id": venue_id,
                     "platform": "untappd",
                     "content": content,
                     "post_url": url,
                     "scraped_at": datetime.now().isoformat(),
-                    "mentions_beers": [beer_text.split(' by ')[0]] if ' by ' in beer_text else [beer_text]
-                })
+                    "mentions_beers": [beer_name],
+                    "beer_details": {
+                        "name": beer_name,
+                        "brewery": brewery_name or beer_details.get('brewery', ''),
+                        "style": beer_details.get('style', ''),
+                        "abv": beer_details.get('abv'),
+                        "ibu": beer_details.get('ibu'),
+                        "description": beer_details.get('description', ''),
+                        "label_url": beer_details.get('label_url', ''),
+                        "untappd_url": beer_url
+                    }
+                }
+                
+                posts.append(post)
                 
             except Exception as e:
-                continue  # Skip problematic checkins
+                continue
         
         metrics.record_source_success(source_name, len(posts))
+        print(f"  Untappd/{venue_id}: Found {len(posts)} checkins, cached {len(beer_cache)} unique beers")
         
     except Exception as e:
         error_msg = str(e)
         metrics.record_source_error(source_name, error_msg)
         print(f"  Untappd error: {error_msg}")
     
-    return posts
+    return posts, beer_cache
 
 # ==================== RSS FEED SCRAPERS ====================
 
@@ -707,13 +826,23 @@ def main():
     # 5. Untappd checkins (real-time beer activity)
     print("Scraping Untappd checkins...")
     
-    # Cache for discovered Untappd IDs
+    # Cache for discovered Untappd IDs and beer details
     untappd_cache_file = CACHE_FILE.parent / "untappd_venues.json"
+    beer_details_file = DATA_FILE.parent / "beer_details.json"
     untappd_cache = {}
+    beer_cache = {}
+    
     if untappd_cache_file.exists():
         try:
             with open(untappd_cache_file) as f:
                 untappd_cache = json.load(f)
+        except:
+            pass
+    
+    if beer_details_file.exists():
+        try:
+            with open(beer_details_file) as f:
+                beer_cache = json.load(f)
         except:
             pass
     
@@ -732,11 +861,16 @@ def main():
         
         if untappd_id:
             try:
-                posts = scrape_untappd_checkins(venue.id, untappd_id)
+                posts, beer_cache = scrape_untappd_checkins(venue.id, untappd_id, beer_cache)
                 all_posts.extend(posts)
-                print(f"  Untappd/{venue.id}: Found {len(posts)} checkins")
             except Exception as e:
                 print(f"  Untappd/{venue.id}: Error - {e}")
+    
+    # Save beer details cache
+    if beer_cache:
+        with open(beer_details_file, 'w') as f:
+            json.dump(beer_cache, f, indent=2, default=str)
+        print(f"  Saved {len(beer_cache)} unique beer details")
     
     print()
     

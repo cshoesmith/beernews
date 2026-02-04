@@ -35,6 +35,7 @@ class SocialPost(BaseModel):
     mentions_beers: List[str] = []  # beer IDs mentioned
     image_url: Optional[str] = None
     post_url: Optional[str] = None
+    beer_details: Optional[Dict] = None  # Rich beer info from Untappd (name, style, abv, label_url, etc.)
 
 
 class UserPreference(BaseModel):
