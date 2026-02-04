@@ -49,13 +49,14 @@ jobs:
     - name: Commit and push if changed
       if: steps.git-check.outputs.changed == 'true'
       env:
-        # Use the built-in GITHUB_TOKEN for authentication
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Use PAT to push to Vercel-connected repo
+        # Add PAT to GitHub Secrets as VERCEL_REPO_PAT
+        PAT: ${{ secrets.VERCEL_REPO_PAT }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add data/
         git commit -m "Update beer data - $(date -u '+%Y-%m-%d %H:%M UTC')"
         # Push to the repo that Vercel is connected to
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/cshoesmith/beernews_vercel.git
+        git remote set-url origin https://x-access-token:${PAT}@github.com/cshoesmith/beernews_vercel.git
         git push
