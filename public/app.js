@@ -467,23 +467,32 @@ async function loadMetrics() {
             </div>
         `;
         
-        // Individual sources
+        // Individual sources - show all, sorted by items found (most productive first)
         if (data.sources && Object.keys(data.sources).length > 0) {
-            for (const [sourceName, sourceData] of Object.entries(data.sources).slice(0, 6)) {
+            const sortedSources = Object.entries(data.sources)
+                .sort((a, b) => b[1].items_found - a[1].items_found);
+            
+            html += `<div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--nyt-border); padding: 12px; margin-bottom: 16px;">`;
+            
+            for (const [sourceName, sourceData] of sortedSources) {
                 const statusIcon = sourceData.status === 'active' ? '●' : sourceData.status === 'struggling' ? '▲' : '○';
                 const statusColor = sourceData.status === 'active' ? '#2ea44f' : sourceData.status === 'struggling' ? '#f59e0b' : '#999';
                 
                 html += `
-                    <div class="metric-source">
-                        <div class="metric-name" style="color: ${statusColor}">${statusIcon} ${sourceName}</div>
-                        <div class="metric-tech">${sourceData.technique}</div>
-                        <div class="metric-stats">
-                            <span class="metric-success">${sourceData.success_rate}%</span>
-                            <span class="metric-items">${sourceData.items_found} items</span>
+                    <div class="metric-source" style="padding: 10px 0; border-bottom: 1px dotted var(--nyt-border);">
+                        <div class="metric-name" style="color: ${statusColor}; font-weight: 600;">${statusIcon} ${sourceName}</div>
+                        <div class="metric-tech">${sourceData.technique} | ${sourceData.attempts || 0} attempts</div>
+                        <div class="metric-stats" style="margin-top: 4px;">
+                            <span class="metric-success" style="color: ${sourceData.success_rate >= 50 ? '#2ea44f' : '#f59e0b'}; font-weight: 600;">${sourceData.success_rate}% success</span>
+                            <span class="metric-items" style="margin-left: 12px; color: var(--nyt-gray);">${sourceData.items_found} items found</span>
                         </div>
+                        ${sourceData.note ? `<div style="font-size: 0.75rem; color: var(--nyt-light-gray); margin-top: 4px;">${sourceData.note}</div>` : ''}
                     </div>
                 `;
             }
+            
+            html += `</div>`;
+            html += `<p style="font-size: 0.8rem; color: var(--nyt-gray); text-align: center;">Showing ${sortedSources.length} data sources</p>`;
         } else {
             html += '<p style="font-size: 0.85rem; color: #666;">No metrics data yet.</p>';
         }
