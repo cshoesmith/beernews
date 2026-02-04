@@ -22,6 +22,7 @@ class Venue(BaseModel):
     suburb: str
     location: tuple  # (lat, lng)
     instagram_handle: Optional[str] = None
+    untappd_id: Optional[str] = None  # Untappd venue ID for checkin scraping
     tags: List[str] = []
 
 

@@ -370,6 +370,81 @@ def scrape_instagram_instaloader(handle: str) -> List[Dict]:
     
     return posts
 
+# ==================== UNTAPPD SCRAPER ====================
+
+def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str) -> List[Dict]:
+    """Scrape Untappd checkins for a venue.
+    
+    Untappd shows recent checkins which indicates what beers are currently being poured.
+    Example: https://untappd.com/v/hotel-sweeneys/107565
+    """
+    posts = []
+    metrics = get_metrics()
+    source_name = f"untappd-{venue_id}"
+    
+    metrics.record_source_attempt(source_name, "untappd-checkins")
+    
+    try:
+        url = f"https://untappd.com/v/{venue_id}/{untappd_venue_id}"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+        }
+        
+        resp = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        # Find checkin items - Untappd uses .item class for checkins
+        checkins = soup.find_all('div', class_='item')[:10]  # Get last 10 checkins
+        
+        for checkin in checkins:
+            try:
+                # Extract beer name
+                beer_elem = checkin.find('p', class_='text') or checkin.find('a', class_='track-click')
+                if not beer_elem:
+                    continue
+                    
+                beer_text = beer_elem.get_text().strip()
+                
+                # Extract user name
+                user_elem = checkin.find('a', class_='user')
+                user_name = user_elem.get_text().strip() if user_elem else "Someone"
+                
+                # Extract time (usually in a span with class 'time' or similar)
+                time_elem = checkin.find('span', class_='time') or checkin.find('span', class_='created_at')
+                time_text = time_elem.get_text().strip() if time_elem else "recently"
+                
+                # Extract rating if available
+                rating_elem = checkin.find('span', class_='rating')
+                rating = rating_elem.get_text().strip() if rating_elem else None
+                
+                # Build content
+                content = f"🍺 {user_name} is drinking {beer_text} at this venue ({time_text})"
+                if rating:
+                    content += f" - Rated {rating}"
+                
+                posts.append({
+                    "venue_id": venue_id,
+                    "platform": "untappd",
+                    "content": content,
+                    "post_url": url,
+                    "scraped_at": datetime.now().isoformat(),
+                    "mentions_beers": [beer_text.split(' by ')[0]] if ' by ' in beer_text else [beer_text]
+                })
+                
+            except Exception as e:
+                continue  # Skip problematic checkins
+        
+        metrics.record_source_success(source_name, len(posts))
+        
+    except Exception as e:
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  Untappd error: {error_msg}")
+    
+    return posts
+
 # ==================== RSS FEED SCRAPERS ====================
 
 def scrape_rss_feeds() -> List[Dict]:
@@ -567,7 +642,20 @@ def main():
     
     print()
     
-    # 5. RSS feeds
+    # 5. Untappd checkins (real-time beer activity)
+    print("Scraping Untappd checkins...")
+    for venue in SYDNEY_VENUES:
+        if venue.untappd_id:
+            try:
+                posts = scrape_untappd_checkins(venue.id, venue.untappd_id)
+                all_posts.extend(posts)
+                print(f"  Untappd/{venue.id}: Found {len(posts)} checkins")
+            except Exception as e:
+                print(f"  Untappd/{venue.id}: Error - {e}")
+    
+    print()
+    
+    # 6. RSS feeds
     print("Scraping RSS feeds...")
     rss_posts = scrape_rss_feeds()
     all_posts.extend(rss_posts)

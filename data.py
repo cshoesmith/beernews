@@ -185,6 +185,7 @@ SYDNEY_VENUES = [
         suburb="Sydney CBD",
         location=(-33.8688, 151.2053),
         instagram_handle="@hotelsweeneys",
+        untappd_id="107565",  # https://untappd.com/v/hotel-sweeneys/107565
         tags=["pub", "craft-beer", "live-music", "rooftop"]
     ),
     # MORE BARS
