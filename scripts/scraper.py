@@ -372,6 +372,68 @@ def scrape_instagram_instaloader(handle: str) -> List[Dict]:
 
 # ==================== UNTAPPD SCRAPER ====================
 
+def find_untappd_venue_id(venue_name: str, venue_address: str = "") -> Optional[str]:
+    """Search Untappd for a venue and return its ID if found near Sydney.
+    
+    Example search: https://untappd.com/search?q=hotel+sweeneys&type=venues
+    """
+    try:
+        # Build search URL
+        search_query = venue_name.replace(' ', '+')
+        url = f"https://untappd.com/search?q={search_query}&type=venues"
+        
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        }
+        
+        print(f"  Searching Untappd for: {venue_name}")
+        resp = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        # Find venue results - they typically have class 'beer-item' or similar
+        results = soup.find_all('div', class_='beer-item') or soup.find_all('div', class_='venue-item')
+        
+        sydney_keywords = ['sydney', 'nsw', 'new south wales', 'marrickville', 'newtown', 
+                          'alexandria', 'camperdown', 'enmore', 'surry hills', 'crows nest',
+                          'rozelle', 'broookvale', 'petersham', 'woolloomooloo']
+        
+        for result in results[:5]:  # Check top 5 results
+            # Extract venue name and address
+            name_elem = result.find('a', class_='name') or result.find('h3') or result.find('a')
+            addr_elem = result.find('p', class_='address') or result.find('span', class_='location')
+            
+            if not name_elem:
+                continue
+                
+            result_name = name_elem.get_text().strip()
+            result_addr = addr_elem.get_text().strip() if addr_elem else ""
+            
+            # Check if result is in Sydney area
+            is_sydney = any(kw in result_addr.lower() for kw in sydney_keywords)
+            
+            # Also check if venue name is similar
+            name_match = venue_name.lower() in result_name.lower() or result_name.lower() in venue_name.lower()
+            
+            if is_sydney or name_match:
+                # Extract venue ID from URL
+                link = name_elem.get('href', '')
+                if link:
+                    # URL format: /v/venue-name/123456
+                    parts = link.rstrip('/').split('/')
+                    if len(parts) >= 2 and parts[-1].isdigit():
+                        venue_id = parts[-1]
+                        print(f"    Found: {result_name} ({result_addr}) - ID: {venue_id}")
+                        return venue_id
+        
+        print(f"    No matching Sydney venue found for: {venue_name}")
+        return None
+        
+    except Exception as e:
+        print(f"    Error searching Untappd: {e}")
+        return None
+
+
 def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str) -> List[Dict]:
     """Scrape Untappd checkins for a venue.
     
@@ -644,10 +706,33 @@ def main():
     
     # 5. Untappd checkins (real-time beer activity)
     print("Scraping Untappd checkins...")
+    
+    # Cache for discovered Untappd IDs
+    untappd_cache_file = CACHE_FILE.parent / "untappd_venues.json"
+    untappd_cache = {}
+    if untappd_cache_file.exists():
+        try:
+            with open(untappd_cache_file) as f:
+                untappd_cache = json.load(f)
+        except:
+            pass
+    
     for venue in SYDNEY_VENUES:
-        if venue.untappd_id:
+        untappd_id = venue.untappd_id or untappd_cache.get(venue.id)
+        
+        # Auto-discover if not cached
+        if not untappd_id:
+            print(f"  Auto-discovering Untappd ID for {venue.name}...")
+            untappd_id = find_untappd_venue_id(venue.name, venue.address)
+            if untappd_id:
+                untappd_cache[venue.id] = untappd_id
+                # Save cache
+                with open(untappd_cache_file, 'w') as f:
+                    json.dump(untappd_cache, f, indent=2)
+        
+        if untappd_id:
             try:
-                posts = scrape_untappd_checkins(venue.id, venue.untappd_id)
+                posts = scrape_untappd_checkins(venue.id, untappd_id)
                 all_posts.extend(posts)
                 print(f"  Untappd/{venue.id}: Found {len(posts)} checkins")
             except Exception as e:
