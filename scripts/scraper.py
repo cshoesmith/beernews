@@ -542,19 +542,33 @@ def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str, beer_cache: Di
                 if not beer_elem:
                     continue
                 
-                beer_text = beer_elem.get_text().strip()
+                raw_text = beer_elem.get_text().strip()
                 beer_url = None
                 
                 if beer_link_elem:
                     beer_url = 'https://untappd.com' + beer_link_elem.get('href', '')
                 
-                # Parse beer name and brewery from text (format: "Beer Name by Brewery Name")
-                beer_name = beer_text
+                # Parse checkin text - Untappd format: "Username is drinking Beer Name by Brewery Name"
+                # or just "Beer Name by Brewery Name" depending on the element
+                beer_text = raw_text
+                beer_name = raw_text
                 brewery_name = ""
+                
+                # Remove the "is drinking" prefix if present (e.g., "X is drinking Y by Z")
+                if ' is drinking ' in raw_text:
+                    parts = raw_text.split(' is drinking ', 1)
+                    beer_text = parts[1].strip()
+                elif ' was drinking ' in raw_text:
+                    parts = raw_text.split(' was drinking ', 1)
+                    beer_text = parts[1].strip()
+                
+                # Now parse "Beer Name by Brewery Name"
                 if ' by ' in beer_text:
                     parts = beer_text.split(' by ', 1)
                     beer_name = parts[0].strip()
                     brewery_name = parts[1].strip()
+                else:
+                    beer_name = beer_text
                 
                 # Get rich beer details if we have a URL
                 beer_details = {}
@@ -582,9 +596,8 @@ def scrape_untappd_checkins(venue_id: str, untappd_venue_id: str, beer_cache: Di
                 content = f"🍺 {user_name} is drinking {beer_name}"
                 if brewery_name:
                     content += f" by {brewery_name}"
-                content += f" ({time_text})"
                 if rating:
-                    content += f" - Rated {rating}"
+                    content += f" — Rated {rating}"
                 
                 # Add style and ABV if available
                 if beer_details.get('style'):
