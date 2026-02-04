@@ -2,23 +2,19 @@
   "sources": {
     "mountain-culture-website": {
       "technique": "website-beautifulsoup",
-      "attempts": 17,
-      "successes": 17,
-      "items_found": 17,
+      "attempts": 18,
+      "successes": 18,
+      "items_found": 18,
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-03T18:14:56.833211"
+      "last_attempt": "2026-02-04T00:10:41.516540"
     },
     "batch-brewing-website": {
       "technique": "website-beautifulsoup",
-      "attempts": 17,
+      "attempts": 18,
       "successes": 0,
       "items_found": 0,
       "errors": [
-        {
-          "time": "2026-02-01T12:03:10.464041",
-          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
-        },
         {
           "time": "2026-02-01T18:03:51.665011",
           "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
@@ -54,37 +50,41 @@
         {
           "time": "2026-02-03T18:14:56.833175",
           "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
+        },
+        {
+          "time": "2026-02-04T00:10:41.516497",
+          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
         }
       ],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-03T18:14:56.814979"
+      "last_attempt": "2026-02-04T00:10:41.293561"
     },
     "4-pines-website": {
       "technique": "website-generic",
-      "attempts": 17,
-      "successes": 17,
+      "attempts": 18,
+      "successes": 18,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-03T18:14:57.221233"
+      "last_attempt": "2026-02-04T00:10:41.718906"
     },
     "white-bay-website": {
       "technique": "website-generic",
+      "attempts": 18,
+      "successes": 18,
+      "items_found": 0,
+      "errors": [],
+      "first_seen": "2026-01-31T00:00:00",
+      "last_attempt": "2026-02-04T00:10:42.616863"
+    },
+    "instagram-younghenrys": {
+      "technique": "instagram-apify",
       "attempts": 17,
       "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-03T18:14:58.450538"
-    },
-    "instagram-younghenrys": {
-      "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
-      "items_found": 0,
-      "errors": [],
-      "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-03T18:14:59.539966",
+      "last_attempt": "2026-02-04T00:10:44.752904",
       "note": "Requires APIFY_API_TOKEN"
     },
     "instagram-batchbrewing": {
@@ -109,210 +109,210 @@
     },
     "instagram-batchbrewingcompany": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:07.930926",
-      "last_attempt": "2026-02-03T18:15:02.737503"
+      "last_attempt": "2026-02-04T00:10:47.935345"
     },
     "instagram-waywardbrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:09.899437",
-      "last_attempt": "2026-02-03T18:15:05.592020"
+      "last_attempt": "2026-02-04T00:10:49.997255"
     },
     "instagram-grifterbrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:12.224020",
-      "last_attempt": "2026-02-03T18:15:08.335406"
+      "last_attempt": "2026-02-04T00:10:52.223403"
     },
     "instagram-therocksbrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:14.095207",
-      "last_attempt": "2026-02-03T18:15:11.130162"
+      "last_attempt": "2026-02-04T00:10:54.680933"
     },
     "instagram-bracketbrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:16.090706",
-      "last_attempt": "2026-02-03T18:15:13.440007"
+      "last_attempt": "2026-02-04T00:10:56.774939"
     },
     "instagram-futurebrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:17.950477",
-      "last_attempt": "2026-02-03T18:15:16.029537"
+      "last_attempt": "2026-02-04T00:10:58.993985"
     },
     "instagram-rangebrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:19.796576",
-      "last_attempt": "2026-02-03T18:15:18.524320"
+      "last_attempt": "2026-02-04T00:11:02.468693"
     },
     "instagram-mountainculturebeerco": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:21.933131",
-      "last_attempt": "2026-02-03T18:15:21.792425"
+      "last_attempt": "2026-02-04T00:11:04.650499"
     },
     "instagram-kicksbrewing": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:24.106081",
-      "last_attempt": "2026-02-03T18:15:24.422977"
+      "last_attempt": "2026-02-04T00:11:06.909799"
     },
     "instagram-4pinesbeer": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:26.827857",
-      "last_attempt": "2026-02-03T18:15:26.493490"
+      "last_attempt": "2026-02-04T00:11:09.029045"
     },
     "instagram-whitebaybeerco": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:28.770973",
-      "last_attempt": "2026-02-03T18:15:29.194777"
+      "last_attempt": "2026-02-04T00:11:11.487071"
     },
     "instagram-bloodorangeliquorbar": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:30.510556",
-      "last_attempt": "2026-02-03T18:15:31.448504"
+      "last_attempt": "2026-02-04T00:11:14.086063"
     },
     "instagram-thetilbury": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:32.577559",
-      "last_attempt": "2026-02-03T18:15:33.503959"
+      "last_attempt": "2026-02-04T00:11:16.063107"
     },
     "instagram-dulciesdoveclub": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:34.726757",
-      "last_attempt": "2026-02-03T18:15:35.882930"
+      "last_attempt": "2026-02-04T00:11:18.218073"
     },
     "instagram-basketballliquor": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:36.658627",
-      "last_attempt": "2026-02-03T18:15:38.187919"
+      "last_attempt": "2026-02-04T00:11:21.212589"
     },
     "instagram-tivabarsyd": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:38.464604",
-      "last_attempt": "2026-02-03T18:15:41.802413"
+      "last_attempt": "2026-02-04T00:11:23.691218"
     },
     "instagram-hotelsweeneys": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:40.360290",
-      "last_attempt": "2026-02-03T18:15:44.065262"
+      "last_attempt": "2026-02-04T00:11:25.630807"
     },
     "instagram-jbandsons": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:42.275389",
-      "last_attempt": "2026-02-03T18:15:46.152873"
+      "last_attempt": "2026-02-04T00:11:27.501691"
     },
     "instagram-noblehopsbar": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:43.926104",
-      "last_attempt": "2026-02-03T18:15:50.920825"
+      "last_attempt": "2026-02-04T00:11:31.803591"
     },
     "instagram-theunionhotelnewtown": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:45.891308",
-      "last_attempt": "2026-02-03T18:15:53.047453"
+      "last_attempt": "2026-02-04T00:11:34.049899"
     },
     "instagram-bitterphew": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:47.763265",
-      "last_attempt": "2026-02-03T18:15:55.364939"
+      "last_attempt": "2026-02-04T00:11:36.220738"
     },
     "instagram-hartspub": {
       "technique": "instagram-apify",
-      "attempts": 16,
-      "successes": 16,
+      "attempts": 17,
+      "successes": 17,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T13:47:50.067969",
-      "last_attempt": "2026-02-03T18:15:57.536662"
+      "last_attempt": "2026-02-04T00:11:38.084894"
     },
     "instagram-jbandsonsmanly": {
       "technique": "instagram-apify",
-      "attempts": 12,
-      "successes": 12,
+      "attempts": 13,
+      "successes": 13,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-01T03:27:37.569024",
-      "last_attempt": "2026-02-03T18:15:48.905480"
+      "last_attempt": "2026-02-04T00:11:29.640298"
     }
   },
   "runs": [
@@ -2646,6 +2646,153 @@
         }
       },
       "ended_at": "2026-02-03T18:16:12.299892",
+      "total_items": 1
+    },
+    {
+      "started_at": "2026-02-04T00:10:41.293508",
+      "sources": {
+        "batch-brewing-website": {
+          "success": false,
+          "items": 0,
+          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
+        },
+        "mountain-culture-website": {
+          "success": true,
+          "items": 1,
+          "error": null
+        },
+        "4-pines-website": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "white-bay-website": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-younghenrys": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-batchbrewingcompany": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-waywardbrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-grifterbrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-therocksbrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-bracketbrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-futurebrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-rangebrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-mountainculturebeerco": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-kicksbrewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-4pinesbeer": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-whitebaybeerco": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-bloodorangeliquorbar": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-thetilbury": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-dulciesdoveclub": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-basketballliquor": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-tivabarsyd": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-hotelsweeneys": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-jbandsons": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-jbandsonsmanly": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-noblehopsbar": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-theunionhotelnewtown": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-bitterphew": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "instagram-hartspub": {
+          "success": true,
+          "items": 0,
+          "error": null
+        }
+      },
+      "ended_at": "2026-02-04T00:11:52.811563",
       "total_items": 1
     }
   ],
