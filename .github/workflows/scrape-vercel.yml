@@ -1,9 +1,3 @@
-# INSTRUCTIONS: Move this file to the beernews_vercel repo
-# Rename it to: .github/workflows/scrape.yml
-#
-# This workflow runs entirely in the beernews_vercel repo (where Vercel is connected)
-# It pulls the scraper code from beernews, runs it, and commits data to beernews_vercel
-
 name: Scrape Beer Updates
 
 on:
