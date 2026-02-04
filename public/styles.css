@@ -1,16 +1,19 @@
+/* ============================================
+   THE SYDNEY BEER HERALD
+   NYTimes-inspired Editorial Design
+   ============================================ */
+
 :root {
-  --primary: #f59e0b;
-  --primary-dark: #d97706;
-  --secondary: #1f2937;
-  --bg: #f9fafb;
-  --card-bg: #ffffff;
-  --text: #1f2937;
-  --text-light: #6b7280;
-  --border: #e5e7eb;
-  --success: #10b981;
-  --radius: 12px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --nyt-black: #121212;
+  --nyt-dark-gray: #333;
+  --nyt-gray: #666;
+  --nyt-light-gray: #999;
+  --nyt-border: #e2e2e2;
+  --nyt-bg: #fff;
+  --nyt-section-red: #a81817;
+  --nyt-blue: #326891;
+  --nyt-link: #326891;
+  --nyt-link-hover: #0056b3;
 }
 
 * {
@@ -24,461 +27,913 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--nyt-bg);
+  color: var(--nyt-black);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
-  max-width: 900px;
+/* ============================================
+   TOP NAVIGATION
+   ============================================ */
+
+.top-nav {
+  background: var(--nyt-bg);
+  border-bottom: 1px solid var(--nyt-border);
+  padding: 8px 0;
+}
+
+.nav-container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-}
-
-/* ===== HEADER ===== */
-header {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  color: var(--text-light);
-  font-size: 1.1rem;
-}
-
-/* ===== LAST UPDATED ===== */
-.last-updated {
-  text-align: center;
-  padding: 8px 16px;
-  background: #f3f4f6;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  color: var(--text-light);
-  margin-bottom: 16px;
-  display: inline-block;
-  margin-left: 50%;
-  transform: translateX(-50%);
-}
-
-/* ===== METRICS BUTTON & PANEL ===== */
-#metrics-toggle {
-  margin-bottom: 16px;
-  width: auto;
-  padding: 10px 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.metrics-panel {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow);
-}
-
-.metrics-panel.hidden {
-  display: none;
-}
-
-.metrics-panel h3 {
-  margin-bottom: 16px;
-  font-size: 1.1rem;
-}
-
-.metric-source {
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: var(--bg);
-  border-radius: 8px;
-  margin-bottom: 8px;
 }
 
-.metric-source.active {
-  border-left: 4px solid var(--success);
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.metric-source.struggling {
-  border-left: 4px solid #f59e0b;
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
 }
 
-.metric-source.new {
-  border-left: 4px solid var(--text-light);
-}
-
-.metric-name {
-  font-weight: 500;
-}
-
-.metric-tech {
-  font-size: 0.75rem;
-  color: var(--text-light);
-}
-
-.metric-stats {
-  text-align: right;
-}
-
-.metric-success {
-  font-weight: 600;
-  color: var(--success);
-}
-
-.metric-items {
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-/* ===== STATS BAR (DESKTOP) ===== */
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 30px;
-}
-
-.stat {
-  background: var(--card-bg);
-  padding: 20px;
-  border-radius: var(--radius);
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-
-.stat-value {
+.menu-btn span {
   display: block;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--primary-dark);
+  width: 20px;
+  height: 2px;
+  background: var(--nyt-black);
 }
 
-.stat-label {
-  font-size: 0.875rem;
-  color: var(--text-light);
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-link {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--nyt-black);
+  text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* ===== FILTERS ===== */
-.filters {
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-right {
   display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-subscribe {
+  background: var(--nyt-section-red);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+.btn-subscribe:hover {
+  background: #8a1412;
+}
+
+.btn-login {
+  background: none;
+  border: 1px solid var(--nyt-black);
+  padding: 8px 16px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-login:hover {
+  background: var(--nyt-black);
+  color: white;
+}
+
+/* ============================================
+   DATE BAR
+   ============================================ */
+
+.date-bar {
+  background: var(--nyt-bg);
+  border-bottom: 1px solid var(--nyt-border);
+  padding: 8px 0;
+}
+
+.date-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--nyt-gray);
+}
+
+.paper-edition {
+  color: var(--nyt-black);
+  font-weight: 500;
+}
+
+.paper-edition:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ============================================
+   MASTHEAD
+   ============================================ */
+
+.masthead {
+  background: var(--nyt-bg);
+  padding: 20px 0 0;
+  text-align: center;
+}
+
+.masthead-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.masthead-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.weather-widget {
+  text-align: left;
+  font-size: 0.75rem;
+  color: var(--nyt-gray);
+}
+
+.weather-location {
+  font-weight: 600;
+  color: var(--nyt-black);
+}
+
+.weather-temp {
+  margin: 0 4px;
+}
+
+.masthead-logo h1 {
+  font-family: 'Chomsky', 'UnifrakturMaguntia', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.stock-ticker {
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--nyt-gray);
+}
+
+.stock-up {
+  color: #2ea44f;
+}
+
+.stock-down {
+  color: #cf222e;
+}
+
+/* Sections Navigation */
+.sections-nav {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 12px 0;
+  border-top: 1px solid var(--nyt-border);
+  border-bottom: 2px solid var(--nyt-black);
   flex-wrap: wrap;
 }
 
+.section-link {
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--nyt-black);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.section-link:hover,
+.section-link.active {
+  border-bottom-color: var(--nyt-black);
+}
+
+/* ============================================
+   BREAKING BANNER
+   ============================================ */
+
+.breaking-banner {
+  background: #fdf5f5;
+  border-bottom: 1px solid var(--nyt-border);
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.breaking-label {
+  background: var(--nyt-section-red);
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.breaking-text {
+  font-weight: 600;
+}
+
+.last-updated {
+  color: var(--nyt-light-gray);
+  font-size: 0.75rem;
+}
+
+/* ============================================
+   MAIN CONTENT GRID
+   ============================================ */
+
+.main-content {
+  background: var(--nyt-bg);
+  padding: 30px 0;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 200px 1fr 300px;
+  gap: 40px;
+}
+
+/* ============================================
+   LEFT RAIL
+   ============================================ */
+
+.left-rail {
+  border-right: 1px solid var(--nyt-border);
+  padding-right: 20px;
+}
+
+.rail-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--nyt-border);
+}
+
+.rail-section:last-child {
+  border-bottom: none;
+}
+
+.rail-section h3 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  color: var(--nyt-gray);
+}
+
 .filter-group {
-  flex: 1;
-  min-width: 150px;
+  margin-bottom: 16px;
 }
 
 .filter-group label {
   display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 6px;
-  color: var(--text-light);
+  color: var(--nyt-gray);
 }
 
-select, .btn-secondary {
+select {
   width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  background: var(--card-bg);
+  padding: 8px 10px;
+  border: 1px solid var(--nyt-border);
+  font-size: 0.85rem;
+  background: white;
   cursor: pointer;
 }
 
-.btn-secondary {
-  background: var(--secondary);
-  color: white;
-  border: none;
-  font-weight: 500;
+select:focus {
+  outline: none;
+  border-color: var(--nyt-black);
 }
 
-.btn-secondary:hover {
-  background: #374151;
+.location-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--nyt-bg);
+  border: 1px solid var(--nyt-black);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.location-btn:hover {
+  background: var(--nyt-black);
+  color: white;
 }
 
 .location-status {
-  background: #dbeafe;
-  border: 1px solid #93c5fd;
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 0.9rem;
+  margin-top: 10px;
+  padding: 10px;
+  background: #f0f7ff;
+  border-left: 3px solid var(--nyt-blue);
+  font-size: 0.8rem;
 }
 
 .location-status.hidden {
   display: none;
 }
 
-/* ===== TABS (DESKTOP) ===== */
-.tabs {
+/* Stats in left rail */
+.stat-item {
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-  border-bottom: 2px solid var(--border);
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--nyt-border);
 }
 
-.tab {
-  padding: 12px 20px;
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  font-weight: 500;
+.stat-item:last-child {
+  border-bottom: none;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--nyt-black);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--nyt-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Metrics Toggle */
+.metrics-toggle {
+  width: 100%;
+  padding: 10px;
+  background: #f8f8f8;
+  border: 1px solid var(--nyt-border);
+  font-size: 0.8rem;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  transition: all 0.2s;
+  text-align: left;
+  transition: background 0.2s;
 }
 
-.tab:hover {
-  color: var(--primary-dark);
+.metrics-toggle:hover {
+  background: var(--nyt-border);
 }
 
-.tab.active {
-  color: var(--primary-dark);
-  border-bottom-color: var(--primary-dark);
+.metrics-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f8f8f8;
+  border: 1px solid var(--nyt-border);
 }
 
-.tab-content {
+.metrics-panel.hidden {
   display: none;
 }
 
-.tab-content.active {
-  display: block;
+/* ============================================
+   MAIN ARTICLE AREA
+   ============================================ */
+
+.main-article.hidden {
+  display: none;
 }
 
-.loading {
+/* Hero Story */
+.hero-story {
   text-align: center;
-  padding: 40px;
-  color: var(--text-light);
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--nyt-black);
 }
 
-/* ===== CARDS ===== */
-.card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 12px;
-}
-
-.venue-name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.venue-type {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
+.hero-label {
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-}
-
-.venue-type.brewery {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.venue-type.bar {
-  background: #e0e7ff;
-  color: #3730a3;
-}
-
-.venue-address {
-  color: var(--text-light);
-  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--nyt-section-red);
   margin-bottom: 12px;
 }
 
-.venue-meta {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-size: 0.875rem;
-  color: var(--text-light);
-}
-
-.distance {
-  color: var(--success);
-  font-weight: 500;
-}
-
-.reason {
-  background: #fef3c7;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  color: #92400e;
+.headline {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.1;
   margin-bottom: 16px;
+  letter-spacing: -0.02em;
 }
 
-/* ===== BEER LIST ===== */
-.beer-list {
-  margin-top: 16px;
+.deck {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--nyt-gray);
+  max-width: 600px;
+  margin: 0 auto 16px;
+  line-height: 1.5;
 }
 
-.beer-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: var(--bg);
-  border-radius: 8px;
+.byline {
+  font-size: 0.8rem;
+  color: var(--nyt-gray);
+}
+
+.byline span:first-child {
+  font-weight: 600;
+  color: var(--nyt-black);
+}
+
+.timestamp {
+  margin-left: 8px;
+}
+
+.timestamp::before {
+  content: "•";
+  margin-right: 8px;
+}
+
+/* Story Grid (Recommendations) */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.story-card {
+  border-bottom: 1px solid var(--nyt-border);
+  padding-bottom: 20px;
+}
+
+.story-card.featured {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.story-kicker {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--nyt-section-red);
   margin-bottom: 8px;
 }
 
-.beer-info {
-  flex: 1;
+.story-headline {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.story-card.featured .story-headline {
+  font-size: 1.75rem;
+}
+
+.story-headline a {
+  color: var(--nyt-black);
+  text-decoration: none;
+}
+
+.story-headline a:hover {
+  color: var(--nyt-gray);
+}
+
+.story-summary {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--nyt-gray);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.story-meta {
+  font-size: 0.75rem;
+  color: var(--nyt-light-gray);
+}
+
+.story-meta .author {
+  color: var(--nyt-gray);
+  font-weight: 500;
+}
+
+/* Story List (New Releases) */
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.list-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--nyt-border);
+}
+
+.item-date {
+  font-size: 0.75rem;
+  color: var(--nyt-light-gray);
+  text-transform: uppercase;
+}
+
+.item-content h4 {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.item-content p {
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  color: var(--nyt-gray);
+  line-height: 1.5;
+}
+
+.item-tags {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  color: var(--nyt-gray);
+}
+
+/* Venue Grid */
+.venue-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.venue-card {
+  border: 1px solid var(--nyt-border);
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.venue-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.venue-type-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--nyt-section-red);
+  margin-bottom: 8px;
+}
+
+.venue-card h4 {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.venue-address {
+  font-size: 0.85rem;
+  color: var(--nyt-gray);
+  margin-bottom: 8px;
+}
+
+.venue-meta {
+  font-size: 0.75rem;
+  color: var(--nyt-light-gray);
+}
+
+.distance {
+  color: var(--nyt-blue);
+  font-weight: 500;
+}
+
+/* Beer List within Story Cards */
+.beer-list {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dotted var(--nyt-border);
+}
+
+.beer-item {
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--nyt-border);
+}
+
+.beer-item:last-child {
+  border-bottom: none;
 }
 
 .beer-name {
   font-weight: 600;
-  margin-bottom: 2px;
-}
-
-.beer-details {
-  font-size: 0.875rem;
-  color: var(--text-light);
-}
-
-.beer-time {
-  font-size: 0.8rem;
-  color: var(--success);
-  font-weight: 500;
-  margin-top: 4px;
-}
-
-.beer-badge {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  background: var(--primary);
-  color: white;
-}
-
-.posts-section {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.posts-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text-light);
-}
-
-.post-content {
-  font-size: 0.9rem;
-  color: var(--text);
-  padding: 12px;
-  background: #f3f4f6;
-  border-radius: 8px;
-  border-left: 3px solid var(--primary);
-}
-
-.post-meta {
-  font-size: 0.8rem;
-  color: var(--text-light);
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(0,0,0,0.05);
-}
-
-.post-text {
+  font-size: 0.95rem;
   margin-bottom: 4px;
 }
 
-/* ===== BEER CARD (NEW RELEASES TAB) ===== */
-.beer-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-}
-
-.beer-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.beer-style {
-  display: inline-block;
-  padding: 4px 12px;
-  background: #e0e7ff;
-  color: #3730a3;
-  border-radius: 20px;
+.beer-details {
   font-size: 0.8rem;
-  font-weight: 500;
+  color: var(--nyt-gray);
 }
 
-.abv {
-  color: var(--text-light);
-  font-size: 0.9rem;
-}
-
-.brewery-link {
-  color: var(--primary-dark);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.brewery-link:hover {
-  text-decoration: underline;
+.beer-time {
+  font-size: 0.75rem;
+  color: var(--nyt-blue);
+  margin-top: 4px;
 }
 
 .new-badge {
   display: inline-block;
-  padding: 4px 10px;
-  background: var(--success);
+  background: var(--nyt-section-red);
   color: white;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
   margin-left: 8px;
+  vertical-align: middle;
 }
 
-/* ===== EMPTY STATE ===== */
+/* Posts Section */
+.posts-section {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f8f8f8;
+}
+
+.posts-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--nyt-gray);
+  margin-bottom: 12px;
+}
+
+.post-content {
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--nyt-gray);
+  line-height: 1.5;
+  padding-left: 12px;
+  border-left: 3px solid var(--nyt-border);
+}
+
+/* ============================================
+   RIGHT RAIL
+   ============================================ */
+
+.right-rail {
+  border-left: 1px solid var(--nyt-border);
+  padding-left: 20px;
+}
+
+.trending-list {
+  list-style: none;
+  counter-reset: trending;
+}
+
+.trending-list li {
+  counter-increment: trending;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--nyt-border);
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.trending-list li::before {
+  content: counter(trending);
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--nyt-section-red);
+  float: left;
+  margin-right: 12px;
+  line-height: 1;
+}
+
+.trending-list a {
+  color: var(--nyt-black);
+  text-decoration: none;
+}
+
+.trending-list a:hover {
+  color: var(--nyt-gray);
+}
+
+.suburb-list {
+  list-style: none;
+}
+
+.suburb-list li {
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--nyt-border);
+}
+
+.suburb-list a {
+  color: var(--nyt-link);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.suburb-list a:hover {
+  text-decoration: underline;
+}
+
+/* Newsletter */
+.newsletter {
+  background: #f8f8f8;
+  padding: 20px;
+  border: 1px solid var(--nyt-border);
+}
+
+.newsletter h3 {
+  color: var(--nyt-black);
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.newsletter p {
+  font-size: 0.8rem;
+  color: var(--nyt-gray);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--nyt-border);
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--nyt-black);
+}
+
+.newsletter-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--nyt-black);
+  color: white;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.newsletter-btn:hover {
+  background: var(--nyt-dark-gray);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.main-footer {
+  background: var(--nyt-black);
+  color: white;
+  padding: 40px 0 20px;
+  margin-top: 60px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-logo h2 {
+  font-family: 'Chomsky', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.footer-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.footer-nav a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.footer-tagline {
+  margin-top: 8px;
+}
+
+/* ============================================
+   LOADING & EMPTY STATES
+   ============================================ */
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--nyt-gray);
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: var(--text-light);
+  color: var(--nyt-gray);
 }
 
 .empty-state-icon {
@@ -486,302 +941,147 @@ select, .btn-secondary {
   margin-bottom: 16px;
 }
 
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-light);
-  font-size: 0.9rem;
+/* ============================================
+   METRICS PANEL STYLES
+   ============================================ */
+
+.metric-source {
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--nyt-border);
+  font-size: 0.8rem;
+}
+
+.metric-source:last-child {
+  border-bottom: none;
+}
+
+.metric-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.metric-tech {
+  font-size: 0.7rem;
+  color: var(--nyt-light-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-stats {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.metric-success {
+  color: #2ea44f;
+  font-weight: 600;
+}
+
+.metric-items {
+  color: var(--nyt-gray);
 }
 
 /* ============================================
-   MOBILE RESPONSIVE (Portrait < 768px)
+   RESPONSIVE DESIGN
    ============================================ */
-@media (max-width: 767px) {
-  html {
-    font-size: 14px;
+
+@media (max-width: 1024px) {
+  .content-container {
+    grid-template-columns: 1fr 300px;
   }
   
-  .container {
-    padding: 12px;
-    max-width: 100%;
-  }
-  
-  /* Header */
-  header {
-    padding: 20px 12px;
-  }
-  
-  header h1 {
-    font-size: 1.5rem;
-  }
-  
-  .subtitle {
-    font-size: 0.9rem;
-  }
-  
-  /* Stats Bar - 2x2 Grid on mobile */
-  .stats-bar {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-  
-  .stat {
-    padding: 12px 8px;
-  }
-  
-  .stat-value {
-    font-size: 1.5rem;
-  }
-  
-  .stat-label {
-    font-size: 0.7rem;
-  }
-  
-  /* Filters - Stack vertically */
-  .filters {
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .filter-group {
-    min-width: 100%;
-  }
-  
-  /* Bottom Nav for Mobile (instead of top tabs) */
-  .tabs {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--card-bg);
-    border-top: 1px solid var(--border);
-    border-bottom: none;
-    margin: 0;
-    padding: 8px 0;
-    z-index: 100;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    justify-content: space-around;
-  }
-  
-  .tab {
-    flex: 1;
-    padding: 8px 4px;
-    font-size: 0.75rem;
-    border-bottom: none;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  .tab::before {
-    font-size: 1.25rem;
-  }
-  
-  /* Hide text labels on small mobile, show only icons */
-  .tab .tab-label {
+  .left-rail {
     display: none;
   }
   
-  .tab .tab-icon {
+  .masthead-logo h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .right-rail {
+    display: none;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .masthead-top {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .weather-widget,
+  .stock-ticker {
+    display: none;
+  }
+  
+  .masthead-logo h1 {
+    font-size: 1.75rem;
+  }
+  
+  .sections-nav {
+    gap: 16px;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .section-link {
+    white-space: nowrap;
+  }
+  
+  .headline {
+    font-size: 1.75rem;
+  }
+  
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .story-card.featured {
+    grid-column: span 1;
+    grid-template-columns: 1fr;
+  }
+  
+  .venue-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .btn-subscribe {
+    font-size: 0.6rem;
+    padding: 6px 10px;
+  }
+  
+  .btn-login {
+    font-size: 0.6rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breaking-banner {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+  
+  .hero-story {
+    text-align: left;
+  }
+  
+  .headline {
     font-size: 1.5rem;
   }
   
-  .tab.active {
-    border-bottom: none;
-    color: var(--primary-dark);
-    background: rgba(245, 158, 11, 0.1);
-  }
-  
-  /* Add padding to content for bottom nav */
-  .tab-content {
-    padding-bottom: 80px;
-  }
-  
-  /* Cards - More compact */
-  .card {
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-  
-  .card-header {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .venue-name {
-    font-size: 1.1rem;
-  }
-  
-  .venue-meta {
-    flex-direction: column;
-    gap: 4px;
-  }
-  
-  /* Beer items - Stack on mobile */
-  .beer-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  
-  .beer-badge {
-    align-self: flex-end;
-  }
-  
-  /* Metrics panel */
-  .metrics-panel {
-    padding: 16px;
-  }
-  
-  .metric-source {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  
-  .metric-stats {
-    text-align: left;
-    width: 100%;
-  }
-  
-  /* Footer - Add space for bottom nav */
-  footer {
-    padding-bottom: 100px;
-  }
-}
-
-/* ============================================
-   TABLET (768px - 1023px)
-   ============================================ */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .container {
-    max-width: 100%;
-    padding: 16px;
-  }
-  
-  .stats-bar {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  
-  .filters {
-    flex-wrap: wrap;
-  }
-  
-  .filter-group {
-    flex: 1 1 calc(50% - 8px);
-    min-width: 200px;
-  }
-}
-
-/* ============================================
-   LANDSCAPE MOBILE (< 900px height)
-   ============================================ */
-@media (max-height: 600px) and (orientation: landscape) {
-  header {
-    padding: 12px;
-  }
-  
-  header h1 {
-    font-size: 1.25rem;
-  }
-  
-  .stats-bar {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  
-  .stat {
-    padding: 8px;
-  }
-  
-  .stat-value {
-    font-size: 1.25rem;
-  }
-  
-  .tabs {
-    padding: 4px 0;
-  }
-  
-  .tab {
-    padding: 6px 4px;
-    font-size: 0.7rem;
-  }
-}
-
-/* ============================================
-   LARGE SCREENS (> 1200px)
-   ============================================ */
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1100px;
-  }
-  
-  header h1 {
-    font-size: 3rem;
-  }
-  
-  .card {
-    padding: 28px;
-  }
-}
-
-/* ============================================
-   DARK MODE SUPPORT (Optional)
-   ============================================ */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111827;
-    --card-bg: #1f2937;
-    --text: #f9fafb;
-    --text-light: #9ca3af;
-    --border: #374151;
-  }
-}
-
-/* ============================================
-   PRINT STYLES
-   ============================================ */
-@media print {
-  .tabs,
-  .filters,
-  #metrics-toggle,
-  .location-status {
-    display: none !important;
-  }
-  
-  .card {
-    break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid #ccc;
-  }
-}
-
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Touch-friendly tap targets */
-@media (pointer: coarse) {
-  .tab,
-  .btn-secondary,
-  select {
-    min-height: 44px;
-  }
-  
-  .beer-item,
-  .card {
-    cursor: pointer;
+  .deck {
+    font-size: 1rem;
   }
 }

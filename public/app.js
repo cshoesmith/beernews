@@ -5,17 +5,25 @@ let currentTab = 'recommendations';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    setCurrentDate();
     loadStats();
     loadSuburbs();
     loadRecommendations();
     loadNewReleases();
     loadVenues();
     
-    // Tab switching
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabName = tab.dataset.tab;
-            switchTab(tabName);
+    // Section navigation (tabs)
+    document.querySelectorAll('.section-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tabName = link.dataset.tab;
+            if (tabName) {
+                switchTab(tabName);
+                
+                // Update active state
+                document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
         });
     });
     
@@ -35,19 +43,32 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('metrics-toggle').addEventListener('click', toggleMetrics);
 });
 
+function setCurrentDate() {
+    const now = new Date();
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    const dateStr = now.toLocaleDateString('en-AU', options);
+    document.getElementById('current-date').textContent = dateStr;
+    document.getElementById('hero-timestamp').textContent = dateStr;
+}
+
 function switchTab(tabName) {
     currentTab = tabName;
     
-    // Update tab buttons
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.tab === tabName);
+    // Hide all content sections
+    document.querySelectorAll('.main-article').forEach(content => {
+        content.classList.add('hidden');
     });
     
-    // Update content
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    document.getElementById(`content-${tabName}`).classList.add('active');
+    // Show selected content
+    document.getElementById(`content-${tabName}`).classList.remove('hidden');
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function refreshAll() {
@@ -66,13 +87,16 @@ async function loadStats() {
         document.getElementById('stat-breweries').textContent = stats.breweries;
         document.getElementById('stat-bars').textContent = stats.bars;
         
+        // Update breaking news with latest info
+        if (stats.new_releases_7d > 0) {
+            document.getElementById('breaking-news').textContent = 
+                `${stats.new_releases_7d} new beer releases found this week across ${stats.venues_with_new_releases} venues`;
+        }
+        
         // Show last updated time
         if (stats.last_updated) {
-            // Parse the ISO date string
             const updateTime = new Date(stats.last_updated);
             const now = new Date();
-            
-            // Calculate time difference
             const diffMs = now - updateTime;
             const hoursAgo = Math.floor(diffMs / (1000 * 60 * 60));
             const daysAgo = Math.floor(hoursAgo / 24);
@@ -83,28 +107,14 @@ async function loadStats() {
                 timeText = minsAgo < 1 ? 'Just now' : `${minsAgo}m ago`;
             } else if (hoursAgo < 24) {
                 timeText = `${hoursAgo}h ago`;
-            } else if (daysAgo === 1) {
-                timeText = 'Yesterday';
             } else {
-                timeText = `${daysAgo} days ago`;
+                timeText = `${daysAgo}d ago`;
             }
             
-            // Format local time with timezone indicator
-            const localTimeStr = updateTime.toLocaleString('en-AU', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'short',
-                hour: '2-digit',
-                minute: '2-digit',
-                timeZoneName: 'short'
-            });
-            
-            document.getElementById('last-updated').textContent = 
-                `🔄 Data updated: ${timeText} (${localTimeStr})`;
+            document.getElementById('last-updated').textContent = `Updated ${timeText}`;
         }
     } catch (err) {
         console.error('Failed to load stats:', err);
-        document.getElementById('last-updated').textContent = 'Unable to check last update';
     }
 }
 
@@ -114,7 +124,6 @@ async function loadSuburbs() {
         const stats = await response.json();
         
         const select = document.getElementById('suburb-filter');
-        // Keep the "All Suburbs" option
         select.innerHTML = '<option value="">All Suburbs</option>';
         
         const suburbs = stats.popular_suburbs.sort();
@@ -124,17 +133,28 @@ async function loadSuburbs() {
             option.textContent = suburb;
             select.appendChild(option);
         });
+        
+        // Update suburb list in right rail
+        const suburbList = document.getElementById('suburb-list');
+        if (suburbList) {
+            suburbList.innerHTML = suburbs.slice(0, 8).map(suburb => 
+                `<li><a href="#" onclick="filterBySuburb('${suburb}'); return false;">${suburb}</a></li>`
+            ).join('');
+        }
     } catch (err) {
         console.error('Failed to load suburbs:', err);
     }
 }
 
+function filterBySuburb(suburb) {
+    document.getElementById('suburb-filter').value = suburb;
+    refreshAll();
+}
+
 async function loadRecommendations() {
-    const loading = document.getElementById('rec-loading');
     const container = document.getElementById('recommendations-list');
     
-    loading.style.display = 'block';
-    container.innerHTML = '';
+    container.innerHTML = '<div class="loading">Finding the best spots for you...</div>';
     
     try {
         const suburb = document.getElementById('suburb-filter').value;
@@ -150,8 +170,6 @@ async function loadRecommendations() {
         const response = await fetch(url);
         const recommendations = await response.json();
         
-        loading.style.display = 'none';
-        
         if (recommendations.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
@@ -163,21 +181,23 @@ async function loadRecommendations() {
             return;
         }
         
-        recommendations.forEach(rec => {
-            container.appendChild(createRecommendationCard(rec));
+        // First recommendation is featured
+        let html = '';
+        recommendations.forEach((rec, index) => {
+            const isFeatured = index === 0;
+            html += createStoryCard(rec, isFeatured);
         });
+        
+        container.innerHTML = html;
+        
     } catch (err) {
-        loading.style.display = 'none';
-        container.innerHTML = `<p class="empty-state">Error loading recommendations: ${err.message}</p>`;
+        container.innerHTML = `<div class="empty-state">Error loading recommendations: ${err.message}</div>`;
     }
 }
 
-function createRecommendationCard(rec) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    
+function createStoryCard(rec, isFeatured = false) {
     const distanceText = rec.distance_km !== null 
-        ? `<span class="distance">📍 ${rec.distance_km.toFixed(1)} km away</span>` 
+        ? `<span class="distance">${rec.distance_km.toFixed(1)} km away</span>` 
         : '';
     
     const beerList = rec.new_beers.map(beer => {
@@ -197,67 +217,54 @@ function createRecommendationCard(rec) {
             timeText = `${daysAgo} days ago`;
         }
         
-        const dateStr = releaseDate.toLocaleString('en-AU', {
-            weekday: 'short',
-            day: 'numeric',
-            month: 'short',
-            timeZoneName: 'short'
-        });
-        
         return `
         <div class="beer-item">
-            <div class="beer-info">
-                <div class="beer-name">${beer.name}</div>
-                <div class="beer-details">${beer.style} • ${beer.abv}% ABV</div>
-                <div class="beer-time">📅 ${dateStr} • ${timeText}</div>
-            </div>
-            <span class="beer-badge">NEW</span>
+            <div class="beer-name">${beer.name} <span class="new-badge">New</span></div>
+            <div class="beer-details">${beer.style} • ${beer.abv}% ABV</div>
+            <div class="beer-time">Released: ${timeText}</div>
         </div>
     `}).join('');
     
     const posts = rec.relevant_posts.map(post => `
-        <div class="post-content">${post.content}</div>
+        <div class="post-content">"${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}"</div>
     `).join('');
     
-    card.innerHTML = `
-        <div class="card-header">
-            <div>
-                <div class="venue-name">${rec.venue.name}</div>
-                <span class="venue-type ${rec.venue.type}">${rec.venue.type}</span>
-            </div>
-        </div>
-        <div class="venue-address">${rec.venue.address}</div>
-        <div class="venue-meta">
-            <span>📍 ${rec.venue.suburb}</span>
-            ${distanceText}
-        </div>
-        <div class="reason">💡 ${rec.reason}</div>
-        <div class="beer-list">
-            ${beerList}
-        </div>
-        ${posts ? `
-            <div class="posts-section">
-                <div class="posts-title">Recent Posts</div>
-                ${posts}
-            </div>
-        ` : ''}
-    `;
+    const featuredClass = isFeatured ? 'featured' : '';
+    const kicker = isFeatured ? 'Top Pick' : rec.venue.type === 'brewery' ? 'Brewery' : 'Venue';
     
-    return card;
+    return `
+        <article class="story-card ${featuredClass}">
+            <div class="story-content">
+                <div class="story-kicker">${kicker}</div>
+                <h3 class="story-headline">
+                    <a href="#">${rec.venue.name}</a>
+                </h3>
+                <p class="story-summary">
+                    ${rec.venue.address}, ${rec.venue.suburb}. ${rec.reason}
+                </p>
+                <div class="story-meta">
+                    <span class="author">${rec.venue.type === 'brewery' ? 'Brewery' : 'Craft Beer Bar'}</span>
+                    ${distanceText}
+                </div>
+                ${beerList ? `<div class="beer-list">${beerList}</div>` : ''}
+                ${posts ? `
+                    <div class="posts-section">
+                        <div class="posts-title">Latest Update</div>
+                        ${posts}
+                    </div>
+                ` : ''}
+            </div>
+        </article>
+    `;
 }
 
 async function loadNewReleases() {
-    const loading = document.getElementById('beers-loading');
     const container = document.getElementById('beers-list');
     
-    loading.style.display = 'block';
-    container.innerHTML = '';
+    container.innerHTML = '<div class="loading">Loading new releases...</div>';
     
     try {
-        const suburb = document.getElementById('suburb-filter').value;
-        
-        // Get new beers
-        let url = `${API_BASE}/beers/new?days=7`;
+        const url = `${API_BASE}/beers/new?days=7`;
         const response = await fetch(url);
         const beers = await response.json();
         
@@ -266,8 +273,6 @@ async function loadNewReleases() {
         const venues = await venuesResponse.json();
         const venueMap = {};
         venues.forEach(v => venueMap[v.id] = v);
-        
-        loading.style.display = 'none';
         
         if (beers.length === 0) {
             container.innerHTML = `
@@ -280,11 +285,9 @@ async function loadNewReleases() {
             return;
         }
         
+        let html = '';
         beers.forEach(beer => {
             const brewery = venueMap[beer.brewery_id];
-            const card = document.createElement('div');
-            card.className = 'beer-card';
-            
             const releaseDate = new Date(beer.release_date);
             const now = new Date();
             const daysAgo = Math.floor((now - releaseDate) / (1000 * 60 * 60 * 24));
@@ -301,48 +304,33 @@ async function loadNewReleases() {
                 timeText = `${daysAgo} days ago`;
             }
             
-            const dateStr = releaseDate.toLocaleString('en-AU', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'short',
-                hour: '2-digit',
-                minute: '2-digit',
-                timeZoneName: 'short'
-            });
-            
-            card.innerHTML = `
-                <div class="beer-card-header">
-                    <div>
-                        <div class="venue-name">${beer.name} <span class="new-badge">NEW</span></div>
-                        <div style="margin-top: 8px;">
-                            <span class="beer-style">${beer.style}</span>
-                            <span class="abv">${beer.abv}% ABV</span>
+            html += `
+                <div class="list-item">
+                    <div class="item-date">${timeText}</div>
+                    <div class="item-content">
+                        <h4>${beer.name} <span class="new-badge">New Release</span></h4>
+                        <p>${beer.description || `${beer.style} from ${brewery ? brewery.name : 'Unknown Brewery'}`}</p>
+                        <div class="item-tags">
+                            <span class="tag">${beer.style}</span>
+                            <span class="tag">${beer.abv}% ABV</span>
+                            ${brewery ? `<span class="tag">${brewery.suburb}</span>` : ''}
                         </div>
-                        ${brewery ? `<div style="margin-top: 8px;"><a href="#" class="brewery-link" data-venue="${brewery.id}">${brewery.name}</a>, ${brewery.suburb}</div>` : ''}
                     </div>
                 </div>
-                <div style="margin-top: 12px; padding: 8px 12px; background: #f0fdf4; border-radius: 6px; border-left: 3px solid var(--success);">
-                    <span style="font-size: 0.9rem; color: var(--success); font-weight: 500;">
-                        📅 Released: ${dateStr} • ${timeText}
-                    </span>
-                </div>
-                ${beer.description ? `<p style="margin-top: 12px; color: var(--text-light);">${beer.description}</p>` : ''}
             `;
-            
-            container.appendChild(card);
         });
+        
+        container.innerHTML = html;
+        
     } catch (err) {
-        loading.style.display = 'none';
-        container.innerHTML = `<p class="empty-state">Error loading beers: ${err.message}</p>`;
+        container.innerHTML = `<div class="empty-state">Error loading beers: ${err.message}</div>`;
     }
 }
 
 async function loadVenues() {
-    const loading = document.getElementById('venues-loading');
     const container = document.getElementById('venues-list');
     
-    loading.style.display = 'block';
-    container.innerHTML = '';
+    container.innerHTML = '<div class="loading">Loading venues...</div>';
     
     try {
         const suburb = document.getElementById('suburb-filter').value;
@@ -352,8 +340,6 @@ async function loadVenues() {
         
         const response = await fetch(url);
         const venues = await response.json();
-        
-        loading.style.display = 'none';
         
         if (venues.length === 0) {
             container.innerHTML = `
@@ -366,39 +352,30 @@ async function loadVenues() {
             return;
         }
         
+        let html = '';
         venues.forEach(venue => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            
             const distanceText = userLocation
-                ? `<span class="distance">📍 ${calculateDistance(userLocation.lat, userLocation.lng, venue.location[0], venue.location[1]).toFixed(1)} km</span>`
+                ? `<span class="distance">${calculateDistance(userLocation.lat, userLocation.lng, venue.location[0], venue.location[1]).toFixed(1)} km</span>`
                 : '';
             
-            card.innerHTML = `
-                <div class="card-header">
-                    <div>
-                        <div class="venue-name">${venue.name}</div>
-                        <span class="venue-type ${venue.type}">${venue.type}</span>
+            html += `
+                <div class="venue-card">
+                    <div class="venue-type-label">${venue.type}</div>
+                    <h4>${venue.name}</h4>
+                    <div class="venue-address">${venue.address}</div>
+                    <div class="venue-meta">
+                        ${venue.suburb}
+                        ${distanceText}
                     </div>
+                    ${venue.instagram_handle ? `<div style="margin-top: 8px; font-size: 0.75rem; color: #999;">${venue.instagram_handle}</div>` : ''}
                 </div>
-                <div class="venue-address">${venue.address}</div>
-                <div class="venue-meta">
-                    <span>📍 ${venue.suburb}</span>
-                    ${distanceText}
-                    ${venue.instagram_handle ? `<span>📸 ${venue.instagram_handle}</span>` : ''}
-                </div>
-                ${venue.tags.length ? `
-                    <div style="margin-top: 12px;">
-                        ${venue.tags.map(tag => `<span class="beer-style" style="margin-right: 8px;">${tag}</span>`).join('')}
-                    </div>
-                ` : ''}
             `;
-            
-            container.appendChild(card);
         });
+        
+        container.innerHTML = html;
+        
     } catch (err) {
-        loading.style.display = 'none';
-        container.innerHTML = `<p class="empty-state">Error loading venues: ${err.message}</p>`;
+        container.innerHTML = `<div class="empty-state">Error loading venues: ${err.message}</div>`;
     }
 }
 
@@ -412,7 +389,7 @@ function getUserLocation() {
     if (!navigator.geolocation) {
         status.textContent = 'Geolocation is not supported by your browser';
         status.classList.remove('hidden');
-        btn.textContent = 'Get Location';
+        btn.innerHTML = '<span class="location-icon">📍</span> Use My Location';
         btn.disabled = false;
         return;
     }
@@ -424,27 +401,26 @@ function getUserLocation() {
                 lng: position.coords.longitude
             };
             
-            btn.textContent = '✓ Location Set';
+            btn.innerHTML = '<span class="location-icon">✓</span> Location Set';
             btn.disabled = false;
             
-            status.innerHTML = `📍 Using your location for distance calculations<br><small>${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}</small>`;
+            status.innerHTML = `Using your location: ${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`;
             status.classList.remove('hidden');
             
-            // Refresh with location
             loadRecommendations();
             loadVenues();
         },
         (err) => {
             status.textContent = `Could not get location: ${err.message}`;
             status.classList.remove('hidden');
-            btn.textContent = 'Get Location';
+            btn.innerHTML = '<span class="location-icon">📍</span> Use My Location';
             btn.disabled = false;
         }
     );
 }
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Earth's radius in km
+    const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -453,7 +429,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     return R * c;
 }
-
 
 function toggleMetrics() {
     const panel = document.getElementById('metrics-panel');
@@ -476,7 +451,7 @@ async function loadMetrics() {
         const data = await response.json();
         
         if (data.error) {
-            container.innerHTML = `<p class="empty-state">Metrics not available yet. Run scraper to generate data.</p>`;
+            container.innerHTML = `<p>Metrics not available yet.</p>`;
             return;
         }
         
@@ -484,46 +459,38 @@ async function loadMetrics() {
         
         // Overall stats
         html += `
-            <div style="margin-bottom: 20px; padding: 16px; background: #f0fdf4; border-radius: 8px;">
-                <strong>Overall Success Rate: ${data.overall?.success_rate || 0}%</strong><br>
-                <span style="font-size: 0.9rem; color: var(--text-light);">
-                    ${data.overall?.total_successes || 0} successes from ${data.overall?.total_attempts || 0} attempts
-                    (${data.overall?.total_items || 0} items found)
-                </span>
+            <div style="margin-bottom: 20px; padding: 12px; background: #f0fdf4; border-left: 3px solid #2ea44f;">
+                <div style="font-weight: 600; color: #2ea44f;">${data.overall?.success_rate || 0}% Success Rate</div>
+                <div style="font-size: 0.8rem; color: #666;">
+                    ${data.overall?.total_successes || 0} successes / ${data.overall?.total_attempts || 0} attempts
+                </div>
             </div>
         `;
         
         // Individual sources
         if (data.sources && Object.keys(data.sources).length > 0) {
-            html += '<div class="metrics-sources">';
-            for (const [sourceName, sourceData] of Object.entries(data.sources)) {
-                const statusClass = sourceData.status || 'new';
-                const statusIcon = statusClass === 'active' ? '●' : statusClass === 'struggling' ? '▲' : '○';
+            for (const [sourceName, sourceData] of Object.entries(data.sources).slice(0, 6)) {
+                const statusIcon = sourceData.status === 'active' ? '●' : sourceData.status === 'struggling' ? '▲' : '○';
+                const statusColor = sourceData.status === 'active' ? '#2ea44f' : sourceData.status === 'struggling' ? '#f59e0b' : '#999';
                 
                 html += `
-                    <div class="metric-source ${statusClass}">
-                        <div>
-                            <div class="metric-name">${statusIcon} ${sourceName}</div>
-                            <div class="metric-tech">${sourceData.technique}</div>
-                        </div>
+                    <div class="metric-source">
+                        <div class="metric-name" style="color: ${statusColor}">${statusIcon} ${sourceName}</div>
+                        <div class="metric-tech">${sourceData.technique}</div>
                         <div class="metric-stats">
-                            <div class="metric-success">${sourceData.success_rate}% success</div>
-                            <div class="metric-items">${sourceData.items_found} items (${sourceData.attempts} attempts)</div>
-                            ${sourceData.recent_items > 0 ? `<div style="font-size: 0.75rem; color: var(--success);">+${sourceData.recent_items} recently</div>` : ''}
+                            <span class="metric-success">${sourceData.success_rate}%</span>
+                            <span class="metric-items">${sourceData.items_found} items</span>
                         </div>
                     </div>
                 `;
             }
-            html += '</div>';
         } else {
-            html += '<p class="empty-state">No metrics data yet. Run the scraper to collect productivity data.</p>';
+            html += '<p style="font-size: 0.85rem; color: #666;">No metrics data yet.</p>';
         }
-        
-        html += `<p style="margin-top: 16px; font-size: 0.8rem; color: var(--text-light);">Generated: ${new Date(data.generated_at).toLocaleString('en-AU')}</p>`;
         
         container.innerHTML = html;
         
     } catch (err) {
-        container.innerHTML = `<p class="empty-state">Error loading metrics: ${err.message}</p>`;
+        container.innerHTML = `<p style="font-size: 0.85rem; color: #666;">Error loading metrics.</p>`;
     }
 }

@@ -2,112 +2,251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#f59e0b">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Sydney Beer Aggregator 🍺</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sydney Beer Herald - Latest Craft Beer News & Releases</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Chomsky&family=Libre+Franklin:wght@300;400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍺 Sydney Beer Aggregator</h1>
-            <p class="subtitle">Discover new beer releases at Sydney's best breweries & bars</p>
-        </header>
-
-        <div class="last-updated" id="last-updated">Checking last update...</div>
-        
-        <button class="btn-secondary" id="metrics-toggle" style="margin-bottom: 16px; width: auto; padding: 10px 20px;">
-            📊 Data Source Summary
-        </button>
-        
-        <div id="metrics-panel" class="metrics-panel hidden">
-            <h3>Scraper Productivity</h3>
-            <div id="metrics-content">Loading...</div>
-        </div>
-
-        <div class="stats-bar" id="stats">
-            <div class="stat">
-                <span class="stat-value" id="stat-venues">-</span>
-                <span class="stat-label">Venues</span>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">U.S.</a>
+                    <a href="#" class="nav-link">International</a>
+                    <a href="#" class="nav-link">Canada</a>
+                    <a href="#" class="nav-link">Español</a>
+                    <a href="#" class="nav-link">中文</a>
+                </div>
             </div>
-            <div class="stat">
-                <span class="stat-value" id="stat-new">-</span>
-                <span class="stat-label">New This Week</span>
-            </div>
-            <div class="stat">
-                <span class="stat-value" id="stat-breweries">-</span>
-                <span class="stat-label">Breweries</span>
-            </div>
-            <div class="stat">
-                <span class="stat-value" id="stat-bars">-</span>
-                <span class="stat-label">Bars</span>
+            <div class="nav-right">
+                <button class="btn-subscribe">SUBSCRIBE FOR $0.50/WEEK</button>
+                <button class="btn-login">LOG IN</button>
             </div>
         </div>
+    </nav>
 
-        <div class="filters">
-            <div class="filter-group">
-                <label for="suburb-filter">Suburb</label>
-                <select id="suburb-filter">
-                    <option value="">All Suburbs</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="style-filter">Beer Style</label>
-                <select id="style-filter">
-                    <option value="">All Styles</option>
-                    <option value="IPA">IPA</option>
-                    <option value="DDH IPA">DDH IPA</option>
-                    <option value="NEIPA">NEIPA</option>
-                    <option value="DDH NEIPA">DDH NEIPA</option>
-                    <option value="Triple IPA">Triple IPA</option>
-                    <option value="Cold IPA">Cold IPA</option>
-                    <option value="Pale Ale">Pale Ale</option>
-                    <option value="Golden Ale">Golden Ale</option>
-                    <option value="Lager">Lager</option>
-                    <option value="Sour">Sour</option>
-                    <option value="Kettle Sour">Kettle Sour</option>
-                    <option value="Fruited Sour">Fruited Sour</option>
-                    <option value="Berliner Weisse">Berliner Weisse</option>
-                    <option value="Imperial Stout">Imperial Stout</option>
-                    <option value="Ginger Beer">Ginger Beer</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="location-toggle">📍 Use My Location</label>
-                <button id="location-toggle" class="btn-secondary">Get Location</button>
-            </div>
+    <!-- Date Bar -->
+    <div class="date-bar">
+        <div class="date-container">
+            <span id="current-date"></span>
+            <span class="paper-edition">Today's Paper</span>
         </div>
-
-        <div id="location-status" class="location-status hidden"></div>
-
-        <div class="tabs">
-            <button class="tab active" data-tab="recommendations"><span class="tab-icon">🎯</span><span class="tab-label">Recommendations</span></button>
-            <button class="tab" data-tab="new-releases"><span class="tab-icon">🆕</span><span class="tab-label">New Releases</span></button>
-            <button class="tab" data-tab="venues"><span class="tab-icon">📍</span><span class="tab-label">Venues</span></button>
-        </div>
-
-        <div id="content-recommendations" class="tab-content active">
-            <div class="loading" id="rec-loading">Finding the best spots for you...</div>
-            <div id="recommendations-list"></div>
-        </div>
-
-        <div id="content-new-releases" class="tab-content">
-            <div class="loading" id="beers-loading">Loading new releases...</div>
-            <div id="beers-list"></div>
-        </div>
-
-        <div id="content-venues" class="tab-content">
-            <div class="loading" id="venues-loading">Loading venues...</div>
-            <div id="venues-list"></div>
-        </div>
-
-        <footer>
-            <p>Built for Sydney beer lovers 🍻 | Data from social feeds</p>
-        </footer>
     </div>
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="masthead-container">
+            <div class="masthead-top">
+                <div class="weather-widget">
+                    <span class="weather-location">Sydney</span>
+                    <span class="weather-temp">24°C</span>
+                    <span class="weather-desc">Partly cloudy</span>
+                </div>
+                <div class="masthead-logo">
+                    <h1>The Sydney Beer Herald</h1>
+                </div>
+                <div class="stock-ticker">
+                    <span>XXXX 4.20 <span class="stock-up">+1.2%</span></span>
+                </div>
+            </div>
+            <nav class="sections-nav">
+                <a href="#" class="section-link active" data-tab="recommendations">Recommendations</a>
+                <a href="#" class="section-link" data-tab="new-releases">New Releases</a>
+                <a href="#" class="section-link" data-tab="venues">Venues</a>
+                <a href="#" class="section-link">Styles</a>
+                <a href="#" class="section-link">Breweries</a>
+                <a href="#" class="section-link">Reviews</a>
+                <a href="#" class="section-link">Events</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breaking News Banner -->
+    <div class="breaking-banner">
+        <span class="breaking-label">BREAKING</span>
+        <span class="breaking-text" id="breaking-news">Mountain Culture releases fresh batch this week</span>
+        <span class="last-updated" id="last-updated"></span>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-container">
+            
+            <!-- Left Rail -->
+            <aside class="left-rail">
+                <div class="rail-section">
+                    <h3>Filter By</h3>
+                    <div class="filter-group">
+                        <label>Suburb</label>
+                        <select id="suburb-filter">
+                            <option value="">All Suburbs</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Beer Style</label>
+                        <select id="style-filter">
+                            <option value="">All Styles</option>
+                            <option value="IPA">IPA</option>
+                            <option value="DDH IPA">DDH IPA</option>
+                            <option value="NEIPA">NEIPA</option>
+                            <option value="Pale Ale">Pale Ale</option>
+                            <option value="Lager">Lager</option>
+                            <option value="Sour">Sour</option>
+                            <option value="Stout">Stout</option>
+                        </select>
+                    </div>
+                    <button id="location-toggle" class="location-btn">
+                        <span class="location-icon">📍</span>
+                        Use My Location
+                    </button>
+                    <div id="location-status" class="location-status hidden"></div>
+                </div>
+
+                <div class="rail-section">
+                    <h3>Quick Stats</h3>
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-venues">-</span>
+                        <span class="stat-label">Venues</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-new">-</span>
+                        <span class="stat-label">New This Week</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-breweries">-</span>
+                        <span class="stat-label">Breweries</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="stat-bars">-</span>
+                        <span class="stat-label">Bars</span>
+                    </div>
+                </div>
+
+                <div class="rail-section">
+                    <h3>Data Source</h3>
+                    <button class="metrics-toggle" id="metrics-toggle">
+                        📊 View Scraper Metrics
+                    </button>
+                    <div id="metrics-panel" class="metrics-panel hidden">
+                        <div id="metrics-content">Loading...</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Article Area -->
+            <section class="main-article" id="content-recommendations">
+                <article class="hero-story">
+                    <div class="hero-label">TOP STORY</div>
+                    <h2 class="headline">Discover Sydney's Best New Beer Releases</h2>
+                    <p class="deck">Our curated recommendations based on your location and preferences, featuring the freshest drops from local breweries and craft beer bars.</p>
+                    <div class="byline">
+                        <span>By Beer News Staff</span>
+                        <span class="timestamp" id="hero-timestamp"></span>
+                    </div>
+                </article>
+
+                <div class="story-grid" id="recommendations-list">
+                    <div class="loading">Loading recommendations...</div>
+                </div>
+            </section>
+
+            <!-- New Releases Section (Hidden by default) -->
+            <section class="main-article hidden" id="content-new-releases">
+                <article class="hero-story">
+                    <div class="hero-label">LATEST RELEASES</div>
+                    <h2 class="headline">New Beer Releases This Week</h2>
+                    <p class="deck">The freshest craft beers hitting Sydney taps and bottleshops, updated daily from brewery social feeds.</p>
+                    <div class="byline">
+                        <span>Compiled from brewery sources</span>
+                        <span class="timestamp"></span>
+                    </div>
+                </article>
+
+                <div class="story-list" id="beers-list">
+                    <div class="loading">Loading new releases...</div>
+                </div>
+            </section>
+
+            <!-- Venues Section (Hidden by default) -->
+            <section class="main-article hidden" id="content-venues">
+                <article class="hero-story">
+                    <div class="hero-label">VENUE GUIDE</div>
+                    <h2 class="headline">Sydney's Craft Beer Venues</h2>
+                    <p class="deck">A comprehensive guide to breweries, brewpubs, and craft beer bars across Sydney.</p>
+                    <div class="byline">
+                        <span>Sydney Beer Herald Staff</span>
+                    </div>
+                </article>
+
+                <div class="venue-grid" id="venues-list">
+                    <div class="loading">Loading venues...</div>
+                </div>
+            </section>
+
+            <!-- Right Rail -->
+            <aside class="right-rail">
+                <div class="rail-section trending">
+                    <h3>Trending</h3>
+                    <ol class="trending-list">
+                        <li><a href="#">Mountain Culture's latest IPA drop</a></li>
+                        <li><a href="#">New brewery opening in Marrickville</a></li>
+                        <li><a href="#">Sour beer trends for 2025</a></li>
+                        <li><a href="#">Best beer gardens in Sydney</a></li>
+                        <li><a href="#">Craft beer festival announced</a></li>
+                    </ol>
+                </div>
+
+                <div class="rail-section">
+                    <h3>Popular Suburbs</h3>
+                    <ul class="suburb-list" id="suburb-list">
+                        <li><a href="#">Marrickville</a></li>
+                        <li><a href="#">Newtown</a></li>
+                        <li><a href="#">Alexandria</a></li>
+                        <li><a href="#">Camperdown</a></li>
+                        <li><a href="#">Enmore</a></li>
+                    </ul>
+                </div>
+
+                <div class="rail-section newsletter">
+                    <h3>The Daily Pour</h3>
+                    <p>Get the latest beer news delivered to your inbox every morning.</p>
+                    <input type="email" placeholder="your@email.com" class="newsletter-input">
+                    <button class="newsletter-btn">Sign Up</button>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h2>The Sydney Beer Herald</h2>
+            </div>
+            <nav class="footer-nav">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Work with us</a>
+                <a href="#">Advertise</a>
+            </nav>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Sydney Beer Herald Company</p>
+                <p class="footer-tagline">Built for Sydney beer lovers 🍻</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="app.js"></script>
 </body>
