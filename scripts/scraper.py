@@ -124,42 +124,48 @@ def scrape_website_batch_brewing() -> List[Dict]:
 
 def scrape_website_mountain_culture() -> List[Dict]:
     """Scrape Mountain Culture website."""
-    url = "https://mountainculture.com.au/"
+    base_url = "https://mountainculture.com.au"
     posts = []
     metrics = get_metrics()
     source_name = "mountain-culture-website"
     
     metrics.record_source_attempt(source_name, "website-beautifulsoup")
     
-    try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-        resp = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(resp.text, 'html.parser')
-        
-        # Look for product/release announcements
-        for elem in soup.find_all(['h2', 'h3', '.product-title', '.announcement']):
-            text = elem.get_text().strip()
-            if any(keyword in text.lower() for keyword in ['new', 'release', 'fresh', 'drop', 'ipa', 'ale']):
-                if len(text) > 10 and len(text) < 200:
-                    posts.append({
-                        "venue_id": "mountain-culture",
-                        "platform": "website",
-                        "content": f"🍺 {text}",
-                        "post_url": url,
-                        "scraped_at": datetime.now().isoformat()
-                    })
-        
-        metrics.record_source_success(source_name, len(posts))
-        print(f"  Mountain Culture: Found {len(posts)} items")
-        
-    except Exception as e:
-        error_msg = str(e)
-        metrics.record_source_error(source_name, error_msg)
-        print(f"  Mountain Culture: Error - {error_msg}")
+    # Try multiple pages
+    paths = ['', '/collections/beer', '/blogs/news']
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
     
-    return posts[:5]  # Limit results
+    for path in paths:
+        try:
+            url = f"{base_url}{path}"
+            resp = requests.get(url, headers=headers, timeout=10)
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            
+            # Look for product cards, announcements
+            selectors = ['.product-card', '.product-title', 'h2', 'h3', '.article-title', '.blog-title']
+            for selector in selectors:
+                for elem in soup.select(selector):
+                    text = elem.get_text().strip()
+                    if any(keyword in text.lower() for keyword in ['new', 'release', 'fresh', 'drop', 'ipa', 'ale', 'pale', 'stout', 'sour', 'lager']):
+                        if 10 < len(text) < 200:
+                            posts.append({
+                                "venue_id": "mountain-culture",
+                                "platform": "website",
+                                "content": f"🍺 {text}",
+                                "post_url": url,
+                                "scraped_at": datetime.now().isoformat()
+                            })
+                            
+            if posts:
+                break
+                
+        except Exception as e:
+            continue
+    
+    metrics.record_source_success(source_name, len(posts))
+    print(f"  Mountain Culture: Found {len(posts)} items")
+    
+    return posts[:5]
 
 def scrape_generic_website(venue_id: str, url: str) -> List[Dict]:
     """Generic website scraper for any venue."""
@@ -169,37 +175,65 @@ def scrape_generic_website(venue_id: str, url: str) -> List[Dict]:
     
     metrics.record_source_attempt(source_name, "website-generic")
     
-    try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-        resp = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(resp.text, 'html.parser')
-        
-        # Look for keywords in headings and paragraphs
-        keywords = ['new release', 'now pouring', 'on tap', 'fresh batch', 'just dropped']
-        
-        for elem in soup.find_all(['h1', 'h2', 'h3', 'p']):
-            text = elem.get_text().strip().lower()
-            if any(kw in text for kw in keywords):
-                full_text = elem.get_text().strip()
-                if 20 < len(full_text) < 300:
-                    posts.append({
-                        "venue_id": venue_id,
-                        "platform": "website",
-                        "content": full_text[:280],
-                        "post_url": url,
-                        "scraped_at": datetime.now().isoformat()
-                    })
-        
-        metrics.record_source_success(source_name, len(posts))
-        
-    except Exception as e:
-        error_msg = str(e)
-        metrics.record_source_error(source_name, error_msg)
-        print(f"  {venue_id}: Error - {error_msg}")
+    # Try multiple pages for new releases
+    paths_to_try = [
+        '',  # Homepage
+        'new-releases',
+        'new',
+        'latest',
+        'blog',
+        'news',
+        'beers',
+        'our-beers',
+        'ontap',
+        'on-tap',
+    ]
     
-    return posts[:3]
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    }
+    
+    for path in paths_to_try:
+        try:
+            full_url = url if not path else f"{url.rstrip('/')}/{path}"
+            resp = requests.get(full_url, headers=headers, timeout=10)
+            
+            if resp.status_code != 200:
+                continue
+                
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            
+            # Look for keywords in headings and paragraphs
+            keywords = ['new release', 'now pouring', 'on tap', 'fresh batch', 'just dropped', 
+                       'new beer', 'latest release', 'just released', 'coming soon', 'available now',
+                       'drop', 'fresh', 'tapping', 'tap takeover']
+            
+            for elem in soup.find_all(['h1', 'h2', 'h3', 'h4', 'p', '.product-title', '.beer-name']):
+                text = elem.get_text().strip()
+                text_lower = text.lower()
+                if any(kw in text_lower for kw in keywords):
+                    # Check if it looks like a beer name (contains style or has capitalized words)
+                    if 15 < len(text) < 300:
+                        # Avoid duplicates
+                        if not any(p['content'] == text[:280] for p in posts):
+                            posts.append({
+                                "venue_id": venue_id,
+                                "platform": "website",
+                                "content": text[:280],
+                                "post_url": full_url,
+                                "scraped_at": datetime.now().isoformat()
+                            })
+                            
+            if posts:
+                break  # Stop if we found something
+                
+        except Exception as e:
+            continue  # Try next path
+    
+    metrics.record_source_success(source_name, len(posts))
+    print(f"  {venue_id}: Found {len(posts)} posts")
+    
+    return posts[:5]
 
 # ==================== INSTAGRAM SCRAPERS ====================
 
@@ -222,13 +256,13 @@ def scrape_instagram_apify(handle: str) -> List[Dict]:
         
         client = ApifyClient(token)
         
-        # Calculate date 7 days ago
-        cutoff_date = datetime.now() - timedelta(days=7)
+        # Calculate date 14 days ago (extended to catch more posts)
+        cutoff_date = datetime.now() - timedelta(days=14)
         
         # Run Instagram scraper - get more posts to check dates
         run_input = {
             "usernames": [handle.replace('@', '')],
-            "resultsLimit": 20,  # Increased from 5 to get more history
+            "resultsLimit": 30,  # Get more posts
             "includePinnedPosts": False,
         }
         
@@ -254,13 +288,22 @@ def scrape_instagram_apify(handle: str) -> List[Dict]:
                 # If date parsing fails, include the post anyway
                 pass
             
-            # Check for beer-related keywords
-            beer_keywords = ['beer', 'brew', 'ipa', 'ale', 'stout', 'sour', 'hazy', 'pale', 'lager', 'tap', 'release', 'new', 'drop', 'pouring', 'tapping', 'fresh', 'just', 'limited']
-            if any(kw in caption.lower() for kw in beer_keywords):
+            # Check for beer-related keywords (relaxed matching)
+            beer_keywords = ['beer', 'brew', 'ipa', 'ale', 'stout', 'sour', 'hazy', 'pale', 'lager', 
+                           'tap', 'release', 'new', 'drop', 'pouring', 'tapping', 'fresh', 'just', 
+                           'limited', 'can', 'cans', 'available', 'now', ' launching', 'introducing',
+                           'proud', 'excited', ' announce']
+            caption_lower = caption.lower()
+            
+            # Accept posts with beer keywords OR from brewery accounts (assume relevant)
+            is_beer_related = any(kw in caption_lower for kw in beer_keywords)
+            has_media = item.get('images') or item.get('videoUrl')
+            
+            if is_beer_related or (has_media and len(caption) > 10):
                 posts.append({
                     "venue_id": None,  # Will be set by caller
                     "platform": "instagram",
-                    "content": caption[:500],
+                    "content": caption[:500] if caption else "📸 New post",
                     "post_url": item.get('url'),
                     "posted_at": timestamp_str,
                     "scraped_at": datetime.now().isoformat()
@@ -404,6 +447,11 @@ def main():
     website_map = {
         "4-pines": "https://4pinesbeer.com.au/",
         "white-bay": "https://whitebay.beer/",
+        "wayward-brewing": "https://waywardbrewing.com.au/",
+        "grifter-brewing": "https://grifterbrewing.com/",
+        "the-rocks-brewing": "https://therocksbrewing.com/",
+        "bracket-brewing": "https://bracketbrewing.com.au/",
+        "young-henrys": "https://younghenrys.com/",
     }
     for venue_id, url in website_map.items():
         posts = scrape_generic_website(venue_id, url)

@@ -889,8 +889,8 @@ def load_dynamic_data():
                 else:
                     posted_at = datetime.now()
                 
-                # Skip posts older than 14 days
-                if (datetime.now() - posted_at).days > 14:
+                # Skip posts older than 30 days (extended to show more history)
+                if (datetime.now() - posted_at).days > 30:
                     continue
                 
                 posts.append(SocialPost(
