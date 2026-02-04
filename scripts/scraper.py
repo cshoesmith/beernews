@@ -42,11 +42,11 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from data import SYDNEY_VENUES, SYDNEY_BEERS, SYDNEY_POSTS
-from scraper_metrics import get_metrics
+from scripts.scraper_metrics import get_metrics
 
 # Import Imginn scraper
 try:
-    from imginn_scraper import scrape_all_imginn_content
+    from scripts.imginn_scraper import scrape_all_imginn_content
     IMGINN_AVAILABLE = True
 except ImportError:
     IMGINN_AVAILABLE = False
@@ -417,7 +417,7 @@ def main():
     instagram_token = os.getenv('INSTAGRAM_ACCESS_TOKEN')
     if instagram_token:
         try:
-            from meta_instagram_scraper import scrape_all_with_meta
+            from scripts.meta_instagram_scraper import scrape_all_with_meta
             
             # Build accounts dict from venues
             meta_accounts = {}
@@ -494,25 +494,28 @@ def main():
         "beer-sydney": "beersydney",  # Beer reviews and news
     }
     
-    for source_id, username in enthusiast_accounts.items():
-        try:
-            posts = scrape_all_imginn_content(username, source_id)
-            # For enthusiast accounts, we need to extract which brewery they're talking about
-            for post in posts:
-                # Try to detect which brewery is mentioned
-                content_lower = post['content'].lower()
-                for venue in SYDNEY_VENUES:
-                    if venue.instagram_handle:
-                        handle_clean = venue.instagram_handle.replace('@', '').lower()
-                        name_clean = venue.name.lower().replace(' ', '').replace('&', '')
-                        if handle_clean in content_lower or name_clean in content_lower:
-                            post['venue_id'] = venue.id
-                            post['detected_venue'] = venue.name
-                            break
-            all_posts.extend(posts)
-            print(f"  {username}: Found {len(posts)} posts")
-        except Exception as e:
-            print(f"  {username}: Error - {e}")
+    if IMGINN_AVAILABLE:
+        for source_id, username in enthusiast_accounts.items():
+            try:
+                posts = scrape_all_imginn_content(username, source_id)
+                # For enthusiast accounts, we need to extract which brewery they're talking about
+                for post in posts:
+                    # Try to detect which brewery is mentioned
+                    content_lower = post['content'].lower()
+                    for venue in SYDNEY_VENUES:
+                        if venue.instagram_handle:
+                            handle_clean = venue.instagram_handle.replace('@', '').lower()
+                            name_clean = venue.name.lower().replace(' ', '').replace('&', '')
+                            if handle_clean in content_lower or name_clean in content_lower:
+                                post['venue_id'] = venue.id
+                                post['detected_venue'] = venue.name
+                                break
+                all_posts.extend(posts)
+                print(f"  {username}: Found {len(posts)} posts")
+            except Exception as e:
+                print(f"  {username}: Error - {e}")
+    else:
+        print("  Skipping (imginn_scraper not available)")
     
     print()
     
