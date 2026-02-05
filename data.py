@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Dict
+from typing import Dict, List
 from pathlib import Path
 from models import Venue, Beer, SocialPost
 
@@ -574,6 +574,96 @@ SYDNEY_POSTS = [
 ]
 
 
+# ==================== UNTAPPD BEER LOADING ====================
+
+def load_beers_from_untappd() -> List[Beer]:
+    """Load beers discovered from Untappd checkins.
+    
+    Creates Beer objects from beer_details.json and tracks when they were first seen.
+    Only includes beers seen in the last 7 days as 'new releases'.
+    """
+    beers = []
+    
+    try:
+        beer_details_file = Path(__file__).parent / "data" / "beer_details.json"
+        beer_history_file = Path(__file__).parent / "data" / "beer_history.json"
+        
+        # Load beer history (tracks when we first saw each beer)
+        beer_history = {}
+        if beer_history_file.exists():
+            try:
+                with open(beer_history_file, encoding='utf-8') as f:
+                    beer_history = json.load(f)
+            except:
+                pass
+        
+        # Load current beer details from Untappd
+        if not beer_details_file.exists():
+            return beers
+            
+        try:
+            with open(beer_details_file, encoding='utf-8') as f:
+                beer_details_cache = json.load(f)
+        except:
+            return beers
+        
+        now = datetime.now()
+        
+        # Process each unique beer found on Untappd
+        for url, details in beer_details_cache.items():
+            if not details.get('name'):
+                continue
+            
+            beer_name = details['name']
+            brewery = details.get('brewery', '')
+            
+            # Create unique ID from beer name + brewery
+            beer_id = f"untappd-{beer_name.lower().replace(' ', '-').replace('(', '').replace(')', '').replace('&', 'and')[:30]}"
+            if brewery:
+                beer_id += f"-{brewery.lower().replace(' ', '-').replace('(', '').replace(')', '').replace('&', 'and')[:20]}"
+            
+            # Check if we've seen this beer before
+            history_key = f"{beer_name}|{brewery}"
+            first_seen_str = beer_history.get(history_key)
+            
+            if first_seen_str:
+                # We've seen this beer before
+                first_seen = datetime.fromisoformat(first_seen_str)
+            else:
+                # First time seeing this beer
+                first_seen = now
+                beer_history[history_key] = first_seen.isoformat()
+            
+            # Beer is "new" if first seen within last 7 days
+            days_since_first_seen = (now - first_seen).days
+            is_new = days_since_first_seen <= 7
+            
+            # Only add beers that are new or were seen recently (within 30 days)
+            if days_since_first_seen <= 30:
+                beers.append(Beer(
+                    id=beer_id,
+                    name=beer_name,
+                    brewery_id=details.get('brewery', 'unknown').lower().replace(' ', '-'),
+                    style=details.get('style'),
+                    abv=details.get('abv'),
+                    description=details.get('description', '')[:200],
+                    release_date=first_seen,
+                    is_new_release=is_new
+                ))
+        
+        # Save updated beer history
+        try:
+            with open(beer_history_file, 'w', encoding='utf-8') as f:
+                json.dump(beer_history, f, indent=2)
+        except Exception as e:
+            print(f"Warning: Could not save beer history: {e}")
+        
+    except Exception as e:
+        print(f"Error loading beers from Untappd: {e}")
+    
+    return beers
+
+
 # ==================== DYNAMIC DATA LOADING ====================
 
 def load_dynamic_data():
@@ -666,7 +756,16 @@ for url, details in _BEER_DETAILS_CACHE.items():
     if details.get('name'):
         BEER_DETAILS_BY_NAME[details['name'].lower()] = details
 
-# Merge dynamic data
+# Load beers from Untappd checkins
+_UNTAPPD_BEERS = load_beers_from_untappd()
+
+# Add Untappd beers to list
+_existing_ids = {b.id for b in SYDNEY_BEERS}
+for beer in _UNTAPPD_BEERS:
+    if beer.id not in _existing_ids:
+        SYDNEY_BEERS.append(beer)
+
+# Merge dynamic data (manual entries and scraped posts)
 _DYNAMIC_BEERS, _DYNAMIC_POSTS = load_dynamic_data()
 
 # Add dynamic beers to list (avoiding duplicates by ID)
@@ -681,4 +780,4 @@ for post in _DYNAMIC_POSTS:
     if post.id not in _existing_post_ids:
         SYDNEY_POSTS.append(post)
 
-print(f"[Data] Loaded {len(_DYNAMIC_BEERS)} dynamic beers, {len(_DYNAMIC_POSTS)} dynamic posts, {len(BEER_DETAILS_BY_NAME)} beer details")
+print(f"[Data] Loaded {len(_UNTAPPD_BEERS)} beers from Untappd, {len(_DYNAMIC_BEERS)} dynamic beers, {len(_DYNAMIC_POSTS)} dynamic posts, {len(BEER_DETAILS_BY_NAME)} beer details")
