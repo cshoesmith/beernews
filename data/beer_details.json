@@ -598,5 +598,25 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-cali-ipa/6348904"
+  },
+  "https://untappd.com/b/pickled-monkey-brewing-co-altbier/6365821": {
+    "name": "Altbier",
+    "brewery": "Pickled Monkey Brewing Co",
+    "style": "Altbier - Traditional",
+    "abv": 4.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-altbier/6365821"
+  },
+  "https://untappd.com/b/pickled-monkey-brewing-co-hazy-pale/6199717": {
+    "name": "Hazy Pale",
+    "brewery": "Pickled Monkey Brewing Co",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 4.7,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-hazy-pale/6199717"
   }
 }
