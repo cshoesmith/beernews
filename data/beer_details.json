@@ -598,5 +598,27 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-double-wcipa/6503298"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-scenic-route/3852927": {
+    "name": "Scenic Route",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Belconnen, ACT",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 4.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-scenic-route/3852927"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439": {
+    "name": "Log Jam",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Katoomba, NSW",
+    "style": "IPA - Other",
+    "abv": 5.6,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
   }
 }
