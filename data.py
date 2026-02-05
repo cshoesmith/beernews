@@ -575,6 +575,53 @@ SYDNEY_POSTS = [
 ]
 
 
+# ==================== BREWERY MAPPING ====================
+
+# Map Untappd brewery names to our venue IDs
+BREWERY_NAME_TO_VENUE_ID = {
+    'young henrys': 'young-henrys',
+    'batch brewing company': 'batch-brewing',
+    'wayward brewing': 'wayward-brewing',
+    'grifter brewing': 'grifter-brewing',
+    'grifter brewing co': 'grifter-brewing',
+    'the rocks brewing': 'the-rocks-brewing',
+    'the rocks brewing co': 'the-rocks-brewing',
+    'bracket brewing': 'bracket-brewing',
+    'future brewing': 'future-brewing',
+    'future brewing co': 'future-brewing',
+    'range brewing': 'range-brewing',
+    'mountain culture beer co': 'mountain-culture',
+    'mountain culture': 'mountain-culture',
+    'kicks brewing': 'kicks-brewing',
+    '4 pines brewing': '4-pines',
+    '4 pines brewing co': '4-pines',
+    '4 pines': '4-pines',
+    'white bay beer co': 'white-bay',
+    'white bay': 'white-bay',
+    'white bay brewing': 'white-bay',
+}
+
+def map_brewery_to_venue_id(brewery_name: str) -> str:
+    """Map a brewery name from Untappd to our venue ID."""
+    if not brewery_name:
+        return 'unknown'
+    
+    brewery_lower = brewery_name.lower().strip()
+    
+    # Try direct lookup
+    if brewery_lower in BREWERY_NAME_TO_VENUE_ID:
+        return BREWERY_NAME_TO_VENUE_ID[brewery_lower]
+    
+    # Try to match against venue IDs
+    for venue in SYDNEY_VENUES:
+        venue_name = venue.name.lower()
+        if venue_name in brewery_lower or brewery_lower in venue_name:
+            return venue.id
+    
+    # Fallback: convert to ID format
+    return brewery_lower.replace(' ', '-').replace('&', 'and')
+
+
 # ==================== UNTAPPD BEER LOADING ====================
 
 def load_beers_from_untappd() -> List[Beer]:
@@ -639,12 +686,16 @@ def load_beers_from_untappd() -> List[Beer]:
             days_since_first_seen = (now - first_seen).days
             is_new = days_since_first_seen <= 7
             
+            # Map brewery name to venue ID
+            brewery_name = details.get('brewery', '')
+            brewery_id = map_brewery_to_venue_id(brewery_name)
+            
             # Only add beers that are new or were seen recently (within 30 days)
             if days_since_first_seen <= 30:
                 beers.append(Beer(
                     id=beer_id,
                     name=beer_name,
-                    brewery_id=details.get('brewery', 'unknown').lower().replace(' ', '-'),
+                    brewery_id=brewery_id,
                     style=details.get('style'),
                     abv=details.get('abv'),
                     description=details.get('description', '')[:200],
