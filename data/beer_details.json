@@ -1,1 +1,602 @@
-{}
+{
+  "https://untappd.com/b/young-henrys-natural-lager/157945": {
+    "name": "Natural Lager",
+    "brewery": "Young Henrys",
+    "style": "Kellerbier / Zwickelbier",
+    "abv": 4.2,
+    "ibu": 25,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-natural-lager/157945"
+  },
+  "https://untappd.com/b/young-henrys-hopic-thunder/6219017": {
+    "name": "Hopic Thunder",
+    "brewery": "Young Henrys",
+    "style": "IPA - New England / Hazy",
+    "abv": null,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-hopic-thunder/6219017"
+  },
+  "https://untappd.com/b/young-henrys-cold-xpa/5531974": {
+    "name": "Cold XPA",
+    "brewery": "Young Henrys",
+    "style": "Pale Ale - XPA (Extra Pale)",
+    "abv": 4.0,
+    "ibu": 15,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-cold-xpa/5531974"
+  },
+  "https://untappd.com/b/young-henrys-coco-crush/6563805": {
+    "name": "Coco Crush",
+    "brewery": "Young Henrys",
+    "style": "Pale Ale - Australian",
+    "abv": 4.4,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-coco-crush/6563805"
+  },
+  "https://untappd.com/b/batch-brewing-company-zwickel-bier/4841741": {
+    "name": "Zwickel Bier",
+    "brewery": "Batch Brewing Company",
+    "style": "Kellerbier / Zwickelbier",
+    "abv": 4.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-zwickel-bier/4841741"
+  },
+  "https://untappd.com/b/batch-brewing-company-yipee-rye-yay/6543779": {
+    "name": "Yipee Rye Yay",
+    "brewery": "Batch Brewing Company",
+    "style": "IPA - Rye",
+    "abv": 5.2,
+    "ibu": 40,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-yipee-rye-yay/6543779"
+  },
+  "https://untappd.com/b/batch-brewing-company-heap/6543788": {
+    "name": "HEAP",
+    "brewery": "Batch Brewing Company",
+    "style": "Pilsner - New Zealand",
+    "abv": 5.6,
+    "ibu": 35,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-heap/6543788"
+  },
+  "https://untappd.com/b/batch-brewing-company-czech-czech-one-two-one-two/4555877": {
+    "name": "Czech Czech One-Two, One-Two",
+    "brewery": "Batch Brewing Company",
+    "style": "Pilsner - Czech / Bohemian",
+    "abv": 5.4,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-czech-czech-one-two-one-two/4555877"
+  },
+  "https://untappd.com/b/wayward-brewing-gayward-fruity-pale-ale/6151148": {
+    "name": "Gayward | Fruity Pale Ale",
+    "brewery": "Wayward Brewing",
+    "style": "Pale Ale - Australian",
+    "abv": 4.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/wayward-brewing-gayward-fruity-pale-ale/6151148"
+  },
+  "https://untappd.com/b/powder-monkey-brewing-co-schwarzbier-dark-lager/6000422": {
+    "name": "Schwarzbier Dark Lager",
+    "brewery": "Powder Monkey Brewing Co",
+    "style": "Schwarzbier",
+    "abv": 5.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/powder-monkey-brewing-co-schwarzbier-dark-lager/6000422"
+  },
+  "https://untappd.com/b/wayward-brewing-rhuberry-saison/6086143": {
+    "name": "Rhuberry Saison",
+    "brewery": "Wayward Brewing",
+    "style": "Farmhouse Ale - Saison",
+    "abv": 4.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/wayward-brewing-rhuberry-saison/6086143"
+  },
+  "https://untappd.com/b/akasha-brewing-company-super-chill-pacific-ale/4544089": {
+    "name": "Super Chill Pacific Ale",
+    "brewery": "Akasha Brewing Company",
+    "style": "Pale Ale - Australian",
+    "abv": 4.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/akasha-brewing-company-super-chill-pacific-ale/4544089"
+  },
+  "https://untappd.com/b/batch-brewing-dry-hopped-citrus-sour/6167375": {
+    "name": "Dry Hopped Citrus Sour",
+    "brewery": "Batch Brewing",
+    "style": "Sour - Fruited",
+    "abv": 4.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-dry-hopped-citrus-sour/6167375"
+  },
+  "https://untappd.com/b/the-grifter-brewing-co-golden-bronco/6111245": {
+    "name": "Golden Bronco",
+    "brewery": "The Grifter Brewing Co.",
+    "style": "Pale Ale - American",
+    "abv": 5.3,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/the-grifter-brewing-co-golden-bronco/6111245"
+  },
+  "https://untappd.com/b/the-grifter-brewing-co-pink-galah/2485568": {
+    "name": "Pink Galah",
+    "brewery": "The Grifter Brewing Co.",
+    "style": "Sour - Other",
+    "abv": 4.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/the-grifter-brewing-co-pink-galah/2485568"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-great-hopspectations/6452033": {
+    "name": "Great Hopspectations",
+    "brewery": "Balanced Rock Brewing",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 5.5,
+    "ibu": 19,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-great-hopspectations/6452033"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-hop-the-casbah/6452041": {
+    "name": "Hop the Casbah",
+    "brewery": "Balanced Rock Brewing",
+    "style": "IPA - Imperial / Double New England / Hazy",
+    "abv": 8.5,
+    "ibu": 25,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-hop-the-casbah/6452041"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-dublin-dark/6542995": {
+    "name": "Dublin Dark",
+    "brewery": "Balanced Rock Brewing",
+    "style": "Stout - Irish Dry",
+    "abv": null,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-dublin-dark/6542995"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-special-hops-op/6230292": {
+    "name": "Special Hops Op",
+    "brewery": "Balanced Rock Brewing",
+    "style": "Bitter - Extra Special / Strong (ESB)",
+    "abv": 4.0,
+    "ibu": 40,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-special-hops-op/6230292"
+  },
+  "https://untappd.com/b/bracket-brewing-arrangement/6535958": {
+    "name": "Arrangement",
+    "brewery": "Bracket Brewing",
+    "style": "IPA - American",
+    "abv": 8.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/bracket-brewing-arrangement/6535958"
+  },
+  "https://untappd.com/b/bracket-brewing-pigment/6516202": {
+    "name": "Pigment",
+    "brewery": "Bracket Brewing",
+    "style": "IPA - Imperial / Double New England / Hazy",
+    "abv": 8.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/bracket-brewing-pigment/6516202"
+  },
+  "https://untappd.com/b/bracket-brewing-circular-logic/6516204": {
+    "name": "Circular Logic",
+    "brewery": "Bracket Brewing",
+    "style": "IPA - Triple New England / Hazy",
+    "abv": 10.1,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/bracket-brewing-circular-logic/6516204"
+  },
+  "https://untappd.com/b/bracket-brewing-recess/6456592": {
+    "name": "Recess",
+    "brewery": "Bracket Brewing",
+    "style": "IPA - Session",
+    "abv": 3.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/bracket-brewing-recess/6456592"
+  },
+  "https://untappd.com/b/future-magic-brewing-co-sleight-of-hand/6150146": {
+    "name": "Sleight of Hand",
+    "brewery": "Future Magic Brewing Co.",
+    "style": "Pilsner - Other",
+    "abv": 4.9,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/future-magic-brewing-co-sleight-of-hand/6150146"
+  },
+  "https://untappd.com/b/future-magic-brewing-co-straight-outta-koln/6433212": {
+    "name": "Straight Outta K\u00f6ln",
+    "brewery": "Future Magic Brewing Co.",
+    "style": "K\u00f6lsch",
+    "abv": 4.8,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/future-magic-brewing-co-straight-outta-koln/6433212"
+  },
+  "https://untappd.com/b/future-magic-brewing-co-magic-stick/5204982": {
+    "name": "Magic Stick",
+    "brewery": "Future Magic Brewing Co.",
+    "style": "IPA - Session",
+    "abv": 3.5,
+    "ibu": 20,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/future-magic-brewing-co-magic-stick/5204982"
+  },
+  "https://untappd.com/b/future-magic-brewing-co-decimate/6475560": {
+    "name": "Decimate",
+    "brewery": "Future Magic Brewing Co.",
+    "style": "IPA - Triple",
+    "abv": 10.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/future-magic-brewing-co-decimate/6475560"
+  },
+  "https://untappd.com/b/future-magic-brewing-co-galaxy-dust/5203754": {
+    "name": "Galaxy Dust",
+    "brewery": "Future Magic Brewing Co.",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.6,
+    "ibu": 31,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/future-magic-brewing-co-galaxy-dust/5203754"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-status-quo/3554194": {
+    "name": "Status Quo",
+    "brewery": "Mountain Culture Beer Co.",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 5.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-status-quo/3554194"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-surly-s-super-cobra/6322022": {
+    "name": "Surly\u2019s Super Cobra",
+    "brewery": "Mountain Culture Beer Co.",
+    "style": "Red Ale - American Amber / Red",
+    "abv": 5.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-surly-s-super-cobra/6322022"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-company-coin/6582744": {
+    "name": "Company Coin",
+    "brewery": "Mountain Culture Beer Co.",
+    "style": "IPA - Imperial / Double New England / Hazy",
+    "abv": 8.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-company-coin/6582744"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-moon-dust/3477131": {
+    "name": "Moon Dust",
+    "brewery": "Mountain Culture Beer Co.",
+    "style": "Stout - American",
+    "abv": 5.6,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-moon-dust/3477131"
+  },
+  "https://untappd.com/b/hillbilly-harvest-co-scrumpy/1740557": {
+    "name": "Scrumpy",
+    "brewery": "Hillbilly Harvest Co.",
+    "style": "Cider - Traditional / Apfelwein",
+    "abv": 6.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/hillbilly-harvest-co-scrumpy/1740557"
+  },
+  "https://untappd.com/b/summit-brewing-company-twenty-one-ipa/2984369": {
+    "name": "Twenty-One IPA",
+    "brewery": "Summit Brewing Company",
+    "style": "IPA - American",
+    "abv": 7.0,
+    "ibu": 70,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/summit-brewing-company-twenty-one-ipa/2984369"
+  },
+  "https://untappd.com/b/summit-brewing-company-elderflower-ipa/3641556": {
+    "name": "Elderflower IPA",
+    "brewery": "Summit Brewing Company",
+    "style": "IPA - American",
+    "abv": 6.2,
+    "ibu": 41,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/summit-brewing-company-elderflower-ipa/3641556"
+  },
+  "https://untappd.com/b/bell-s-brewery-hopslam-ale-2020/3612085": {
+    "name": "Hopslam Ale (2020)",
+    "brewery": "Bell\u2019s Brewery",
+    "style": "IPA - Imperial / Double",
+    "abv": 10.0,
+    "ibu": 65,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/bell-s-brewery-hopslam-ale-2020/3612085"
+  },
+  "https://untappd.com/b/toppling-goliath-brewing-co-king-sue/594015": {
+    "name": "King Sue",
+    "brewery": "Toppling Goliath Brewing Co.",
+    "style": "IPA - Imperial / Double New England / Hazy",
+    "abv": 8.2,
+    "ibu": 100,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/toppling-goliath-brewing-co-king-sue/594015"
+  },
+  "https://untappd.com/b/sydney-brewery-hazy-ipa/5265729": {
+    "name": "Hazy IPA",
+    "brewery": "Sydney Brewery",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/sydney-brewery-hazy-ipa/5265729"
+  },
+  "https://untappd.com/b/sydney-brewery-mosaic-west-coast-ipa/6245899": {
+    "name": "Mosaic West Coast IPA",
+    "brewery": "Sydney Brewery",
+    "style": "IPA - American",
+    "abv": 6.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/sydney-brewery-mosaic-west-coast-ipa/6245899"
+  },
+  "https://untappd.com/b/sydney-brewery-dawn-ipa/6240371": {
+    "name": "Dawn IPA",
+    "brewery": "Sydney Brewery",
+    "style": "IPA - Other",
+    "abv": 6.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/sydney-brewery-dawn-ipa/6240371"
+  },
+  "https://untappd.com/b/sydney-brewery-mango-sour/5784080": {
+    "name": "Mango Sour",
+    "brewery": "Sydney Brewery",
+    "style": "Sour - Fruited",
+    "abv": 4.4,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/sydney-brewery-mango-sour/5784080"
+  },
+  "https://untappd.com/b/white-bay-brewery-pils-czech-pilsner/4677479": {
+    "name": "Pils - Czech Pilsner",
+    "brewery": "White Bay Brewery",
+    "style": "Pilsner - Czech / Bohemian",
+    "abv": 5.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/white-bay-brewery-pils-czech-pilsner/4677479"
+  },
+  "https://untappd.com/b/carlton-and-united-breweries-resch-s-draught/9871": {
+    "name": "Resch's Draught",
+    "brewery": "Carlton & United Breweries",
+    "style": "Lager - Pale",
+    "abv": 5.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/carlton-and-united-breweries-resch-s-draught/9871"
+  },
+  "https://untappd.com/b/coopers-original-pale-ale/7884": {
+    "name": "Original Pale Ale",
+    "brewery": "Coopers",
+    "style": "Pale Ale - Australian",
+    "abv": 4.5,
+    "ibu": 24,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/coopers-original-pale-ale/7884"
+  },
+  "https://untappd.com/b/stone-and-wood-easy-pale-ale/6195248": {
+    "name": "Easy Pale Ale",
+    "brewery": "Stone & Wood",
+    "style": "Pale Ale - Australian",
+    "abv": 3.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/stone-and-wood-easy-pale-ale/6195248"
+  },
+  "https://untappd.com/b/stone-and-wood-pacific-ale/626326": {
+    "name": "Pacific Ale",
+    "brewery": "Stone & Wood",
+    "style": "Pale Ale - Australian",
+    "abv": 4.4,
+    "ibu": 30,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/stone-and-wood-pacific-ale/626326"
+  },
+  "https://untappd.com/b/great-northern-brewing-co-super-crisp-lager/230949": {
+    "name": "Super Crisp Lager",
+    "brewery": "Great Northern Brewing Co.",
+    "style": "Lager - American",
+    "abv": 3.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/great-northern-brewing-co-super-crisp-lager/230949"
+  },
+  "https://untappd.com/b/magyar-czider-kft-czider-szaraz/817644": {
+    "name": "Czider Sz\u00e1raz",
+    "brewery": "Magyar Czider Kft.",
+    "style": "Cider - Dry",
+    "abv": 7.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/magyar-czider-kft-czider-szaraz/817644"
+  },
+  "https://untappd.com/b/bulmers-cider-strongbow-gold-apple/131291": {
+    "name": "Strongbow Gold Apple",
+    "brewery": "Bulmers Cider",
+    "style": "Cider - Traditional / Apfelwein",
+    "abv": 5.0,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/bulmers-cider-strongbow-gold-apple/131291"
+  },
+  "https://untappd.com/b/soproni-sorgyar-heineken-hungaria-lager-klasszikus/19843": {
+    "name": "Lager (Klasszikus)",
+    "brewery": "Soproni S\u00f6rgy\u00e1r (Heineken Hung\u00e1ria)",
+    "style": "Lager - Pale",
+    "abv": 4.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/soproni-sorgyar-heineken-hungaria-lager-klasszikus/19843"
+  },
+  "https://untappd.com/b/brau-union-osterreich-edelweiss-hefetrub-original/93420": {
+    "name": "Edelweiss Hefetr\u00fcb Original",
+    "brewery": "Brau Union \u00d6sterreich",
+    "style": "Wheat Beer - Hefeweizen",
+    "abv": 5.1,
+    "ibu": 10,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/brau-union-osterreich-edelweiss-hefetrub-original/93420"
+  },
+  "https://untappd.com/b/soproni-sorgyar-heineken-hungaria-soproni-ipa-ovatos-duhaj/2002025": {
+    "name": "Soproni IPA \u00d3vatos Duhaj",
+    "brewery": "Soproni S\u00f6rgy\u00e1r (Heineken Hung\u00e1ria)",
+    "style": "IPA - American",
+    "abv": 4.8,
+    "ibu": 40,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/soproni-sorgyar-heineken-hungaria-soproni-ipa-ovatos-duhaj/2002025"
+  },
+  "https://untappd.com/b/fiddlehead-brewing-company-fiddlehead-ipa/96969": {
+    "name": "Fiddlehead IPA",
+    "brewery": "Fiddlehead Brewing Company",
+    "style": "IPA - American",
+    "abv": 6.2,
+    "ibu": 53,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/fiddlehead-brewing-company-fiddlehead-ipa/96969"
+  },
+  "https://untappd.com/b/sierra-nevada-brewing-co-hazy-little-thing/2412786": {
+    "name": "Hazy Little Thing",
+    "brewery": "Sierra Nevada Brewing Co.",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.7,
+    "ibu": 35,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/sierra-nevada-brewing-co-hazy-little-thing/2412786"
+  },
+  "https://untappd.com/b/beer-tree-brew-co-old-union-haze/5777139": {
+    "name": "Old Union Haze",
+    "brewery": "Beer Tree Brew Co",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.3,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/beer-tree-brew-co-old-union-haze/5777139"
+  },
+  "https://untappd.com/b/southern-tier-brewing-company-lake-shore-fog/2911781": {
+    "name": "Lake Shore Fog",
+    "brewery": "Southern Tier Brewing Company",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.5,
+    "ibu": 20,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/southern-tier-brewing-company-lake-shore-fog/2911781"
+  },
+  "https://untappd.com/b/wicked-weed-brewing-pernicious-ipa/883318": {
+    "name": "Pernicious",
+    "brewery": "Wicked Weed Brewing",
+    "style": "IPA - American",
+    "abv": 7.3,
+    "ibu": 70,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/wicked-weed-brewing-pernicious-ipa/883318"
+  },
+  "https://untappd.com/b/pickled-monkey-brewing-co-altbier/6365821": {
+    "name": "Altbier",
+    "brewery": "Pickled Monkey Brewing Co",
+    "style": "Altbier - Traditional",
+    "abv": 4.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-altbier/6365821"
+  },
+  "https://untappd.com/b/pickled-monkey-brewing-co-hazy-pale/6199717": {
+    "name": "Hazy Pale",
+    "brewery": "Pickled Monkey Brewing Co",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 4.7,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-hazy-pale/6199717"
+  },
+  "https://untappd.com/b/pickled-monkey-brewing-co-double-wcipa/6503298": {
+    "name": "Double WCIPA",
+    "brewery": "Pickled Monkey Brewing Co",
+    "style": "IPA - Imperial / Double",
+    "abv": 8.5,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-double-wcipa/6503298"
+  }
+}
