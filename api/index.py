@@ -244,8 +244,8 @@ def get_trending():
         venue_activity = Counter()
         style_counts = Counter()
         
-        # Build lookup for engine beers (by ID)
-        beers_by_id = {b.id: b for b in engine.beers}
+        # Build lookup for engine beers (by ID) - engine.beers is a dict
+        beers_by_id = engine.beers  # Already a dict keyed by beer ID
         
         for post in recent_posts:
             # Count venue activity
