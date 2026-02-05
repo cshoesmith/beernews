@@ -251,7 +251,8 @@ def get_trending():
             # Count venue activity
             venue_activity[post.venue_id] += 1
             
-            # Use beer_details from Untappd if available (has real names)
+            # Only count beers from Untappd posts with beer_details (real data)
+            # Skip mock posts that only have beer IDs like "beer-001"
             if post.beer_details and post.beer_details.get('name'):
                 beer_name = post.beer_details['name']
                 # Clean up beer name (remove leading "a " or "an ")
@@ -279,16 +280,6 @@ def get_trending():
                         style_counts['Pale Ale'] += 1
                     else:
                         style_counts[style.split(' - ')[0]] += 1
-            else:
-                # Fallback to mentions_beers (may contain IDs)
-                for beer_id in post.mentions_beers:
-                    # Try to look up beer name from engine
-                    if beer_id in beers_by_id:
-                        beer_name = beers_by_id[beer_id].name
-                    else:
-                        # Use the ID as name (for Untappd beers not in engine)
-                        beer_name = beer_id
-                    beer_counts[beer_name] += 1
         
         # Get top items
         trending_beers = [
