@@ -1,0 +1,63 @@
+name: Scrape Beer Updates
+
+on:
+  schedule:
+    # Run every 6 hours
+    - cron: '0 */6 * * *'
+  # Allow manual trigger
+  workflow_dispatch:
+
+# Grant write permissions to push data updates
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout vercel repo (current repo)
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: true
+        fetch-depth: 0
+        
+    - name: Checkout beernews repo (for scraper code)
+      uses: actions/checkout@v4
+      with:
+        repository: cshoesmith/beernews
+        path: beernews_code
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r beernews_code/requirements.txt
+        pip install -r beernews_code/requirements-scraper.txt
+      
+    - name: Run scraper
+      env:
+        APIFY_API_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
+        INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+      run: |
+        # Copy scripts to run them
+        cp -r beernews_code/scripts .
+        python scripts/scraper.py
+        
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff --quiet data/ || echo "changed=true" >> $GITHUB_OUTPUT
+        
+    - name: Commit and push if changed
+      if: steps.git-check.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git commit -m "Update beer data - $(date -u '+%Y-%m-%d %H:%M UTC')"
+        git push
+        echo "Changes pushed. Vercel will auto-deploy."
