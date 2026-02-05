@@ -434,10 +434,68 @@ def find_untappd_venue_id(venue_name: str, venue_address: str = "") -> Optional[
         return None
 
 
+def is_sydney_suburb(location_text: str) -> bool:
+    """Check if a location is in Sydney."""
+    if not location_text:
+        return False
+    
+    sydney_keywords = [
+        'sydney', 'nsw', 'new south wales',
+        'marrickville', 'newtown', 'alexandria', 'camperdown', 'enmore',
+        'surry hills', 'crows nest', 'rozelle', 'broookvale', 'petersham',
+        'woolloomooloo', 'manly', 'balmain', 'glebe', 'redfern',
+        'annandale', 'leichhardt', 'stanmore', 'summer hill',
+        'dulwich hill', 'haberfield', 'ashfield', 'croydon',
+        'rockdale', 'kogarah', 'hurstville', 'sutherland',
+        'parramatta', 'liverpool', 'blacktown', 'penrith',
+        'chatswood', 'north sydney', 'mosman', 'bondi',
+        'coogee', 'maroubra', 'randwick', 'paddington',
+        'darlinghurst', 'potts point', 'pyrmont', 'ultimo',
+        'haymarket', 'the rocks', 'wynyard', 'circular quay'
+    ]
+    
+    location_lower = location_text.lower()
+    return any(kw in location_lower for kw in sydney_keywords)
+
+
+def add_new_sydney_venue(brewery_name: str, brewery_location: str = ""):
+    """Add a newly discovered Sydney venue to the auto-discovered list."""
+    try:
+        # Load auto-discovered venues
+        venues_file = DATA_FILE.parent / "auto_discovered_venues.json"
+        auto_venues = {}
+        
+        if venues_file.exists():
+            with open(venues_file, 'r', encoding='utf-8') as f:
+                auto_venues = json.load(f)
+        
+        # Check if already known
+        brewery_id = brewery_name.lower().replace(' ', '-').replace('&', 'and')
+        if brewery_id in auto_venues:
+            return
+        
+        # Add new venue
+        auto_venues[brewery_id] = {
+            "name": brewery_name,
+            "location": brewery_location,
+            "discovered_at": datetime.now().isoformat(),
+            "status": "pending_review"
+        }
+        
+        # Save
+        with open(venues_file, 'w', encoding='utf-8') as f:
+            json.dump(auto_venues, f, indent=2)
+        
+        print(f"    [NEW VENUE DISCOVERED] {brewery_name} - Added to auto-discovered list")
+        
+    except Exception as e:
+        print(f"    Warning: Could not save auto-discovered venue: {e}")
+
+
 def scrape_untappd_beer_details(beer_url: str) -> Dict:
     """Scrape detailed beer information from Untappd beer page.
     
-    Returns: dict with name, brewery, style, abv, ibu, description, label_url
+    Returns: dict with name, brewery, style, abv, ibu, description, label_url, brewery_location
     """
     try:
         headers = {
@@ -450,6 +508,7 @@ def scrape_untappd_beer_details(beer_url: str) -> Dict:
         beer_data = {
             'name': '',
             'brewery': '',
+            'brewery_location': '',
             'style': '',
             'abv': None,
             'ibu': None,
@@ -467,6 +526,11 @@ def scrape_untappd_beer_details(beer_url: str) -> Dict:
         brewery_elem = soup.find('p', class_='brewery') or soup.find('a', href=re.compile(r'/brewery/'))
         if brewery_elem:
             beer_data['brewery'] = brewery_elem.get_text().strip()
+        
+        # Extract brewery location (if available)
+        location_elem = soup.find('span', class_='location') or soup.find('p', class_='brewery-location')
+        if location_elem:
+            beer_data['brewery_location'] = location_elem.get_text().strip()
         
         # Extract style
         style_elem = soup.find('p', class_='style') or soup.find('span', class_='style')
@@ -497,6 +561,16 @@ def scrape_untappd_beer_details(beer_url: str) -> Dict:
         label_elem = soup.find('img', class_='label') or soup.find('img', class_='beer-label')
         if label_elem:
             beer_data['label_url'] = label_elem.get('src', '')
+        
+        # Check if this is a new Sydney brewery we should track
+        from data import SYDNEY_VENUES
+        existing_ids = {v.id for v in SYDNEY_VENUES}
+        brewery_id = beer_data['brewery'].lower().replace(' ', '-').replace('&', 'and')
+        
+        if brewery_id not in existing_ids:
+            # Check if brewery is in Sydney
+            if is_sydney_suburb(beer_data['brewery_location']):
+                add_new_sydney_venue(beer_data['brewery'], beer_data['brewery_location'])
         
         return beer_data
         
