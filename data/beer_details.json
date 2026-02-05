@@ -599,27 +599,27 @@
     "label_url": "",
     "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-double-wcipa/6503298"
   },
-  "https://untappd.com/b/mountain-culture-beer-co-scenic-route/3852927": {
-    "name": "Scenic Route",
+  "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719": {
+    "name": "Cult IPA",
     "brewery": "Mountain Culture Beer Co.",
-    "brewery_location": "Belconnen, ACT",
-    "style": "Pale Ale - New England / Hazy",
-    "abv": 4.0,
+    "brewery_location": "Pyrmont, NSW",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.2,
     "ibu": null,
     "description": "",
     "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-scenic-route/3852927"
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719"
   },
-  "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439": {
-    "name": "Log Jam",
+  "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489": {
+    "name": "Dirt Church",
     "brewery": "Mountain Culture Beer Co.",
     "brewery_location": "Katoomba, NSW",
-    "style": "IPA - Other",
-    "abv": 5.6,
+    "style": "IPA - New England / Hazy",
+    "abv": null,
     "ibu": null,
     "description": "",
     "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
   },
   "https://untappd.com/b/mountain-culture-beer-co-neon-splice/6414919": {
     "name": "Neon Splice",
@@ -632,16 +632,16 @@
     "label_url": "",
     "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-neon-splice/6414919"
   },
-  "https://untappd.com/b/mountain-culture-beer-co-ruffle-n-feathers/5995614": {
-    "name": "Ruffle'n Feathers",
+  "https://untappd.com/b/mountain-culture-beer-co-scenic-route/3852927": {
+    "name": "Scenic Route",
     "brewery": "Mountain Culture Beer Co.",
-    "brewery_location": "Manly, NSW",
-    "style": "IPA - New England / Hazy",
-    "abv": 6.0,
+    "brewery_location": "Belconnen, ACT",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 4.0,
     "ibu": null,
     "description": "",
     "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-ruffle-n-feathers/5995614"
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-scenic-route/3852927"
   },
   "https://untappd.com/b/mountain-culture-beer-co-hourglass/6525925": {
     "name": "Hourglass",
@@ -654,27 +654,16 @@
     "label_url": "",
     "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-hourglass/6525925"
   },
-  "https://untappd.com/b/mountain-culture-beer-co-status-quo-with-peacharine/6525809": {
-    "name": "Status Quo With Peacharine",
+  "https://untappd.com/b/mountain-culture-beer-co-ruffle-n-feathers/5995614": {
+    "name": "Ruffle'n Feathers",
     "brewery": "Mountain Culture Beer Co.",
-    "brewery_location": "Pyrmont, NSW",
-    "style": "Pale Ale - New England / Hazy",
-    "abv": 5.2,
+    "brewery_location": "Manly, NSW",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.0,
     "ibu": null,
     "description": "",
     "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-status-quo-with-peacharine/6525809"
-  },
-  "https://untappd.com/b/mountain-culture-beer-co-seasoned-veteran/6575883": {
-    "name": "Seasoned Veteran",
-    "brewery": "Mountain Culture Beer Co.",
-    "brewery_location": "North Narrabeen, NSW",
-    "style": "Pale Ale - American",
-    "abv": 5.6,
-    "ibu": null,
-    "description": "",
-    "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-seasoned-veteran/6575883"
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-ruffle-n-feathers/5995614"
   },
   "https://untappd.com/b/seeker-brewing-lil-juicy/6574548": {
     "name": "Lil' Juicy",
@@ -873,28 +862,6 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/sauce-brewing-co-pina-colada-fog/4936294"
-  },
-  "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719": {
-    "name": "Cult IPA",
-    "brewery": "Mountain Culture Beer Co.",
-    "brewery_location": "Pyrmont, NSW",
-    "style": "IPA - New England / Hazy",
-    "abv": 6.2,
-    "ibu": null,
-    "description": "",
-    "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719"
-  },
-  "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489": {
-    "name": "Dirt Church",
-    "brewery": "Mountain Culture Beer Co.",
-    "brewery_location": "Katoomba, NSW",
-    "style": "IPA - New England / Hazy",
-    "abv": null,
-    "ibu": null,
-    "description": "",
-    "label_url": "",
-    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
   },
   "https://untappd.com/b/common-people-brewing-co-villager-s-pale-ale/4685467": {
     "name": "Villager's Pale Ale",
