@@ -173,34 +173,67 @@ function filterBySuburb(suburb) {
 async function loadTrending() {
     try {
         const response = await fetch(`${API_BASE}/trending`);
-        trendingData = await response.json();
+        const data = await response.json();
+        
+        if (data.error) {
+            console.error('Trending API error:', data.error);
+            document.getElementById('trending-list').innerHTML = `<li style="color: #999;">Error: ${data.error}</li>`;
+            return;
+        }
+        
+        trendingData = {
+            beers: data.beers || [],
+            venues: data.venues || [],
+            styles: data.styles || []
+        };
+        
+        // If all arrays are empty, show a message but with the count
+        const totalItems = trendingData.beers.length + trendingData.venues.length + trendingData.styles.length;
+        if (totalItems === 0) {
+            document.getElementById('trending-list').innerHTML = `<li style="color: #999; font-style: italic;">No trending data yet (${data.total_checkins || 0} checkins tracked)</li>`;
+            return;
+        }
+        
         renderTrending();
     } catch (err) {
         console.error('Failed to load trending:', err);
-        document.getElementById('trending-list').innerHTML = '<li>Trending data unavailable</li>';
+        document.getElementById('trending-list').innerHTML = '<li style="color: #999;">Unable to load trending data</li>';
     }
 }
 
 function renderTrending() {
     const list = document.getElementById('trending-list');
+    
+    if (!trendingData || !trendingData[currentTrendingTab]) {
+        list.innerHTML = '<li style="color: #999; font-style: italic;">Loading...</li>';
+        return;
+    }
+    
     const items = trendingData[currentTrendingTab] || [];
     
     if (items.length === 0) {
-        list.innerHTML = '<li style="color: #999; font-style: italic;">No data yet</li>';
+        // Show a friendly message with suggestions
+        const suggestions = {
+            beers: 'Check back after more venue checkins',
+            venues: 'Visit venues to see activity',
+            styles: 'Styles will appear with more data'
+        };
+        list.innerHTML = `<li style="color: #999; font-style: italic; padding: 8px 0;">${suggestions[currentTrendingTab] || 'No data yet'}</li>`;
         return;
     }
     
     list.innerHTML = items.map((item, index) => {
+        const safeName = item.name ? item.name.replace(/'/g, "\\'") : 'Unknown';
         const clickHandler = item.type === 'venue' 
-            ? `onclick="filterBySuburb('${item.name}'); return false;"`
+            ? `onclick="filterBySuburb('${safeName}'); return false;"`
             : item.type === 'style'
-            ? `onclick="filterByStyle('${item.name}'); return false;"`
-            : `onclick="searchBeer('${item.name}'); return false;"`;
+            ? `onclick="filterByStyle('${safeName}'); return false;"`
+            : `onclick="searchBeer('${safeName}'); return false;"`;
         
         return `<li>
             <a href="#" ${clickHandler} style="display: flex; justify-content: space-between; align-items: baseline;">
-                <span>${item.name}</span>
-                <span style="font-size: 0.75rem; color: #999; font-weight: 500;">${item.count} checkins</span>
+                <span>${item.name || 'Unknown'}</span>
+                <span style="font-size: 0.75rem; color: #999; font-weight: 500;">${item.count || 0} checkins</span>
             </a>
         </li>`;
     }).join('');

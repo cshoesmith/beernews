@@ -316,12 +316,15 @@ def get_trending():
             "total_checkins": len(recent_posts)
         })
     except Exception as e:
+        import traceback
+        print(f"ERROR in get_trending: {e}")
+        traceback.print_exc()
         return jsonify({
             "beers": [],
             "venues": [],
             "styles": [],
             "error": str(e)
-        })
+        }), 500
 
 
 @app.route('/api/metrics')
