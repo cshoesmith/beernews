@@ -873,5 +873,29 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/common-people-brewing-co-villager-s-pale-ale/4685467"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-juice-trip/6163929": {
+    "name": "Juice Trip",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Riverwood, NSW",
+    "style": "IPA - Fruited",
+    "abv": 7.0,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-juice-trip/6163929"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439": {
+    "name": "Log Jam",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Sydney, NSW",
+    "style": "IPA - American",
+    "abv": 5.8,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
   }
 }
