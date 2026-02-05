@@ -318,11 +318,18 @@ function createStoryCard(rec, isFeatured = false) {
             timeText = `${daysAgo} days ago`;
         }
         
+        const labelHtml = beer.label_url 
+            ? `<img src="${beer.label_url}" alt="${beer.name}" style="width: 50px; height: 50px; object-fit: contain; float: left; margin-right: 12px; border-radius: 4px;">` 
+            : '';
+        
         return `
-        <div class="beer-item">
-            <div class="beer-name">${beer.name} <span class="new-badge">New</span></div>
-            <div class="beer-details">${beer.style} • ${beer.abv}% ABV</div>
-            <div class="beer-time">Released: ${timeText}</div>
+        <div class="beer-item" style="overflow: hidden;">
+            ${labelHtml}
+            <div style="overflow: hidden;">
+                <div class="beer-name">${beer.name} <span class="new-badge">New</span></div>
+                <div class="beer-details">${beer.style} • ${beer.abv}% ABV</div>
+                <div class="beer-time">Released: ${timeText}</div>
+            </div>
         </div>
     `}).join('');
     
@@ -405,16 +412,23 @@ async function loadNewReleases() {
                 timeText = `${daysAgo} days ago`;
             }
             
+            const labelHtml = beer.label_url 
+                ? `<img src="${beer.label_url}" alt="${beer.name} label" style="width: 60px; height: 60px; object-fit: contain; margin-right: 12px; border-radius: 4px;">` 
+                : '';
+            
             html += `
-                <div class="list-item">
-                    <div class="item-date">${timeText}</div>
-                    <div class="item-content">
-                        <h4>${beer.name} <span class="new-badge">New Release</span></h4>
-                        <p>${beer.description || `${beer.style} from ${brewery ? brewery.name : (beer.brewery_name || 'Unknown Brewery')}`}</p>
-                        <div class="item-tags">
-                            <span class="tag">${beer.style}</span>
-                            <span class="tag">${beer.abv}% ABV</span>
-                            ${brewery ? `<span class="tag">${brewery.suburb}</span>` : ''}
+                <div class="list-item" style="display: flex; align-items: flex-start;">
+                    ${labelHtml}
+                    <div style="flex: 1;">
+                        <div class="item-date">${timeText}</div>
+                        <div class="item-content">
+                            <h4>${beer.name} <span class="new-badge">New Release</span></h4>
+                            <p>${beer.description || `${beer.style} from ${brewery ? brewery.name : (beer.brewery_name || 'Unknown Brewery')}`}</p>
+                            <div class="item-tags">
+                                <span class="tag">${beer.style}</span>
+                                <span class="tag">${beer.abv}% ABV</span>
+                                ${brewery ? `<span class="tag">${brewery.suburb}</span>` : ''}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -78,6 +78,7 @@ def get_recommendations():
                     "style": b.style,
                     "abv": b.abv,
                     "description": b.description,
+                    "label_url": b.label_url,
                     "release_date": b.release_date.isoformat(),
                     "is_new_release": b.is_new_release
                 } for b in rec.new_beers
@@ -111,9 +112,11 @@ def get_new_releases():
             "id": b.id,
             "name": b.name,
             "brewery_id": b.brewery_id,
+            "brewery_name": b.brewery_name,
             "style": b.style,
             "abv": b.abv,
             "description": b.description,
+            "label_url": b.label_url,
             "release_date": b.release_date.isoformat(),
             "is_new_release": b.is_new_release
         } for b in beers
@@ -135,9 +138,11 @@ def get_all_beers():
             "id": b.id,
             "name": b.name,
             "brewery_id": b.brewery_id,
+            "brewery_name": b.brewery_name,
             "style": b.style,
             "abv": b.abv,
             "description": b.description,
+            "label_url": b.label_url,
             "release_date": b.release_date.isoformat(),
             "is_new_release": b.is_new_release
         } for b in beers
