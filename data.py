@@ -128,6 +128,77 @@ SYDNEY_VENUES = [
         instagram_handle="@whitebaybeerco",
         tags=["craft", "lagers", "balanced"]
     ),
+    # NEW ADDITIONS
+    Venue(
+        id="mountain-culture-redfern",
+        name="Mountain Culture Redfern",
+        type="brewery",
+        address="158 Regent St, Redfern",
+        suburb="Redfern",
+        location=(-33.8934, 151.2045),
+        instagram_handle="@mountainculturebeerco",
+        tags=["craft", "hazy", "IPA", "sydney-location"]
+    ),
+    Venue(
+        id="mountain-culture-emu-plains",
+        name="Mountain Culture Emu Plains",
+        type="brewery",
+        address="35 David Rd, Emu Plains",
+        suburb="Emu Plains",
+        location=(-33.7456, 150.6712),
+        instagram_handle="@mountainculturebeerco",
+        tags=["craft", "hazy", "IPA", "original-location"]
+    ),
+    Venue(
+        id="seeker-brewing",
+        name="Seeker Brewing",
+        type="brewery",
+        address="Shop 4, 1 Industrial Rd, Unanderra",
+        suburb="Unanderra",
+        location=(-34.4547, 150.8441),
+        instagram_handle="@seekerbrew",
+        tags=["craft", "experimental", "illawarra"]
+    ),
+    Venue(
+        id="bay-road-brewing",
+        name="Bay Road Brewing",
+        type="brewery",
+        address="89 Donnison St, Gosford",
+        suburb="Gosford",
+        location=(-33.4234, 151.3419),
+        instagram_handle="@bayrdbrewing",
+        tags=["craft", "central-coast", "sessionable"]
+    ),
+    Venue(
+        id="ekim-brewing",
+        name="Ekim Brewing",
+        type="brewery",
+        address="7/35 Leighton Pl, Hornsby",
+        suburb="Hornsby",
+        location=(-33.7025, 151.0987),
+        instagram_handle="@ekimbrewing",
+        tags=["craft", "local", "hornsby"]
+    ),
+    Venue(
+        id="philter-brewing",
+        name="Philter Brewing",
+        type="brewery",
+        address="92-98 Sydenham Rd, Marrickville",
+        suburb="Marrickville",
+        location=(-33.9112, 151.1635),
+        instagram_handle="@philterbrewing",
+        tags=["craft", "XPA", "marrickville", "award-winning"]
+    ),
+    Venue(
+        id="sauce-brewing",
+        name="Sauce Brewing",
+        type="brewery",
+        address="1a Mitchell St, Marrickville",
+        suburb="Marrickville",
+        location=(-33.9075, 151.1630),
+        instagram_handle="@saucebrewing",
+        tags=["craft", "hoppy", "marrickville", "funky"]
+    ),
     # BARS
     Venue(
         id="blood-orange-liquor",
@@ -599,6 +670,16 @@ BREWERY_NAME_TO_VENUE_ID = {
     'white bay beer co': 'white-bay',
     'white bay': 'white-bay',
     'white bay brewing': 'white-bay',
+    # NEW ADDITIONS
+    'mountain culture redfern': 'mountain-culture-redfern',
+    'mountain culture emu plains': 'mountain-culture-emu-plains',
+    'seeker brewing': 'seeker-brewing',
+    'bay road brewing': 'bay-road-brewing',
+    'bay rd brewing': 'bay-road-brewing',
+    'ekim brewing': 'ekim-brewing',
+    'philter brewing': 'philter-brewing',
+    'sauce brewing': 'sauce-brewing',
+    'sauce brewing co': 'sauce-brewing',
 }
 
 def map_brewery_to_venue_id(brewery_name: str) -> str:
