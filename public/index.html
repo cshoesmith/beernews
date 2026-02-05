@@ -195,14 +195,17 @@
             <!-- Right Rail -->
             <aside class="right-rail">
                 <div class="rail-section trending">
-                    <h3>Trending</h3>
-                    <ol class="trending-list">
-                        <li><a href="#">Mountain Culture's latest IPA drop</a></li>
-                        <li><a href="#">New brewery opening in Marrickville</a></li>
-                        <li><a href="#">Sour beer trends for 2025</a></li>
-                        <li><a href="#">Best beer gardens in Sydney</a></li>
-                        <li><a href="#">Craft beer festival announced</a></li>
-                    </ol>
+                    <h3>Trending <span style="font-size: 0.7rem; color: #999; font-weight: 400;">(7 days)</span></h3>
+                    <div id="trending-content">
+                        <ol class="trending-list" id="trending-list">
+                            <li>Loading...</li>
+                        </ol>
+                    </div>
+                    <div class="trending-tabs" style="margin-top: 12px; border-top: 1px solid #e2e2e2; padding-top: 8px;">
+                        <button class="trending-tab active" data-tab="beers" style="font-size: 0.75rem; padding: 4px 8px; margin-right: 4px; background: #f0f0f0; border: none; cursor: pointer;">Beers</button>
+                        <button class="trending-tab" data-tab="venues" style="font-size: 0.75rem; padding: 4px 8px; margin-right: 4px; background: transparent; border: none; cursor: pointer;">Venues</button>
+                        <button class="trending-tab" data-tab="styles" style="font-size: 0.75rem; padding: 4px 8px; background: transparent; border: none; cursor: pointer;">Styles</button>
+                    </div>
                 </div>
 
                 <div class="rail-section">

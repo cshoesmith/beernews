@@ -227,6 +227,86 @@ def get_stats():
 
 
 
+@app.route('/api/trending')
+def get_trending():
+    """Get trending beers, venues, and styles based on recent activity."""
+    try:
+        from data import SYDNEY_POSTS, BEER_DETAILS_BY_NAME
+        from collections import Counter
+        from datetime import datetime, timedelta
+        
+        # Get posts from last 7 days
+        cutoff = datetime.now() - timedelta(days=7)
+        recent_posts = [p for p in SYDNEY_POSTS if p.posted_at >= cutoff]
+        
+        # Count beer mentions from Untappd posts
+        beer_counts = Counter()
+        venue_activity = Counter()
+        style_counts = Counter()
+        
+        for post in recent_posts:
+            # Count venue activity
+            venue_activity[post.venue_id] += 1
+            
+            # Count beers mentioned
+            for beer_name in post.mentions_beers:
+                beer_counts[beer_name] += 1
+                
+                # Try to get style from beer details
+                beer_key = beer_name.lower()
+                if beer_key in BEER_DETAILS_BY_NAME:
+                    style = BEER_DETAILS_BY_NAME[beer_key].get('style')
+                    if style:
+                        # Simplify style (e.g., "IPA - New England" -> "NEIPA")
+                        if 'new england' in style.lower() or 'neipa' in style.lower():
+                            style_counts['NEIPA'] += 1
+                        elif 'ipa' in style.lower():
+                            beer_counts['IPA'] += 1
+                        elif 'sour' in style.lower():
+                            style_counts['Sour'] += 1
+                        elif 'stout' in style.lower():
+                            style_counts['Stout'] += 1
+                        elif 'lager' in style.lower():
+                            style_counts['Lager'] += 1
+                        elif 'pale' in style.lower():
+                            style_counts['Pale Ale'] += 1
+                        else:
+                            style_counts[style.split(' - ')[0]] += 1
+        
+        # Get top items
+        trending_beers = [
+            {"name": name, "count": count, "type": "beer"}
+            for name, count in beer_counts.most_common(5)
+        ]
+        
+        trending_venues = [
+            {"name": engine.venues.get(vid, type('obj', (object,), {'name': vid})).name, 
+             "count": count, "type": "venue", "id": vid}
+            for vid, count in venue_activity.most_common(5)
+            if vid in engine.venues
+        ]
+        
+        trending_styles = [
+            {"name": style, "count": count, "type": "style"}
+            for style, count in style_counts.most_common(5)
+        ]
+        
+        return jsonify({
+            "beers": trending_beers,
+            "venues": trending_venues,
+            "styles": trending_styles,
+            "period": "7 days",
+            "total_checkins": len(recent_posts)
+        })
+    except Exception as e:
+        return jsonify({
+            "beers": [],
+            "venues": [],
+            "styles": [],
+            "error": str(e)
+        })
+
+
 @app.route('/api/metrics')
 def get_metrics():
     """Get scraper productivity metrics."""

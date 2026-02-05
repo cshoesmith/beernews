@@ -3,11 +3,16 @@ const API_BASE = '/api';
 let userLocation = null;
 let currentTab = 'recommendations';
 
+// Trending data cache
+let trendingData = { beers: [], venues: [], styles: [] };
+let currentTrendingTab = 'beers';
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     setCurrentDate();
     loadStats();
     loadSuburbs();
+    loadTrending();
     loadRecommendations();
     loadNewReleases();
     loadVenues();
@@ -41,6 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Metrics toggle button
     document.getElementById('metrics-toggle').addEventListener('click', toggleMetrics);
+    
+    // Trending tabs
+    document.querySelectorAll('.trending-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            currentTrendingTab = tab.dataset.tab;
+            renderTrending();
+            
+            // Update active state
+            document.querySelectorAll('.trending-tab').forEach(t => {
+                t.style.background = t.dataset.tab === currentTrendingTab ? '#f0f0f0' : 'transparent';
+                t.classList.toggle('active', t.dataset.tab === currentTrendingTab);
+            });
+        });
+    });
 });
 
 function setCurrentDate() {
@@ -149,6 +168,55 @@ async function loadSuburbs() {
 function filterBySuburb(suburb) {
     document.getElementById('suburb-filter').value = suburb;
     refreshAll();
+}
+
+async function loadTrending() {
+    try {
+        const response = await fetch(`${API_BASE}/trending`);
+        trendingData = await response.json();
+        renderTrending();
+    } catch (err) {
+        console.error('Failed to load trending:', err);
+        document.getElementById('trending-list').innerHTML = '<li>Trending data unavailable</li>';
+    }
+}
+
+function renderTrending() {
+    const list = document.getElementById('trending-list');
+    const items = trendingData[currentTrendingTab] || [];
+    
+    if (items.length === 0) {
+        list.innerHTML = '<li style="color: #999; font-style: italic;">No data yet</li>';
+        return;
+    }
+    
+    list.innerHTML = items.map((item, index) => {
+        const clickHandler = item.type === 'venue' 
+            ? `onclick="filterBySuburb('${item.name}'); return false;"`
+            : item.type === 'style'
+            ? `onclick="filterByStyle('${item.name}'); return false;"`
+            : `onclick="searchBeer('${item.name}'); return false;"`;
+        
+        return `<li>
+            <a href="#" ${clickHandler} style="display: flex; justify-content: space-between; align-items: baseline;">
+                <span>${item.name}</span>
+                <span style="font-size: 0.75rem; color: #999; font-weight: 500;">${item.count} checkins</span>
+            </a>
+        </li>`;
+    }).join('');
+}
+
+function filterByStyle(style) {
+    document.getElementById('style-filter').value = style;
+    refreshAll();
+}
+
+function searchBeer(beerName) {
+    // Switch to new releases tab and filter
+    switchTab('new-releases');
+    document.querySelectorAll('.section-link').forEach(l => l.classList.remove('active'));
+    document.querySelector('.section-link[data-tab="new-releases"]').classList.add('active');
+    // The beer will be visible in the list if it's recent
 }
 
 async function loadRecommendations() {
