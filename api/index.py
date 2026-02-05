@@ -235,8 +235,8 @@ def get_trending():
         from collections import Counter
         from datetime import datetime, timedelta
         
-        # Get posts from last 7 days
-        cutoff = datetime.now() - timedelta(days=7)
+        # Get posts from last 14 days (extended to get more data)
+        cutoff = datetime.now() - timedelta(days=14)
         recent_posts = [p for p in SYDNEY_POSTS if p.posted_at >= cutoff]
         
         # Count beer mentions from Untappd posts
@@ -254,6 +254,11 @@ def get_trending():
             # Use beer_details from Untappd if available (has real names)
             if post.beer_details and post.beer_details.get('name'):
                 beer_name = post.beer_details['name']
+                # Clean up beer name (remove leading "a " or "an ")
+                if beer_name.startswith('a '):
+                    beer_name = beer_name[2:]
+                elif beer_name.startswith('an '):
+                    beer_name = beer_name[3:]
                 beer_counts[beer_name] += 1
                 
                 # Get style from beer_details
