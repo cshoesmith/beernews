@@ -74,6 +74,7 @@ def get_recommendations():
                     "id": b.id,
                     "name": b.name,
                     "brewery_id": b.brewery_id,
+                    "brewery_name": b.brewery_name,
                     "style": b.style,
                     "abv": b.abv,
                     "description": b.description,
