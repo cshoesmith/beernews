@@ -873,5 +873,38 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/sauce-brewing-co-pina-colada-fog/4936294"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719": {
+    "name": "Cult IPA",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Pyrmont, NSW",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.2,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489": {
+    "name": "Dirt Church",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Katoomba, NSW",
+    "style": "IPA - New England / Hazy",
+    "abv": null,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
+  },
+  "https://untappd.com/b/common-people-brewing-co-villager-s-pale-ale/4685467": {
+    "name": "Villager's Pale Ale",
+    "brewery": "Common People Brewing Co",
+    "brewery_location": "Neutral Bay, NSW",
+    "style": "Pale Ale - Australian",
+    "abv": 5.1,
+    "ibu": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/common-people-brewing-co-villager-s-pale-ale/4685467"
   }
 }
