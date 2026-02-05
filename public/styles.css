@@ -630,6 +630,13 @@ select:focus {
   color: var(--nyt-gray);
 }
 
+.tag-highlight {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #333;
+  font-weight: 700;
+  border: 1px solid #e6a600;
+}
+
 /* Venue Grid */
 .venue-grid {
   display: grid;

@@ -12,6 +12,7 @@ class Beer(BaseModel):
     abv: Optional[float] = None
     description: Optional[str] = None
     label_url: Optional[str] = None  # Beer label image URL from Untappd
+    rating: Optional[float] = None  # Untappd rating out of 5 (4.0+ is considered great)
     release_date: datetime
     is_new_release: bool = False
 

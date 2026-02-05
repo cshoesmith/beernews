@@ -782,6 +782,7 @@ def load_beers_from_untappd() -> List[Beer]:
                     abv=details.get('abv'),
                     description=details.get('description', '')[:200],
                     label_url=details.get('label_url'),  # Beer label image from Untappd
+                    rating=details.get('rating'),  # Untappd rating out of 5 (4.0+ is great)
                     release_date=first_seen,
                     is_new_release=is_new
                 ))

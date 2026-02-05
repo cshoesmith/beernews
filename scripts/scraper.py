@@ -512,6 +512,7 @@ def scrape_untappd_beer_details(beer_url: str) -> Dict:
             'style': '',
             'abv': None,
             'ibu': None,
+            'rating': None,  # Untappd rating out of 5
             'description': '',
             'label_url': '',
             'untappd_url': beer_url
@@ -551,6 +552,25 @@ def scrape_untappd_beer_details(beer_url: str) -> Dict:
             ibu_match = re.search(r'(\d+)\s*IBU', details_text, re.IGNORECASE)
             if ibu_match:
                 beer_data['ibu'] = int(ibu_match.group(1))
+        
+        # Extract rating (out of 5) - look for rating score
+        # Untappd displays rating as a number like "4.25" often near stars
+        rating_elem = soup.find('span', class_=re.compile(r'rating|score')) or soup.find('p', class_=re.compile(r'rating|score'))
+        if rating_elem:
+            rating_text = rating_elem.get_text().strip()
+            # Extract numeric rating (e.g., "4.25" or "4.25/5")
+            rating_match = re.search(r'(\d+\.?\d*)\s*/?\s*5?', rating_text)
+            if rating_match:
+                beer_data['rating'] = float(rating_match.group(1))
+        
+        # Alternative: look for rating in meta or data attributes
+        if not beer_data['rating']:
+            # Try finding rating in the page text near "Rating" or "Avg"
+            page_text = soup.get_text()
+            # Look for patterns like "Avg 4.25" or "Rating: 4.25"
+            avg_match = re.search(r'[Aa]vg\.?\s*:?\s*(\d+\.\d+)', page_text)
+            if avg_match:
+                beer_data['rating'] = float(avg_match.group(1))
         
         # Extract description
         desc_elem = soup.find('div', class_='beer-desc') or soup.find('div', class_='description')

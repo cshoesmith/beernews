@@ -79,6 +79,7 @@ def get_recommendations():
                     "abv": b.abv,
                     "description": b.description,
                     "label_url": b.label_url,
+                    "rating": b.rating,  # Untappd rating out of 5 (4.0+ is great)
                     "release_date": b.release_date.isoformat(),
                     "is_new_release": b.is_new_release
                 } for b in rec.new_beers
@@ -117,6 +118,7 @@ def get_new_releases():
             "abv": b.abv,
             "description": b.description,
             "label_url": b.label_url,
+            "rating": b.rating,  # Untappd rating out of 5 (4.0+ is great)
             "release_date": b.release_date.isoformat(),
             "is_new_release": b.is_new_release
         } for b in beers

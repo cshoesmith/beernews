@@ -322,12 +322,17 @@ function createStoryCard(rec, isFeatured = false) {
             ? `<img src="${beer.label_url}" alt="${beer.name}" style="width: 50px; height: 50px; object-fit: contain; float: left; margin-right: 12px; border-radius: 4px;">` 
             : '';
         
+        // Rating display - highlight 4.0+ as "great beer"
+        const ratingHtml = beer.rating 
+            ? `<span class="tag ${beer.rating >= 4.0 ? 'tag-highlight' : ''}" title="Untappd rating">⭐ ${beer.rating.toFixed(2)}</span>` 
+            : '';
+        
         return `
         <div class="beer-item" style="overflow: hidden;">
             ${labelHtml}
             <div style="overflow: hidden;">
                 <div class="beer-name">${beer.name} <span class="new-badge">New</span></div>
-                <div class="beer-details">${beer.style} • ${beer.abv}% ABV</div>
+                <div class="beer-details">${beer.style} • ${beer.abv}% ABV ${ratingHtml}</div>
                 <div class="beer-time">Released: ${timeText}</div>
             </div>
         </div>
@@ -416,6 +421,11 @@ async function loadNewReleases() {
                 ? `<img src="${beer.label_url}" alt="${beer.name} label" style="width: 60px; height: 60px; object-fit: contain; margin-right: 12px; border-radius: 4px;">` 
                 : '';
             
+            // Rating badge - highlight 4.0+ as great beer
+            const ratingBadge = beer.rating 
+                ? `<span class="tag ${beer.rating >= 4.0 ? 'tag-highlight' : ''}" title="Untappd rating out of 5">⭐ ${beer.rating.toFixed(2)}</span>` 
+                : '';
+            
             html += `
                 <div class="list-item" style="display: flex; align-items: flex-start;">
                     ${labelHtml}
@@ -427,6 +437,7 @@ async function loadNewReleases() {
                             <div class="item-tags">
                                 <span class="tag">${beer.style}</span>
                                 <span class="tag">${beer.abv}% ABV</span>
+                                ${ratingBadge}
                                 ${brewery ? `<span class="tag">${brewery.suburb}</span>` : ''}
                             </div>
                         </div>
