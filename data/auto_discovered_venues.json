@@ -4,5 +4,23 @@
     "location": "Katoomba, NSW",
     "discovered_at": "2026-02-05T05:28:42.602107",
     "status": "pending_review"
+  },
+  "ekim-brewing-co.": {
+    "name": "Ekim Brewing Co.",
+    "location": "Sydney, NSW",
+    "discovered_at": "2026-02-05T05:42:47.398063",
+    "status": "pending_review"
+  },
+  "sauce-brewing-co": {
+    "name": "Sauce Brewing Co",
+    "location": "Sydney, NSW",
+    "discovered_at": "2026-02-05T05:42:59.347837",
+    "status": "pending_review"
+  },
+  "common-people-brewing-co": {
+    "name": "Common People Brewing Co",
+    "location": "Neutral Bay, NSW",
+    "discovered_at": "2026-02-05T06:21:15.014576",
+    "status": "pending_review"
   }
 }
