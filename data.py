@@ -696,6 +696,7 @@ def load_beers_from_untappd() -> List[Beer]:
                     id=beer_id,
                     name=beer_name,
                     brewery_id=brewery_id,
+                    brewery_name=brewery_name or brewery_id,  # Store original brewery name for display
                     style=details.get('style'),
                     abv=details.get('abv'),
                     description=details.get('description', '')[:200],

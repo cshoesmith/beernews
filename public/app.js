@@ -410,7 +410,7 @@ async function loadNewReleases() {
                     <div class="item-date">${timeText}</div>
                     <div class="item-content">
                         <h4>${beer.name} <span class="new-badge">New Release</span></h4>
-                        <p>${beer.description || `${beer.style} from ${brewery ? brewery.name : 'Unknown Brewery'}`}</p>
+                        <p>${beer.description || `${beer.style} from ${brewery ? brewery.name : (beer.brewery_name || 'Unknown Brewery')}`}</p>
                         <div class="item-tags">
                             <span class="tag">${beer.style}</span>
                             <span class="tag">${beer.abv}% ABV</span>

@@ -7,6 +7,7 @@ class Beer(BaseModel):
     id: str
     name: str
     brewery_id: str
+    brewery_name: Optional[str] = None  # Display name from Untappd (may not match a venue)
     style: Optional[str] = None
     abv: Optional[float] = None
     description: Optional[str] = None
