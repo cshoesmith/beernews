@@ -244,34 +244,46 @@ def get_trending():
         venue_activity = Counter()
         style_counts = Counter()
         
+        # Build lookup for engine beers (by ID)
+        beers_by_id = {b.id: b for b in engine.beers}
+        
         for post in recent_posts:
             # Count venue activity
             venue_activity[post.venue_id] += 1
             
-            # Count beers mentioned
-            for beer_name in post.mentions_beers:
+            # Use beer_details from Untappd if available (has real names)
+            if post.beer_details and post.beer_details.get('name'):
+                beer_name = post.beer_details['name']
                 beer_counts[beer_name] += 1
                 
-                # Try to get style from beer details
-                beer_key = beer_name.lower()
-                if beer_key in BEER_DETAILS_BY_NAME:
-                    style = BEER_DETAILS_BY_NAME[beer_key].get('style')
-                    if style:
-                        # Simplify style (e.g., "IPA - New England" -> "NEIPA")
-                        if 'new england' in style.lower() or 'neipa' in style.lower():
-                            style_counts['NEIPA'] += 1
-                        elif 'ipa' in style.lower():
-                            beer_counts['IPA'] += 1
-                        elif 'sour' in style.lower():
-                            style_counts['Sour'] += 1
-                        elif 'stout' in style.lower():
-                            style_counts['Stout'] += 1
-                        elif 'lager' in style.lower():
-                            style_counts['Lager'] += 1
-                        elif 'pale' in style.lower():
-                            style_counts['Pale Ale'] += 1
-                        else:
-                            style_counts[style.split(' - ')[0]] += 1
+                # Get style from beer_details
+                style = post.beer_details.get('style', '')
+                if style:
+                    # Simplify style
+                    if 'new england' in style.lower() or 'neipa' in style.lower():
+                        style_counts['NEIPA'] += 1
+                    elif 'ipa' in style.lower() and 'neipa' not in style.lower():
+                        style_counts['IPA'] += 1
+                    elif 'sour' in style.lower():
+                        style_counts['Sour'] += 1
+                    elif 'stout' in style.lower():
+                        style_counts['Stout'] += 1
+                    elif 'lager' in style.lower():
+                        style_counts['Lager'] += 1
+                    elif 'pale' in style.lower():
+                        style_counts['Pale Ale'] += 1
+                    else:
+                        style_counts[style.split(' - ')[0]] += 1
+            else:
+                # Fallback to mentions_beers (may contain IDs)
+                for beer_id in post.mentions_beers:
+                    # Try to look up beer name from engine
+                    if beer_id in beers_by_id:
+                        beer_name = beers_by_id[beer_id].name
+                    else:
+                        # Use the ID as name (for Untappd beers not in engine)
+                        beer_name = beer_id
+                    beer_counts[beer_name] += 1
         
         # Get top items
         trending_beers = [
