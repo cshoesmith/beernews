@@ -933,5 +933,17 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/sauce-brewing-co-hazy-pale-ale/5319895"
+  },
+  "https://untappd.com/b/batch-brewing-company-hazty-decisions-vol-9/6592072": {
+    "name": "Hazty Decisions Vol. 9",
+    "brewery": "Batch Brewing Company",
+    "brewery_location": "Detroit, MI",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.2,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-hazty-decisions-vol-9/6592072"
   }
 }
