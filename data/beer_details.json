@@ -897,5 +897,41 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
+  },
+  "https://untappd.com/b/young-henrys-demo-batch-juiced-up-baddie/6591529": {
+    "name": "Demo Batch - Juiced Up Baddie",
+    "brewery": "Young Henrys",
+    "brewery_location": "Sydney, NSW",
+    "style": "Sour - Smoothie / Pastry",
+    "abv": 3.5,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-demo-batch-juiced-up-baddie/6591529"
+  },
+  "https://untappd.com/b/philter-brewing-hazy-pale-ale/4241571": {
+    "name": "Hazy Pale Ale",
+    "brewery": "Philter Brewing",
+    "brewery_location": "Chermside, QLD",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 5.3,
+    "ibu": 30,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/philter-brewing-hazy-pale-ale/4241571"
+  },
+  "https://untappd.com/b/sauce-brewing-co-hazy-pale-ale/5319895": {
+    "name": "Hazy Pale Ale",
+    "brewery": "Sauce Brewing Co",
+    "brewery_location": "Glenbrook, NSW",
+    "style": "Pale Ale - New England / Hazy",
+    "abv": 4.6,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/sauce-brewing-co-hazy-pale-ale/5319895"
   }
 }
