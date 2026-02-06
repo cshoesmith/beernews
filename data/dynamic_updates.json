@@ -1,89 +1,89 @@
 {
-  "last_run": "2026-02-06T06:18:40.250136",
+  "last_run": "2026-02-06T12:10:42.960526",
   "posts": [
     {
       "venue_id": "mountain-culture",
       "platform": "website",
       "content": "\ud83c\udf7a Fresh this week",
       "post_url": "https://mountainculture.com.au",
-      "scraped_at": "2026-02-06T06:16:34.468733"
+      "scraped_at": "2026-02-06T12:08:36.946154"
     },
     {
       "venue_id": "4-pines",
       "platform": "website",
       "content": "Hazy & Freshy with AIBA Gold",
       "post_url": "https://4pinesbeer.com.au/news",
-      "scraped_at": "2026-02-06T06:16:39.645509"
+      "scraped_at": "2026-02-06T12:08:42.766662"
     },
     {
       "venue_id": "wayward-brewing",
       "platform": "website",
       "content": "Availability: On tap, growler fills & tinnies",
       "post_url": "https://waywardbrewing.com.au/beers",
-      "scraped_at": "2026-02-06T06:16:48.180722"
+      "scraped_at": "2026-02-06T12:08:50.926286"
     },
     {
       "venue_id": "wayward-brewing",
       "platform": "website",
       "content": "This super sessionable Aussie lager is crisp, clean and ultra refreshing. Brewed with a light malt base, perfectly balanced by subtle passionfruit and citrus notes. Don\u2019t think too hard, just enjoy.\n\nABV 4.2%",
       "post_url": "https://waywardbrewing.com.au/beers",
-      "scraped_at": "2026-02-06T06:16:48.180754"
+      "scraped_at": "2026-02-06T12:08:50.926315"
     },
     {
       "venue_id": "wayward-brewing",
       "platform": "website",
       "content": "Availability: On tap, growler fills &\u00a0tinnies",
       "post_url": "https://waywardbrewing.com.au/beers",
-      "scraped_at": "2026-02-06T06:16:48.180843"
+      "scraped_at": "2026-02-06T12:08:50.926414"
     },
     {
       "venue_id": "wayward-brewing",
       "platform": "website",
       "content": "Dry & Refreshing Sour Ale",
       "post_url": "https://waywardbrewing.com.au/beers",
-      "scraped_at": "2026-02-06T06:16:48.180852"
+      "scraped_at": "2026-02-06T12:08:50.926424"
     },
     {
       "venue_id": "wayward-brewing",
       "platform": "website",
       "content": "This ridiculously refreshing beer (formerly known as Sourpuss) is our take on the classic Berliner Weisse style. Bursting with bright raspberry flavours, balanced by zippy tartness and a crisp, dry finish. It\u2019s Summer in a glass (or straight from the can).\n\nABV 3.8%",
       "post_url": "https://waywardbrewing.com.au/beers",
-      "scraped_at": "2026-02-06T06:16:48.180867"
+      "scraped_at": "2026-02-06T12:08:50.926438"
     },
     {
       "venue_id": "bracket-brewing",
       "platform": "website",
       "content": "We drop new releases every month, each featuring different styles of beer and showcasing our favourite hops.",
       "post_url": "https://bracketbrewing.com.au/",
-      "scraped_at": "2026-02-06T06:16:50.212461"
+      "scraped_at": "2026-02-06T12:08:52.888981"
     },
     {
       "venue_id": "bracket-brewing",
       "platform": "website",
       "content": "Get the freshest info on our releases, events  and everything that is happening at our taproom.",
       "post_url": "https://bracketbrewing.com.au/",
-      "scraped_at": "2026-02-06T06:16:50.212601"
+      "scraped_at": "2026-02-06T12:08:52.889113"
     },
     {
       "venue_id": "young-henrys",
       "platform": "website",
       "content": "Newtowner's got a fresh new look, but the same legendary taste you've always loved.",
       "post_url": "https://younghenrys.com/",
-      "scraped_at": "2026-02-06T06:16:50.618815"
+      "scraped_at": "2026-02-06T12:08:53.284490"
     },
     {
       "venue_id": "young-henrys",
       "platform": "website",
       "content": "On Tap at Opera Bar: Young Henrys Hits Sydney\u2019s Front Row",
       "post_url": "https://younghenrys.com/",
-      "scraped_at": "2026-02-06T06:16:50.618908"
+      "scraped_at": "2026-02-06T12:08:53.284578"
     },
     {
       "venue_id": "young-henrys",
       "platform": "untappd",
       "content": "\ud83c\udf7a . \uff3f\uff89\u4e59(\uff64\uff9d\uff64)\uff3f is drinking a Demo Batch - Juiced Up Baddie by Young Henrys at Young Henrys\n\ud83d\udccb Sour - Smoothie / Pastry | 3.5% ABV",
       "post_url": "https://untappd.com/v/young-henrys/207477",
-      "scraped_at": "2026-02-06T06:18:13.315935",
+      "scraped_at": "2026-02-06T12:10:21.674913",
       "mentions_beers": [
         "a Demo Batch - Juiced Up Baddie"
       ],
@@ -103,7 +103,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Dave Page is drinking a Natural Lager by Young Henrys at Young Henrys\n\ud83d\udccb Kellerbier / Zwickelbier | 4.2% ABV",
       "post_url": "https://untappd.com/v/young-henrys/207477",
-      "scraped_at": "2026-02-06T06:18:13.316310",
+      "scraped_at": "2026-02-06T12:10:21.675266",
       "mentions_beers": [
         "a Natural Lager"
       ],
@@ -123,7 +123,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a GL T is drinking a Hopic Thunder by Young Henrys at Young Henrys\n\ud83d\udccb IPA - New England / Hazy",
       "post_url": "https://untappd.com/v/young-henrys/207477",
-      "scraped_at": "2026-02-06T06:18:13.316630",
+      "scraped_at": "2026-02-06T12:10:21.675601",
       "mentions_beers": [
         "a Hopic Thunder"
       ],
@@ -143,7 +143,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a GL T is drinking a Cold XPA by Young Henrys at Young Henrys\n\ud83d\udccb Pale Ale - XPA (Extra Pale) | 4.0% ABV",
       "post_url": "https://untappd.com/v/young-henrys/207477",
-      "scraped_at": "2026-02-06T06:18:13.316953",
+      "scraped_at": "2026-02-06T12:10:21.675928",
       "mentions_beers": [
         "a Cold XPA"
       ],
@@ -163,7 +163,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Arlo Roche is drinking a Coco Crush by Young Henrys at Young Henrys\n\ud83d\udccb Pale Ale - Australian | 4.4% ABV",
       "post_url": "https://untappd.com/v/young-henrys/207477",
-      "scraped_at": "2026-02-06T06:18:13.317297",
+      "scraped_at": "2026-02-06T12:10:21.676266",
       "mentions_beers": [
         "a Coco Crush"
       ],
@@ -183,7 +183,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Allie is drinking a HEAP by Batch Brewing Company at \u200eBatch Brewing Company\n\ud83d\udccb Pilsner - New Zealand | 5.6% ABV",
       "post_url": "https://untappd.com/v/batch-brewing/623607",
-      "scraped_at": "2026-02-06T06:18:14.250778",
+      "scraped_at": "2026-02-06T12:10:22.563965",
       "mentions_beers": [
         "a HEAP"
       ],
@@ -203,7 +203,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jon Armitage is drinking a Zwickel Bier by Batch Brewing Company at \u200eBatch Brewing Company\n\ud83d\udccb Kellerbier / Zwickelbier | 4.0% ABV",
       "post_url": "https://untappd.com/v/batch-brewing/623607",
-      "scraped_at": "2026-02-06T06:18:14.251168",
+      "scraped_at": "2026-02-06T12:10:22.564320",
       "mentions_beers": [
         "a Zwickel Bier"
       ],
@@ -223,7 +223,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jon Armitage is drinking a Yipee Rye Yay by Batch Brewing Company at \u200eBatch Brewing Company\n\ud83d\udccb IPA - Rye | 5.2% ABV",
       "post_url": "https://untappd.com/v/batch-brewing/623607",
-      "scraped_at": "2026-02-06T06:18:14.251427",
+      "scraped_at": "2026-02-06T12:10:22.564580",
       "mentions_beers": [
         "a Yipee Rye Yay"
       ],
@@ -243,7 +243,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jon Armitage is drinking a HEAP by Batch Brewing Company at \u200eBatch Brewing Company\n\ud83d\udccb Pilsner - New Zealand | 5.6% ABV",
       "post_url": "https://untappd.com/v/batch-brewing/623607",
-      "scraped_at": "2026-02-06T06:18:14.251713",
+      "scraped_at": "2026-02-06T12:10:22.564862",
       "mentions_beers": [
         "a HEAP"
       ],
@@ -263,7 +263,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jon Armitage is drinking a Czech Czech One-Two, One-Two by Batch Brewing Company at \u200eBatch Brewing Company\n\ud83d\udccb Pilsner - Czech / Bohemian | 5.4% ABV",
       "post_url": "https://untappd.com/v/batch-brewing/623607",
-      "scraped_at": "2026-02-06T06:18:14.252035",
+      "scraped_at": "2026-02-06T12:10:22.565166",
       "mentions_beers": [
         "a Czech Czech One-Two, One-Two"
       ],
@@ -283,7 +283,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Stefan Di Benedetto is drinking a Gayward | Fruity Pale Ale by Wayward Brewing at Wayward Brewing Co.\n\ud83d\udccb Pale Ale - Australian | 4.2% ABV",
       "post_url": "https://untappd.com/v/wayward-brewing/3138161",
-      "scraped_at": "2026-02-06T06:18:15.033094",
+      "scraped_at": "2026-02-06T12:10:23.470537",
       "mentions_beers": [
         "a Gayward | Fruity Pale Ale"
       ],
@@ -303,7 +303,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a BriBailey is drinking a Schwarzbier Dark Lager by Powder Monkey Brewing Co at Wayward Brewing Co.\n\ud83d\udccb Schwarzbier | 5.2% ABV",
       "post_url": "https://untappd.com/v/wayward-brewing/3138161",
-      "scraped_at": "2026-02-06T06:18:15.033461",
+      "scraped_at": "2026-02-06T12:10:23.470894",
       "mentions_beers": [
         "a Schwarzbier Dark Lager"
       ],
@@ -323,7 +323,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a BriBailey is drinking a Rhuberry Saison by Wayward Brewing at Wayward Brewing Co.\n\ud83d\udccb Farmhouse Ale - Saison | 4.0% ABV",
       "post_url": "https://untappd.com/v/wayward-brewing/3138161",
-      "scraped_at": "2026-02-06T06:18:15.033768",
+      "scraped_at": "2026-02-06T12:10:23.471197",
       "mentions_beers": [
         "a Rhuberry Saison"
       ],
@@ -343,7 +343,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a BriBailey is drinking a Super Chill Pacific Ale by Akasha Brewing Company at Wayward Brewing Co.\n\ud83d\udccb Pale Ale - Australian | 4.2% ABV",
       "post_url": "https://untappd.com/v/wayward-brewing/3138161",
-      "scraped_at": "2026-02-06T06:18:15.034117",
+      "scraped_at": "2026-02-06T12:10:23.471542",
       "mentions_beers": [
         "a Super Chill Pacific Ale"
       ],
@@ -363,7 +363,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a David McLaren is drinking a Dry Hopped Citrus Sour by Batch Brewing at Wayward Brewing Co.\n\ud83d\udccb Sour - Fruited | 4.5% ABV",
       "post_url": "https://untappd.com/v/wayward-brewing/3138161",
-      "scraped_at": "2026-02-06T06:18:15.034535",
+      "scraped_at": "2026-02-06T12:10:23.471956",
       "mentions_beers": [
         "a Dry Hopped Citrus Sour"
       ],
@@ -383,7 +383,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Karl Hamlett is drinking a Golden Bronco by The Grifter Brewing Co. at The Grifter Brewing Company\n\ud83d\udccb Pale Ale - American | 5.3% ABV",
       "post_url": "https://untappd.com/v/grifter-brewing/4004524",
-      "scraped_at": "2026-02-06T06:18:15.815276",
+      "scraped_at": "2026-02-06T12:10:24.232838",
       "mentions_beers": [
         "a Golden Bronco"
       ],
@@ -403,7 +403,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jack Blackman is drinking a Golden Bronco by The Grifter Brewing Co. at The Grifter Brewing Company\n\ud83d\udccb Pale Ale - American | 5.3% ABV",
       "post_url": "https://untappd.com/v/grifter-brewing/4004524",
-      "scraped_at": "2026-02-06T06:18:15.815586",
+      "scraped_at": "2026-02-06T12:10:24.233147",
       "mentions_beers": [
         "a Golden Bronco"
       ],
@@ -423,7 +423,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Beer Baron is drinking a Golden Bronco by The Grifter Brewing Co. at The Grifter Brewing Company\n\ud83d\udccb Pale Ale - American | 5.3% ABV",
       "post_url": "https://untappd.com/v/grifter-brewing/4004524",
-      "scraped_at": "2026-02-06T06:18:15.815930",
+      "scraped_at": "2026-02-06T12:10:24.233500",
       "mentions_beers": [
         "a Golden Bronco"
       ],
@@ -443,7 +443,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Harry is drinking a Pink Galah by The Grifter Brewing Co. at The Grifter Brewing Company\n\ud83d\udccb Sour - Other | 4.5% ABV",
       "post_url": "https://untappd.com/v/grifter-brewing/4004524",
-      "scraped_at": "2026-02-06T06:18:15.816364",
+      "scraped_at": "2026-02-06T12:10:24.233919",
       "mentions_beers": [
         "a Pink Galah"
       ],
@@ -463,7 +463,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Cbizz is drinking a Golden Bronco by The Grifter Brewing Co. at The Grifter Brewing Company\n\ud83d\udccb Pale Ale - American | 5.3% ABV",
       "post_url": "https://untappd.com/v/grifter-brewing/4004524",
-      "scraped_at": "2026-02-06T06:18:15.816756",
+      "scraped_at": "2026-02-06T12:10:24.234303",
       "mentions_beers": [
         "a Golden Bronco"
       ],
@@ -483,7 +483,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Brady Moore is drinking a Dublin Dark by Balanced Rock Brewing at Balanced Rock Brewing\n\ud83d\udccb Stout - Irish Dry",
       "post_url": "https://untappd.com/v/the-rocks-brewing/13273186",
-      "scraped_at": "2026-02-06T06:18:16.540860",
+      "scraped_at": "2026-02-06T12:10:25.296491",
       "mentions_beers": [
         "a Dublin Dark"
       ],
@@ -503,7 +503,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a jess caylor is drinking a Great Hopspectations by Balanced Rock Brewing at Balanced Rock Brewing\n\ud83d\udccb Pale Ale - New England / Hazy | 5.5% ABV",
       "post_url": "https://untappd.com/v/the-rocks-brewing/13273186",
-      "scraped_at": "2026-02-06T06:18:16.541169",
+      "scraped_at": "2026-02-06T12:10:25.296786",
       "mentions_beers": [
         "a Great Hopspectations"
       ],
@@ -523,7 +523,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Willie Philpot is drinking a Hop the Casbah by Balanced Rock Brewing at Balanced Rock Brewing\n\ud83d\udccb IPA - Imperial / Double New England / Hazy | 8.5% ABV",
       "post_url": "https://untappd.com/v/the-rocks-brewing/13273186",
-      "scraped_at": "2026-02-06T06:18:16.541457",
+      "scraped_at": "2026-02-06T12:10:25.297066",
       "mentions_beers": [
         "a Hop the Casbah"
       ],
@@ -543,7 +543,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Willie Philpot is drinking a Dublin Dark by Balanced Rock Brewing at Balanced Rock Brewing\n\ud83d\udccb Stout - Irish Dry",
       "post_url": "https://untappd.com/v/the-rocks-brewing/13273186",
-      "scraped_at": "2026-02-06T06:18:16.541761",
+      "scraped_at": "2026-02-06T12:10:25.297366",
       "mentions_beers": [
         "a Dublin Dark"
       ],
@@ -563,7 +563,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Dana Schnoor is drinking a Special Hops Op by Balanced Rock Brewing at Balanced Rock Brewing\n\ud83d\udccb Bitter - Extra Special / Strong (ESB) | 4.0% ABV",
       "post_url": "https://untappd.com/v/the-rocks-brewing/13273186",
-      "scraped_at": "2026-02-06T06:18:16.542082",
+      "scraped_at": "2026-02-06T12:10:25.297685",
       "mentions_beers": [
         "a Special Hops Op"
       ],
@@ -583,7 +583,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Kris McCullough is drinking an Arrangement by Bracket Brewing at Bracket Brewing\n\ud83d\udccb IPA - American | 8.0% ABV",
       "post_url": "https://untappd.com/v/bracket-brewing/10185911",
-      "scraped_at": "2026-02-06T06:18:17.254876",
+      "scraped_at": "2026-02-06T12:10:25.935107",
       "mentions_beers": [
         "an Arrangement"
       ],
@@ -603,7 +603,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jonathan T is drinking a Pigment by Bracket Brewing at Bracket Brewing\n\ud83d\udccb IPA - Imperial / Double New England / Hazy | 8.0% ABV",
       "post_url": "https://untappd.com/v/bracket-brewing/10185911",
-      "scraped_at": "2026-02-06T06:18:17.255249",
+      "scraped_at": "2026-02-06T12:10:25.935479",
       "mentions_beers": [
         "a Pigment"
       ],
@@ -623,7 +623,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jonathan T is drinking a Circular Logic by Bracket Brewing at Bracket Brewing\n\ud83d\udccb IPA - Triple New England / Hazy | 10.1% ABV",
       "post_url": "https://untappd.com/v/bracket-brewing/10185911",
-      "scraped_at": "2026-02-06T06:18:17.256000",
+      "scraped_at": "2026-02-06T12:10:25.936219",
       "mentions_beers": [
         "a Circular Logic"
       ],
@@ -643,7 +643,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Ernest Creekside is drinking a Recess by Bracket Brewing at Bracket Brewing\n\ud83d\udccb IPA - Session | 3.2% ABV",
       "post_url": "https://untappd.com/v/bracket-brewing/10185911",
-      "scraped_at": "2026-02-06T06:18:17.256371",
+      "scraped_at": "2026-02-06T12:10:25.936572",
       "mentions_beers": [
         "a Recess"
       ],
@@ -663,7 +663,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Mark Harrison is drinking a Sleight of Hand by Future Magic Brewing Co. at Future Magic Brewing Co.\n\ud83d\udccb Pilsner - Other | 4.9% ABV",
       "post_url": "https://untappd.com/v/future-brewing/11789220",
-      "scraped_at": "2026-02-06T06:18:17.831910",
+      "scraped_at": "2026-02-06T12:10:26.614717",
       "mentions_beers": [
         "a Sleight of Hand"
       ],
@@ -683,7 +683,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Mark Harrison is drinking a Straight Outta K\u00f6ln by Future Magic Brewing Co. at Future Magic Brewing Co.\n\ud83d\udccb K\u00f6lsch | 4.8% ABV",
       "post_url": "https://untappd.com/v/future-brewing/11789220",
-      "scraped_at": "2026-02-06T06:18:17.832221",
+      "scraped_at": "2026-02-06T12:10:26.615010",
       "mentions_beers": [
         "a Straight Outta K\u00f6ln"
       ],
@@ -703,7 +703,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Mitchell Byram is drinking a Magic Stick by Future Magic Brewing Co. at Future Magic Brewing Co.\n\ud83d\udccb IPA - Session | 3.5% ABV",
       "post_url": "https://untappd.com/v/future-brewing/11789220",
-      "scraped_at": "2026-02-06T06:18:17.832520",
+      "scraped_at": "2026-02-06T12:10:26.615304",
       "mentions_beers": [
         "a Magic Stick"
       ],
@@ -723,7 +723,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Mitchell Byram is drinking a Decimate by Future Magic Brewing Co. at Future Magic Brewing Co.\n\ud83d\udccb IPA - Triple | 10.0% ABV",
       "post_url": "https://untappd.com/v/future-brewing/11789220",
-      "scraped_at": "2026-02-06T06:18:17.832840",
+      "scraped_at": "2026-02-06T12:10:26.615635",
       "mentions_beers": [
         "a Decimate"
       ],
@@ -743,7 +743,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Mitchell Byram is drinking a Galaxy Dust by Future Magic Brewing Co. at Future Magic Brewing Co.\n\ud83d\udccb IPA - New England / Hazy | 6.6% ABV",
       "post_url": "https://untappd.com/v/future-brewing/11789220",
-      "scraped_at": "2026-02-06T06:18:17.833177",
+      "scraped_at": "2026-02-06T12:10:26.615961",
       "mentions_beers": [
         "a Galaxy Dust"
       ],
@@ -761,69 +761,29 @@
     {
       "venue_id": "mountain-culture",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Ben Carville-Shang is drinking a Dirt Church by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - New England / Hazy",
+      "content": "\ud83c\udf7a GL T is drinking a Company Coin by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - Imperial / Double New England / Hazy | 8.2% ABV",
       "post_url": "https://untappd.com/v/mountain-culture/9520186",
-      "scraped_at": "2026-02-06T06:18:19.924405",
+      "scraped_at": "2026-02-06T12:10:28.434969",
       "mentions_beers": [
-        "a Dirt Church"
+        "a Company Coin"
       ],
       "beer_details": {
-        "name": "a Dirt Church",
+        "name": "a Company Coin",
         "brewery": "Mountain Culture Beer Co. at Mountain Culture Beer Co.",
-        "style": "IPA - New England / Hazy",
-        "abv": null,
+        "style": "IPA - Imperial / Double New England / Hazy",
+        "abv": 8.2,
         "ibu": null,
         "description": "",
         "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-company-coin/6582744"
       }
     },
     {
       "venue_id": "mountain-culture",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Ben Carville-Shang is drinking a Log Jam by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - American | 5.8% ABV",
+      "content": "\ud83c\udf7a GL T is drinking a Juice Trip by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - Fruited | 7.0% ABV",
       "post_url": "https://untappd.com/v/mountain-culture/9520186",
-      "scraped_at": "2026-02-06T06:18:19.924702",
-      "mentions_beers": [
-        "a Log Jam"
-      ],
-      "beer_details": {
-        "name": "a Log Jam",
-        "brewery": "Mountain Culture Beer Co. at Mountain Culture Beer Co.",
-        "style": "IPA - American",
-        "abv": 5.8,
-        "ibu": null,
-        "description": "",
-        "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
-      }
-    },
-    {
-      "venue_id": "mountain-culture",
-      "platform": "untappd",
-      "content": "\ud83c\udf7a Ben Carville-Shang is drinking a Neon Splice by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb Pale Ale - New England / Hazy | 4.5% ABV",
-      "post_url": "https://untappd.com/v/mountain-culture/9520186",
-      "scraped_at": "2026-02-06T06:18:19.924985",
-      "mentions_beers": [
-        "a Neon Splice"
-      ],
-      "beer_details": {
-        "name": "a Neon Splice",
-        "brewery": "Mountain Culture Beer Co. at Mountain Culture Beer Co.",
-        "style": "Pale Ale - New England / Hazy",
-        "abv": 4.5,
-        "ibu": null,
-        "description": "",
-        "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-neon-splice/6414919"
-      }
-    },
-    {
-      "venue_id": "mountain-culture",
-      "platform": "untappd",
-      "content": "\ud83c\udf7a Griffin Lee is drinking a Juice Trip by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - Fruited | 7.0% ABV",
-      "post_url": "https://untappd.com/v/mountain-culture/9520186",
-      "scraped_at": "2026-02-06T06:18:19.925375",
+      "scraped_at": "2026-02-06T12:10:28.435341",
       "mentions_beers": [
         "a Juice Trip"
       ],
@@ -841,21 +801,61 @@
     {
       "venue_id": "mountain-culture",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Griffin Lee is drinking a Company Coin by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - Imperial / Double New England / Hazy | 8.2% ABV",
+      "content": "\ud83c\udf7a GL T is drinking a Dirt Church by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - New England / Hazy",
       "post_url": "https://untappd.com/v/mountain-culture/9520186",
-      "scraped_at": "2026-02-06T06:18:19.925805",
+      "scraped_at": "2026-02-06T12:10:28.435661",
       "mentions_beers": [
-        "a Company Coin"
+        "a Dirt Church"
       ],
       "beer_details": {
-        "name": "a Company Coin",
+        "name": "a Dirt Church",
         "brewery": "Mountain Culture Beer Co. at Mountain Culture Beer Co.",
-        "style": "IPA - Imperial / Double New England / Hazy",
-        "abv": 8.2,
+        "style": "IPA - New England / Hazy",
+        "abv": null,
         "ibu": null,
         "description": "",
         "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-company-coin/6582744"
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
+      }
+    },
+    {
+      "venue_id": "mountain-culture",
+      "platform": "untappd",
+      "content": "\ud83c\udf7a GL T is drinking a Cult IPA by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - New England / Hazy | 6.2% ABV",
+      "post_url": "https://untappd.com/v/mountain-culture/9520186",
+      "scraped_at": "2026-02-06T12:10:28.435994",
+      "mentions_beers": [
+        "a Cult IPA"
+      ],
+      "beer_details": {
+        "name": "a Cult IPA",
+        "brewery": "Mountain Culture Beer Co. at Mountain Culture Beer Co.",
+        "style": "IPA - New England / Hazy",
+        "abv": 6.2,
+        "ibu": null,
+        "description": "",
+        "label_url": "",
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-cult-ipa/3484719"
+      }
+    },
+    {
+      "venue_id": "mountain-culture",
+      "platform": "untappd",
+      "content": "\ud83c\udf7a Ben Carville-Shang is drinking a Dirt Church by Mountain Culture Beer Co. at Mountain Culture Beer Co.\n\ud83d\udccb IPA - New England / Hazy",
+      "post_url": "https://untappd.com/v/mountain-culture/9520186",
+      "scraped_at": "2026-02-06T12:10:28.436292",
+      "mentions_beers": [
+        "a Dirt Church"
+      ],
+      "beer_details": {
+        "name": "a Dirt Church",
+        "brewery": "Mountain Culture Beer Co. at Mountain Culture Beer Co.",
+        "style": "IPA - New England / Hazy",
+        "abv": null,
+        "ibu": null,
+        "description": "",
+        "label_url": "",
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
       }
     },
     {
@@ -863,7 +863,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Chris Dibble is drinking a Twenty-One IPA by Summit Brewing Company at Three Pines to the Wind Brewery and Ale House (Formerly 4Pines Brewing)\n\ud83d\udccb IPA - American | 7.0% ABV",
       "post_url": "https://untappd.com/v/4-pines/6445656",
-      "scraped_at": "2026-02-06T06:18:21.245663",
+      "scraped_at": "2026-02-06T12:10:30.153408",
       "mentions_beers": [
         "a Twenty-One IPA"
       ],
@@ -883,7 +883,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Chris Dibble is drinking an Elderflower IPA by Summit Brewing Company at Three Pines to the Wind Brewery and Ale House (Formerly 4Pines Brewing)\n\ud83d\udccb IPA - American | 6.2% ABV",
       "post_url": "https://untappd.com/v/4-pines/6445656",
-      "scraped_at": "2026-02-06T06:18:21.246038",
+      "scraped_at": "2026-02-06T12:10:30.153764",
       "mentions_beers": [
         "an Elderflower IPA"
       ],
@@ -903,7 +903,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Chris Dibble is drinking a Hopslam Ale (2020) by Bell\u2019s Brewery at Three Pines to the Wind Brewery and Ale House (Formerly 4Pines Brewing)\n\ud83d\udccb IPA - Imperial / Double | 10.0% ABV",
       "post_url": "https://untappd.com/v/4-pines/6445656",
-      "scraped_at": "2026-02-06T06:18:21.246332",
+      "scraped_at": "2026-02-06T12:10:30.154052",
       "mentions_beers": [
         "a Hopslam Ale (2020)"
       ],
@@ -923,7 +923,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Chris Dibble is drinking a King Sue by Toppling Goliath Brewing Co. at Three Pines to the Wind Brewery and Ale House (Formerly 4Pines Brewing)\n\ud83d\udccb IPA - Imperial / Double New England / Hazy | 8.2% ABV",
       "post_url": "https://untappd.com/v/4-pines/6445656",
-      "scraped_at": "2026-02-06T06:18:21.246987",
+      "scraped_at": "2026-02-06T12:10:30.154697",
       "mentions_beers": [
         "a King Sue"
       ],
@@ -943,7 +943,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Tim Brady is drinking a Hazy IPA by Sydney Brewery at White Bay Beer Co\n\ud83d\udccb IPA - New England / Hazy | 6.5% ABV",
       "post_url": "https://untappd.com/v/white-bay/9963535",
-      "scraped_at": "2026-02-06T06:18:21.992667",
+      "scraped_at": "2026-02-06T12:10:30.952213",
       "mentions_beers": [
         "a Hazy IPA"
       ],
@@ -963,7 +963,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Tim Brady is drinking a Mosaic West Coast IPA by Sydney Brewery at White Bay Beer Co\n\ud83d\udccb IPA - American | 6.0% ABV",
       "post_url": "https://untappd.com/v/white-bay/9963535",
-      "scraped_at": "2026-02-06T06:18:21.992992",
+      "scraped_at": "2026-02-06T12:10:30.952547",
       "mentions_beers": [
         "a Mosaic West Coast IPA"
       ],
@@ -983,7 +983,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Tim Brady is drinking a Dawn IPA by Sydney Brewery at White Bay Beer Co\n\ud83d\udccb IPA - Other | 6.0% ABV",
       "post_url": "https://untappd.com/v/white-bay/9963535",
-      "scraped_at": "2026-02-06T06:18:21.993335",
+      "scraped_at": "2026-02-06T12:10:30.952855",
       "mentions_beers": [
         "a Dawn IPA"
       ],
@@ -1003,7 +1003,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Tim Brady is drinking a Mango Sour by Sydney Brewery at White Bay Beer Co\n\ud83d\udccb Sour - Fruited | 4.4% ABV",
       "post_url": "https://untappd.com/v/white-bay/9963535",
-      "scraped_at": "2026-02-06T06:18:21.993639",
+      "scraped_at": "2026-02-06T12:10:30.953154",
       "mentions_beers": [
         "a Mango Sour"
       ],
@@ -1023,7 +1023,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Adam Bstock is drinking a Pils - Czech Pilsner by White Bay Brewery at White Bay Beer Co\n\ud83d\udccb Pilsner - Czech / Bohemian | 5.0% ABV",
       "post_url": "https://untappd.com/v/white-bay/9963535",
-      "scraped_at": "2026-02-06T06:18:21.993920",
+      "scraped_at": "2026-02-06T12:10:30.953443",
       "mentions_beers": [
         "a Pils - Czech Pilsner"
       ],
@@ -1041,9 +1041,9 @@
     {
       "venue_id": "mountain-culture-redfern",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Corey Watson is drinking a Dirt Church by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - New England / Hazy",
+      "content": "\ud83c\udf7a 1millionbeerswith500cigarettes is drinking a Dirt Church by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - New England / Hazy",
       "post_url": "https://untappd.com/v/mountain-culture-redfern/13090031",
-      "scraped_at": "2026-02-06T06:18:22.748258",
+      "scraped_at": "2026-02-06T12:10:31.583866",
       "mentions_beers": [
         "a Dirt Church"
       ],
@@ -1061,9 +1061,9 @@
     {
       "venue_id": "mountain-culture-redfern",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Corey Watson is drinking a Log Jam by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - American | 5.8% ABV",
+      "content": "\ud83c\udf7a 1millionbeerswith500cigarettes is drinking a Log Jam by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - American | 5.8% ABV",
       "post_url": "https://untappd.com/v/mountain-culture-redfern/13090031",
-      "scraped_at": "2026-02-06T06:18:22.748594",
+      "scraped_at": "2026-02-06T12:10:31.584103",
       "mentions_beers": [
         "a Log Jam"
       ],
@@ -1081,61 +1081,61 @@
     {
       "venue_id": "mountain-culture-redfern",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Jimmy Swings is drinking a Dirt Church by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - New England / Hazy",
+      "content": "\ud83c\udf7a 1millionbeerswith500cigarettes is drinking a Company Coin by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - Imperial / Double New England / Hazy | 8.2% ABV",
       "post_url": "https://untappd.com/v/mountain-culture-redfern/13090031",
-      "scraped_at": "2026-02-06T06:18:22.749045",
+      "scraped_at": "2026-02-06T12:10:31.584472",
       "mentions_beers": [
-        "a Dirt Church"
+        "a Company Coin"
       ],
       "beer_details": {
-        "name": "a Dirt Church",
+        "name": "a Company Coin",
         "brewery": "Mountain Culture Beer Co. at Mountain Culture Redfern",
-        "style": "IPA - New England / Hazy",
-        "abv": null,
+        "style": "IPA - Imperial / Double New England / Hazy",
+        "abv": 8.2,
         "ibu": null,
         "description": "",
         "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-dirt-church/6578489"
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-company-coin/6582744"
       }
     },
     {
       "venue_id": "mountain-culture-redfern",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Jimmy Swings is drinking a Log Jam by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - American | 5.8% ABV",
+      "content": "\ud83c\udf7a 1millionbeerswith500cigarettes is drinking a Hourglass by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - American | 7.5% ABV",
       "post_url": "https://untappd.com/v/mountain-culture-redfern/13090031",
-      "scraped_at": "2026-02-06T06:18:22.749453",
+      "scraped_at": "2026-02-06T12:10:31.584802",
       "mentions_beers": [
-        "a Log Jam"
+        "a Hourglass"
       ],
       "beer_details": {
-        "name": "a Log Jam",
+        "name": "a Hourglass",
         "brewery": "Mountain Culture Beer Co. at Mountain Culture Redfern",
         "style": "IPA - American",
-        "abv": 5.8,
+        "abv": 7.5,
         "ibu": null,
         "description": "",
         "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-hourglass/6525925"
       }
     },
     {
       "venue_id": "mountain-culture-redfern",
       "platform": "untappd",
-      "content": "\ud83c\udf7a Virtual Pete is drinking a Log Jam by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb IPA - American | 5.8% ABV",
+      "content": "\ud83c\udf7a wickfored is drinking a Moon Dust by Mountain Culture Beer Co. at Mountain Culture Redfern\n\ud83d\udccb Stout - American | 5.6% ABV",
       "post_url": "https://untappd.com/v/mountain-culture-redfern/13090031",
-      "scraped_at": "2026-02-06T06:18:22.749814",
+      "scraped_at": "2026-02-06T12:10:31.585101",
       "mentions_beers": [
-        "a Log Jam"
+        "a Moon Dust"
       ],
       "beer_details": {
-        "name": "a Log Jam",
+        "name": "a Moon Dust",
         "brewery": "Mountain Culture Beer Co. at Mountain Culture Redfern",
-        "style": "IPA - American",
-        "abv": 5.8,
+        "style": "Stout - American",
+        "abv": 5.6,
         "ibu": null,
         "description": "",
         "label_url": "",
-        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-log-jam/6590439"
+        "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-moon-dust/3477131"
       }
     },
     {
@@ -1143,7 +1143,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Antony Davies is drinking a Lil' Juicy by Seeker Brewing at Seeker Brewing\n\ud83d\udccb IPA - Session New England / Hazy | 3.2% ABV",
       "post_url": "https://untappd.com/v/seeker-brewing/11232881",
-      "scraped_at": "2026-02-06T06:18:23.772250",
+      "scraped_at": "2026-02-06T12:10:32.608913",
       "mentions_beers": [
         "a Lil' Juicy"
       ],
@@ -1163,7 +1163,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Antony Davies is drinking a Big Red Milkshake by Seeker Brewing at Seeker Brewing\n\ud83d\udccb IPA - Imperial / Double Milkshake | 8.8% ABV",
       "post_url": "https://untappd.com/v/seeker-brewing/11232881",
-      "scraped_at": "2026-02-06T06:18:23.772650",
+      "scraped_at": "2026-02-06T12:10:32.609311",
       "mentions_beers": [
         "a Big Red Milkshake"
       ],
@@ -1183,7 +1183,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Lachy Thomson is drinking a Quintuple IPA by Seeker Brewing at Seeker Brewing\n\ud83d\udccb IPA - Quadruple | 15.0% ABV",
       "post_url": "https://untappd.com/v/seeker-brewing/11232881",
-      "scraped_at": "2026-02-06T06:18:23.773035",
+      "scraped_at": "2026-02-06T12:10:32.609700",
       "mentions_beers": [
         "a Quintuple IPA"
       ],
@@ -1203,7 +1203,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Lachy Thomson is drinking a Big Reds Magic Raspberry Milkshake IPA by Seeker Brewing at Seeker Brewing\n\ud83d\udccb IPA - Imperial / Double Milkshake | 8.4% ABV",
       "post_url": "https://untappd.com/v/seeker-brewing/11232881",
-      "scraped_at": "2026-02-06T06:18:23.773379",
+      "scraped_at": "2026-02-06T12:10:32.610049",
       "mentions_beers": [
         "a Big Reds Magic Raspberry Milkshake IPA"
       ],
@@ -1223,7 +1223,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Lachy Thomson is drinking a Riff's Festiv-ale by Seeker Brewing at Seeker Brewing\n\ud83d\udccb Pale Ale - Other | 4.8% ABV",
       "post_url": "https://untappd.com/v/seeker-brewing/11232881",
-      "scraped_at": "2026-02-06T06:18:23.773716",
+      "scraped_at": "2026-02-06T12:10:32.610406",
       "mentions_beers": [
         "a Riff's Festiv-ale"
       ],
@@ -1241,9 +1241,29 @@
     {
       "venue_id": "ekim-brewing",
       "platform": "untappd",
+      "content": "\ud83c\udf7a Peter Possi is drinking a Belrose Brown by Ekim Brewing Co. at Ekim Brewing Co.\n\ud83d\udccb Brown Ale - English | 4.6% ABV",
+      "post_url": "https://untappd.com/v/ekim-brewing/13443702",
+      "scraped_at": "2026-02-06T12:10:33.676229",
+      "mentions_beers": [
+        "a Belrose Brown"
+      ],
+      "beer_details": {
+        "name": "a Belrose Brown",
+        "brewery": "Ekim Brewing Co. at Ekim Brewing Co.",
+        "style": "Brown Ale - English",
+        "abv": 4.6,
+        "ibu": null,
+        "description": "",
+        "label_url": "",
+        "untappd_url": "https://untappd.com/b/ekim-brewing-co-belrose-brown/5324826"
+      }
+    },
+    {
+      "venue_id": "ekim-brewing",
+      "platform": "untappd",
       "content": "\ud83c\udf7a Adeline Lim is drinking a Belrose Brown by Ekim Brewing Co. at Ekim Brewing Co.\n\ud83d\udccb Brown Ale - English | 4.6% ABV",
       "post_url": "https://untappd.com/v/ekim-brewing/13443702",
-      "scraped_at": "2026-02-06T06:18:24.675519",
+      "scraped_at": "2026-02-06T12:10:33.676539",
       "mentions_beers": [
         "a Belrose Brown"
       ],
@@ -1263,7 +1283,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Adeline Lim is drinking a Shield Wall Porter by Ekim Brewing Co. at Ekim Brewing Co.\n\ud83d\udccb Porter - Other | 6.5% ABV",
       "post_url": "https://untappd.com/v/ekim-brewing/13443702",
-      "scraped_at": "2026-02-06T06:18:24.675820",
+      "scraped_at": "2026-02-06T12:10:33.676831",
       "mentions_beers": [
         "a Shield Wall Porter"
       ],
@@ -1283,7 +1303,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Adeline Lim is drinking an Imperial Christmas Pudding Stout by Ekim Brewing Co. at Ekim Brewing Co.\n\ud83d\udccb Stout - Imperial / Double | 9.6% ABV",
       "post_url": "https://untappd.com/v/ekim-brewing/13443702",
-      "scraped_at": "2026-02-06T06:18:24.676147",
+      "scraped_at": "2026-02-06T12:10:33.677144",
       "mentions_beers": [
         "an Imperial Christmas Pudding Stout"
       ],
@@ -1303,7 +1323,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Wayne H is drinking a Valhalla Triple IPA by Ekim Brewing Co. at Ekim Brewing Co.\n\ud83d\udccb IPA - Triple | 10.0% ABV",
       "post_url": "https://untappd.com/v/ekim-brewing/13443702",
-      "scraped_at": "2026-02-06T06:18:24.676539",
+      "scraped_at": "2026-02-06T12:10:33.677546",
       "mentions_beers": [
         "a Valhalla Triple IPA"
       ],
@@ -1319,31 +1339,11 @@
       }
     },
     {
-      "venue_id": "ekim-brewing",
-      "platform": "untappd",
-      "content": "\ud83c\udf7a Daniel Lister is drinking an Island Hopper by Ekim Brewing Co. at Ekim Brewing Co.\n\ud83d\udccb IPA - New England / Hazy | 6.0% ABV",
-      "post_url": "https://untappd.com/v/ekim-brewing/13443702",
-      "scraped_at": "2026-02-06T06:18:24.676834",
-      "mentions_beers": [
-        "an Island Hopper"
-      ],
-      "beer_details": {
-        "name": "an Island Hopper",
-        "brewery": "Ekim Brewing Co. at Ekim Brewing Co.",
-        "style": "IPA - New England / Hazy",
-        "abv": 6.0,
-        "ibu": null,
-        "description": "",
-        "label_url": "",
-        "untappd_url": "https://untappd.com/b/ekim-brewing-co-island-hopper/6327294"
-      }
-    },
-    {
       "venue_id": "philter-brewing",
       "platform": "untappd",
       "content": "\ud83c\udf7a Ed Hartin is drinking a Hazy Pale Ale by Philter Brewing at Philter Brewing\n\ud83d\udccb Pale Ale - New England / Hazy | 5.3% ABV",
       "post_url": "https://untappd.com/v/philter-brewing/10170718",
-      "scraped_at": "2026-02-06T06:18:25.896493",
+      "scraped_at": "2026-02-06T12:10:34.196377",
       "mentions_beers": [
         "a Hazy Pale Ale"
       ],
@@ -1363,7 +1363,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Josh Howe is drinking a Phresh Tropical Punch by Philter Brewing at Philter Brewing\n\ud83d\udccb Hard Seltzer | 4.0% ABV",
       "post_url": "https://untappd.com/v/philter-brewing/10170718",
-      "scraped_at": "2026-02-06T06:18:25.896881",
+      "scraped_at": "2026-02-06T12:10:34.196755",
       "mentions_beers": [
         "a Phresh Tropical Punch"
       ],
@@ -1383,7 +1383,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Josh Howe is drinking an American Brown Ale by Philter Brewing at Philter Brewing\n\ud83d\udccb Brown Ale - American | 5.5% ABV",
       "post_url": "https://untappd.com/v/philter-brewing/10170718",
-      "scraped_at": "2026-02-06T06:18:25.897238",
+      "scraped_at": "2026-02-06T12:10:34.197068",
       "mentions_beers": [
         "an American Brown Ale"
       ],
@@ -1403,7 +1403,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Josh Howe is drinking an Old Ale by Philter Brewing at Philter Brewing\n\ud83d\udccb Old / Stock Ale | 4.5% ABV",
       "post_url": "https://untappd.com/v/philter-brewing/10170718",
-      "scraped_at": "2026-02-06T06:18:25.897575",
+      "scraped_at": "2026-02-06T12:10:34.197378",
       "mentions_beers": [
         "an Old Ale"
       ],
@@ -1423,7 +1423,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Josh Howe is drinking a NZ Haze by Philter Brewing at Philter Brewing\n\ud83d\udccb IPA - New England / Hazy | 5.8% ABV",
       "post_url": "https://untappd.com/v/philter-brewing/10170718",
-      "scraped_at": "2026-02-06T06:18:25.897896",
+      "scraped_at": "2026-02-06T12:10:34.197703",
       "mentions_beers": [
         "a NZ Haze"
       ],
@@ -1443,7 +1443,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Ed Hartin is drinking a Hazy Pale Ale by Sauce Brewing Co at Sauce Brewing Co\n\ud83d\udccb Pale Ale - New England / Hazy | 4.6% ABV",
       "post_url": "https://untappd.com/v/sauce-brewing/6818911",
-      "scraped_at": "2026-02-06T06:18:28.476032",
+      "scraped_at": "2026-02-06T12:10:35.302409",
       "mentions_beers": [
         "a Hazy Pale Ale"
       ],
@@ -1463,7 +1463,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Andrew Barbour is drinking a Simcoe Smash by Sauce Brewing Co at Sauce Brewing Co\n\ud83d\udccb Pale Ale - American | 4.8% ABV",
       "post_url": "https://untappd.com/v/sauce-brewing/6818911",
-      "scraped_at": "2026-02-06T06:18:28.476338",
+      "scraped_at": "2026-02-06T12:10:35.302707",
       "mentions_beers": [
         "a Simcoe Smash"
       ],
@@ -1483,7 +1483,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Mark Scott is drinking a Northern Lights by Sauce Brewing Co at Sauce Brewing Co\n\ud83d\udccb IPA - American | 7.0% ABV",
       "post_url": "https://untappd.com/v/sauce-brewing/6818911",
-      "scraped_at": "2026-02-06T06:18:28.476657",
+      "scraped_at": "2026-02-06T12:10:35.303023",
       "mentions_beers": [
         "a Northern Lights"
       ],
@@ -1503,7 +1503,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Karl Hamlett is drinking a Northern Lights by Sauce Brewing Co at Sauce Brewing Co\n\ud83d\udccb IPA - American | 7.0% ABV",
       "post_url": "https://untappd.com/v/sauce-brewing/6818911",
-      "scraped_at": "2026-02-06T06:18:28.476950",
+      "scraped_at": "2026-02-06T12:10:35.303314",
       "mentions_beers": [
         "a Northern Lights"
       ],
@@ -1523,7 +1523,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Karl Hamlett is drinking a West Coast IPA by Sauce Brewing Co at Sauce Brewing Co\n\ud83d\udccb IPA - American | 6.2% ABV",
       "post_url": "https://untappd.com/v/sauce-brewing/6818911",
-      "scraped_at": "2026-02-06T06:18:28.477266",
+      "scraped_at": "2026-02-06T12:10:35.303622",
       "mentions_beers": [
         "a West Coast IPA"
       ],
@@ -1543,7 +1543,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Rufus_Creek is drinking a Resch's Draught by Carlton & United Breweries at The Tilbury Hotel\n\ud83d\udccb Lager - Pale | 5.0% ABV",
       "post_url": "https://untappd.com/v/the-tilbury/3721",
-      "scraped_at": "2026-02-06T06:18:29.357287",
+      "scraped_at": "2026-02-06T12:10:36.361088",
       "mentions_beers": [
         "a Resch's Draught"
       ],
@@ -1563,7 +1563,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Ani is drinking an Original Pale Ale by Coopers at The Tilbury Hotel\n\ud83d\udccb Pale Ale - Australian | 4.5% ABV",
       "post_url": "https://untappd.com/v/the-tilbury/3721",
-      "scraped_at": "2026-02-06T06:18:29.357642",
+      "scraped_at": "2026-02-06T12:10:36.361453",
       "mentions_beers": [
         "an Original Pale Ale"
       ],
@@ -1583,7 +1583,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Simon Burr is drinking an Easy Pale Ale by Stone & Wood at The Tilbury Hotel\n\ud83d\udccb Pale Ale - Australian | 3.5% ABV",
       "post_url": "https://untappd.com/v/the-tilbury/3721",
-      "scraped_at": "2026-02-06T06:18:29.357989",
+      "scraped_at": "2026-02-06T12:10:36.361795",
       "mentions_beers": [
         "an Easy Pale Ale"
       ],
@@ -1603,7 +1603,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Cameron Hateley is drinking a Pacific Ale by Stone & Wood at The Tilbury Hotel\n\ud83d\udccb Pale Ale - Australian | 4.4% ABV",
       "post_url": "https://untappd.com/v/the-tilbury/3721",
-      "scraped_at": "2026-02-06T06:18:29.358285",
+      "scraped_at": "2026-02-06T12:10:36.362070",
       "mentions_beers": [
         "a Pacific Ale"
       ],
@@ -1623,7 +1623,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Erik Frid is drinking a Super Crisp Lager by Great Northern Brewing Co. at The Tilbury Hotel\n\ud83d\udccb Lager - American | 3.5% ABV",
       "post_url": "https://untappd.com/v/the-tilbury/3721",
-      "scraped_at": "2026-02-06T06:18:29.358639",
+      "scraped_at": "2026-02-06T12:10:36.362432",
       "mentions_beers": [
         "a Super Crisp Lager"
       ],
@@ -1643,7 +1643,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a carl romano is drinking a Czider Sz\u00e1raz by Magyar Czider Kft. at Mika Tivadar Mulat\u00f3\n\ud83d\udccb Cider - Dry | 7.0% ABV",
       "post_url": "https://untappd.com/v/tiva/320707",
-      "scraped_at": "2026-02-06T06:18:30.561250",
+      "scraped_at": "2026-02-06T12:10:37.737421",
       "mentions_beers": [
         "a Czider Sz\u00e1raz"
       ],
@@ -1663,7 +1663,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Nikki is drinking a Strongbow Gold Apple by Bulmers Cider at Mika Tivadar Mulat\u00f3\n\ud83d\udccb Cider - Traditional / Apfelwein | 5.0% ABV",
       "post_url": "https://untappd.com/v/tiva/320707",
-      "scraped_at": "2026-02-06T06:18:30.561621",
+      "scraped_at": "2026-02-06T12:10:37.737792",
       "mentions_beers": [
         "a Strongbow Gold Apple"
       ],
@@ -1683,7 +1683,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Turgut is drinking a Lager (Klasszikus) by Soproni S\u00f6rgy\u00e1r (Heineken Hung\u00e1ria) at Mika Tivadar Mulat\u00f3\n\ud83d\udccb Lager - Pale | 4.5% ABV",
       "post_url": "https://untappd.com/v/tiva/320707",
-      "scraped_at": "2026-02-06T06:18:30.561900",
+      "scraped_at": "2026-02-06T12:10:37.738066",
       "mentions_beers": [
         "a Lager (Klasszikus)"
       ],
@@ -1703,7 +1703,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jack Clarke is drinking an Edelweiss Hefetr\u00fcb Original by Brau Union \u00d6sterreich at Mika Tivadar Mulat\u00f3\n\ud83d\udccb Wheat Beer - Hefeweizen | 5.1% ABV",
       "post_url": "https://untappd.com/v/tiva/320707",
-      "scraped_at": "2026-02-06T06:18:30.562203",
+      "scraped_at": "2026-02-06T12:10:37.738350",
       "mentions_beers": [
         "an Edelweiss Hefetr\u00fcb Original"
       ],
@@ -1723,7 +1723,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jack Clarke is drinking a Soproni IPA \u00d3vatos Duhaj by Soproni S\u00f6rgy\u00e1r (Heineken Hung\u00e1ria) at Mika Tivadar Mulat\u00f3\n\ud83d\udccb IPA - American | 4.8% ABV",
       "post_url": "https://untappd.com/v/tiva/320707",
-      "scraped_at": "2026-02-06T06:18:30.562513",
+      "scraped_at": "2026-02-06T12:10:37.738666",
       "mentions_beers": [
         "a Soproni IPA \u00d3vatos Duhaj"
       ],
@@ -1743,7 +1743,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a douglas woolley is drinking a Fiddlehead IPA by Fiddlehead Brewing Company at The Old Union Hotel\n\ud83d\udccb IPA - American | 6.2% ABV",
       "post_url": "https://untappd.com/v/union-hotel/56633",
-      "scraped_at": "2026-02-06T06:18:39.029782",
+      "scraped_at": "2026-02-06T12:10:41.707609",
       "mentions_beers": [
         "a Fiddlehead IPA"
       ],
@@ -1763,7 +1763,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a charlie Saam is drinking a Hazy Little Thing by Sierra Nevada Brewing Co. at The Old Union Hotel\n\ud83d\udccb IPA - New England / Hazy | 6.7% ABV",
       "post_url": "https://untappd.com/v/union-hotel/56633",
-      "scraped_at": "2026-02-06T06:18:39.030161",
+      "scraped_at": "2026-02-06T12:10:41.707980",
       "mentions_beers": [
         "a Hazy Little Thing"
       ],
@@ -1783,7 +1783,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Courtney is drinking an Old Union Haze by Beer Tree Brew Co at The Old Union Hotel\n\ud83d\udccb IPA - New England / Hazy | 6.3% ABV",
       "post_url": "https://untappd.com/v/union-hotel/56633",
-      "scraped_at": "2026-02-06T06:18:39.030460",
+      "scraped_at": "2026-02-06T12:10:41.708274",
       "mentions_beers": [
         "an Old Union Haze"
       ],
@@ -1803,7 +1803,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Courtney is drinking a Lake Shore Fog by Southern Tier Brewing Company at The Old Union Hotel\n\ud83d\udccb IPA - New England / Hazy | 6.5% ABV",
       "post_url": "https://untappd.com/v/union-hotel/56633",
-      "scraped_at": "2026-02-06T06:18:39.030739",
+      "scraped_at": "2026-02-06T12:10:41.708568",
       "mentions_beers": [
         "a Lake Shore Fog"
       ],
@@ -1823,7 +1823,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a awesomelamo is drinking a Pernicious by Wicked Weed Brewing at The Old Union Hotel\n\ud83d\udccb IPA - American | 7.3% ABV",
       "post_url": "https://untappd.com/v/union-hotel/56633",
-      "scraped_at": "2026-02-06T06:18:39.031053",
+      "scraped_at": "2026-02-06T12:10:41.708879",
       "mentions_beers": [
         "a Pernicious"
       ],
@@ -1841,9 +1841,29 @@
     {
       "venue_id": "harts-pub",
       "platform": "untappd",
+      "content": "\ud83c\udf7a Ann Reinking is drinking a Villager's Pale Ale by Common People Brewing Co at Harts Pub\n\ud83d\udccb Pale Ale - Australian | 5.1% ABV",
+      "post_url": "https://untappd.com/v/harts-pub/5281",
+      "scraped_at": "2026-02-06T12:10:42.956953",
+      "mentions_beers": [
+        "a Villager's Pale Ale"
+      ],
+      "beer_details": {
+        "name": "a Villager's Pale Ale",
+        "brewery": "Common People Brewing Co at Harts Pub",
+        "style": "Pale Ale - Australian",
+        "abv": 5.1,
+        "ibu": null,
+        "description": "",
+        "label_url": "",
+        "untappd_url": "https://untappd.com/b/common-people-brewing-co-villager-s-pale-ale/4685467"
+      }
+    },
+    {
+      "venue_id": "harts-pub",
+      "platform": "untappd",
       "content": "\ud83c\udf7a Thang A Rang is drinking a Villager's Pale Ale by Common People Brewing Co at Harts Pub\n\ud83d\udccb Pale Ale - Australian | 5.1% ABV",
       "post_url": "https://untappd.com/v/harts-pub/5281",
-      "scraped_at": "2026-02-06T06:18:40.246614",
+      "scraped_at": "2026-02-06T12:10:42.957276",
       "mentions_beers": [
         "a Villager's Pale Ale"
       ],
@@ -1863,7 +1883,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Joel Santiago is drinking an Altbier by Pickled Monkey Brewing Co at Harts Pub\n\ud83d\udccb Altbier - Traditional | 4.5% ABV",
       "post_url": "https://untappd.com/v/harts-pub/5281",
-      "scraped_at": "2026-02-06T06:18:40.246936",
+      "scraped_at": "2026-02-06T12:10:42.957593",
       "mentions_beers": [
         "an Altbier"
       ],
@@ -1883,7 +1903,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Joel Santiago is drinking a Hazy Pale by Pickled Monkey Brewing Co at Harts Pub\n\ud83d\udccb Pale Ale - New England / Hazy | 4.7% ABV",
       "post_url": "https://untappd.com/v/harts-pub/5281",
-      "scraped_at": "2026-02-06T06:18:40.247277",
+      "scraped_at": "2026-02-06T12:10:42.957916",
       "mentions_beers": [
         "a Hazy Pale"
       ],
@@ -1903,7 +1923,7 @@
       "platform": "untappd",
       "content": "\ud83c\udf7a Jayne M is drinking a Double WCIPA by Pickled Monkey Brewing Co at Harts Pub\n\ud83d\udccb IPA - Imperial / Double | 8.5% ABV",
       "post_url": "https://untappd.com/v/harts-pub/5281",
-      "scraped_at": "2026-02-06T06:18:40.247564",
+      "scraped_at": "2026-02-06T12:10:42.958196",
       "mentions_beers": [
         "a Double WCIPA"
       ],
@@ -1916,26 +1936,6 @@
         "description": "",
         "label_url": "",
         "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-double-wcipa/6503298"
-      }
-    },
-    {
-      "venue_id": "harts-pub",
-      "platform": "untappd",
-      "content": "\ud83c\udf7a Andrew Lewandowski is drinking a Super Chill Pacific Ale by Akasha Brewing Company at Harts Pub\n\ud83d\udccb Pale Ale - Australian | 4.2% ABV",
-      "post_url": "https://untappd.com/v/harts-pub/5281",
-      "scraped_at": "2026-02-06T06:18:40.247885",
-      "mentions_beers": [
-        "a Super Chill Pacific Ale"
-      ],
-      "beer_details": {
-        "name": "a Super Chill Pacific Ale",
-        "brewery": "Akasha Brewing Company at Harts Pub",
-        "style": "Pale Ale - Australian",
-        "abv": 4.2,
-        "ibu": null,
-        "description": "",
-        "label_url": "",
-        "untappd_url": "https://untappd.com/b/akasha-brewing-company-super-chill-pacific-ale/4544089"
       }
     }
   ],
