@@ -1089,5 +1089,53 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/sauce-brewing-co-new-england-ipa/5319920"
+  },
+  "https://untappd.com/b/young-henrys-fade-to-black/6267804": {
+    "name": "Fade To Black",
+    "brewery": "Young Henrys",
+    "brewery_location": "Sydney, NSW",
+    "style": "Stout - Irish Dry",
+    "abv": 4.8,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-fade-to-black/6267804"
+  },
+  "https://untappd.com/b/the-grifter-brewing-co-birra-quattro/5227200": {
+    "name": "Birra Quattro",
+    "brewery": "The Grifter Brewing Co.",
+    "brewery_location": "Sydney, NSW",
+    "style": "Pilsner - Italian",
+    "abv": 4.7,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/the-grifter-brewing-co-birra-quattro/5227200"
+  },
+  "https://untappd.com/b/the-grifter-brewing-co-silver-service/6410722": {
+    "name": "Silver Service",
+    "brewery": "The Grifter Brewing Co.",
+    "brewery_location": "Sydney, NSW",
+    "style": "Pilsner - Other",
+    "abv": 4.6,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/the-grifter-brewing-co-silver-service/6410722"
+  },
+  "https://untappd.com/b/philter-brewing-super-cool-lager/5241414": {
+    "name": "Super Cool Lager",
+    "brewery": "Philter Brewing",
+    "brewery_location": "West Gosford, NSW",
+    "style": "Lager - Pale",
+    "abv": 4.2,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/philter-brewing-super-cool-lager/5241414"
   }
 }

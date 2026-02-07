@@ -22,5 +22,11 @@
     "location": "Neutral Bay, NSW",
     "discovered_at": "2026-02-05T06:19:47.360050",
     "status": "pending_review"
+  },
+  "the-grifter-brewing-co.": {
+    "name": "The Grifter Brewing Co.",
+    "location": "Sydney, NSW",
+    "discovered_at": "2026-02-07T12:06:36.684543",
+    "status": "pending_review"
   }
 }
