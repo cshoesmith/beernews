@@ -945,5 +945,29 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/batch-brewing-company-hazty-decisions-vol-9/6592072"
+  },
+  "https://untappd.com/b/batch-brewing-company-sweet-tooth/6505733": {
+    "name": "Sweet Tooth",
+    "brewery": "Batch Brewing Company",
+    "brewery_location": "Charlevoix, MI",
+    "style": "Stout - Imperial / Double",
+    "abv": 9.0,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-sweet-tooth/6505733"
+  },
+  "https://untappd.com/b/batch-brewing-company-le-theory/6592837": {
+    "name": "Le Theory",
+    "brewery": "Batch Brewing Company",
+    "brewery_location": "Detroit, MI",
+    "style": "IPA - Black / Cascadian Dark Ale",
+    "abv": 6.0,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-le-theory/6592837"
   }
 }
