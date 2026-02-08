@@ -1137,5 +1137,77 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/philter-brewing-super-cool-lager/5241414"
+  },
+  "https://untappd.com/b/batch-brewing-company-the-key-the-secret/6476736": {
+    "name": "The Key, the Secret",
+    "brewery": "Batch Brewing Company",
+    "brewery_location": "Coldwater, MI",
+    "style": "IPA - New England / Hazy",
+    "abv": null,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-the-key-the-secret/6476736"
+  },
+  "https://untappd.com/b/batch-brewing-company-yipes/2312994": {
+    "name": "YIPES!",
+    "brewery": "Batch Brewing Company",
+    "brewery_location": "Detroit, MI",
+    "style": "IPA - American",
+    "abv": 6.6,
+    "ibu": 45,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/batch-brewing-company-yipes/2312994"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-rocksteady-hefe/6389042": {
+    "name": "Rocksteady Hefe",
+    "brewery": "Balanced Rock Brewing",
+    "brewery_location": "The Colony, TX",
+    "style": "Wheat Beer - Hefeweizen",
+    "abv": 5.0,
+    "ibu": 15,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-rocksteady-hefe/6389042"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-peel-and-wheat/6434417": {
+    "name": "Peel & Wheat",
+    "brewery": "Balanced Rock Brewing",
+    "brewery_location": "",
+    "style": "Wheat Beer - Other",
+    "abv": 5.0,
+    "ibu": 15,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-peel-and-wheat/6434417"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-the-purp-and-the-wild/6309941": {
+    "name": "The Purp & the Wild",
+    "brewery": "Balanced Rock Brewing",
+    "brewery_location": "The Colony, TX",
+    "style": "Farmhouse Ale - Saison",
+    "abv": 4.6,
+    "ibu": 20,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-the-purp-and-the-wild/6309941"
+  },
+  "https://untappd.com/b/balanced-rock-brewing-systematically-missteps/6279502": {
+    "name": "Systematical Missteps",
+    "brewery": "Balanced Rock Brewing",
+    "brewery_location": "The Colony, TX",
+    "style": "Sour - Fruited",
+    "abv": 5.5,
+    "ibu": 8,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-systematically-missteps/6279502"
   }
 }
