@@ -849,7 +849,7 @@ def main():
     print()
     
     # 3. Scrape Instagram via Apify (alternative)
-    print("Scraping Instagram (Apify - alternative)...")
+    print("Scraping Instagram (Apify)...")
     if os.getenv('APIFY_API_TOKEN'):
         for venue in SYDNEY_VENUES:
             if venue.instagram_handle:
@@ -858,7 +858,8 @@ def main():
                     post['venue_id'] = venue.id
                 all_posts.extend(posts)
     else:
-        print("  Skipping (no APIFY_API_TOKEN)")
+        print("  Skipping Apify (Cost saving mode active / No token found)")
+        print("  To enable Instagram scraping, set APIFY_API_TOKEN env var")
     
     print()
     
