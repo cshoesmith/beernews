@@ -1162,6 +1162,18 @@
     "label_url": "",
     "untappd_url": "https://untappd.com/b/batch-brewing-company-yipes/2312994"
   },
+  "https://untappd.com/b/balanced-rock-brewing-rocksteady-hefe/6389042": {
+    "name": "Rocksteady Hefe",
+    "brewery": "Balanced Rock Brewing",
+    "brewery_location": "The Colony, TX",
+    "style": "Wheat Beer - Hefeweizen",
+    "abv": 5.0,
+    "ibu": 15,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-rocksteady-hefe/6389042"
+  },
   "https://untappd.com/b/balanced-rock-brewing-peel-and-wheat/6434417": {
     "name": "Peel & Wheat",
     "brewery": "Balanced Rock Brewing",
@@ -1197,18 +1209,6 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/balanced-rock-brewing-systematically-missteps/6279502"
-  },
-  "https://untappd.com/b/balanced-rock-brewing-all-sombrero-no-cattle/6195995": {
-    "name": "All Sombrero, No Cattle",
-    "brewery": "Balanced Rock Brewing",
-    "brewery_location": "The Colony, TX",
-    "style": "Lager - Mexican",
-    "abv": 5.4,
-    "ibu": 14,
-    "rating": null,
-    "description": "",
-    "label_url": "",
-    "untappd_url": "https://untappd.com/b/balanced-rock-brewing-all-sombrero-no-cattle/6195995"
   },
   "https://untappd.com/b/balanced-rock-brewing-cinnamon-swirl/6586384": {
     "name": "Cinnamon Swirl",
