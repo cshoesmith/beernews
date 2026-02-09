@@ -2,23 +2,19 @@
   "sources": {
     "mountain-culture-website": {
       "technique": "website-beautifulsoup",
-      "attempts": 53,
-      "successes": 53,
-      "items_found": 52,
+      "attempts": 54,
+      "successes": 54,
+      "items_found": 53,
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-09T00:08:52.022712"
+      "last_attempt": "2026-02-09T06:20:49.627852"
     },
     "batch-brewing-website": {
       "technique": "website-beautifulsoup",
-      "attempts": 53,
+      "attempts": 54,
       "successes": 0,
       "items_found": 0,
       "errors": [
-        {
-          "time": "2026-02-06T18:13:21.518668",
-          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
-        },
         {
           "time": "2026-02-07T00:14:17.445676",
           "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
@@ -54,28 +50,32 @@
         {
           "time": "2026-02-09T00:08:52.022684",
           "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
+        },
+        {
+          "time": "2026-02-09T06:20:49.627788",
+          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
         }
       ],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-09T00:08:52.003562"
+      "last_attempt": "2026-02-09T06:20:49.396851"
     },
     "4-pines-website": {
       "technique": "website-generic",
-      "attempts": 53,
-      "successes": 53,
-      "items_found": 33,
+      "attempts": 54,
+      "successes": 54,
+      "items_found": 34,
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-09T00:08:52.264709"
+      "last_attempt": "2026-02-09T06:20:50.312705"
     },
     "white-bay-website": {
       "technique": "website-generic",
-      "attempts": 53,
-      "successes": 53,
+      "attempts": 54,
+      "successes": 54,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-01-31T00:00:00",
-      "last_attempt": "2026-02-09T00:08:57.398171"
+      "last_attempt": "2026-02-09T06:20:56.086980"
     },
     "instagram-younghenrys": {
       "technique": "instagram-apify",
@@ -484,237 +484,237 @@
     },
     "wayward-brewing-website": {
       "technique": "website-generic",
-      "attempts": 33,
-      "successes": 33,
-      "items_found": 165,
+      "attempts": 34,
+      "successes": 34,
+      "items_found": 170,
       "errors": [],
       "first_seen": "2026-02-04T12:19:08.687579",
-      "last_attempt": "2026-02-09T00:09:03.758160"
+      "last_attempt": "2026-02-09T06:21:00.950053"
     },
     "grifter-brewing-website": {
       "technique": "website-generic",
-      "attempts": 33,
-      "successes": 33,
+      "attempts": 34,
+      "successes": 34,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T12:19:10.960916",
-      "last_attempt": "2026-02-09T00:09:05.337478"
+      "last_attempt": "2026-02-09T06:21:02.550986"
     },
     "the-rocks-brewing-website": {
       "technique": "website-generic",
-      "attempts": 33,
-      "successes": 33,
+      "attempts": 34,
+      "successes": 34,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T12:19:11.310374",
-      "last_attempt": "2026-02-09T00:09:05.522931"
+      "last_attempt": "2026-02-09T06:21:03.097913"
     },
     "bracket-brewing-website": {
       "technique": "website-generic",
-      "attempts": 33,
-      "successes": 33,
-      "items_found": 66,
+      "attempts": 34,
+      "successes": 34,
+      "items_found": 68,
       "errors": [],
       "first_seen": "2026-02-04T12:19:11.651951",
-      "last_attempt": "2026-02-09T00:09:06.028387"
+      "last_attempt": "2026-02-09T06:21:03.581436"
     },
     "young-henrys-website": {
       "technique": "website-generic",
-      "attempts": 33,
-      "successes": 33,
-      "items_found": 66,
+      "attempts": 34,
+      "successes": 34,
+      "items_found": 68,
       "errors": [],
       "first_seen": "2026-02-04T12:19:12.138681",
-      "last_attempt": "2026-02-09T00:09:06.563944"
+      "last_attempt": "2026-02-09T06:21:04.052717"
     },
     "untappd-young-henrys": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:28:49.288156",
-      "last_attempt": "2026-02-09T00:09:20.217175"
+      "last_attempt": "2026-02-09T06:21:17.325569"
     },
     "untappd-batch-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:28:50.765772",
-      "last_attempt": "2026-02-09T00:09:21.247113"
+      "last_attempt": "2026-02-09T06:21:18.022480"
     },
     "untappd-wayward-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:28:52.121138",
-      "last_attempt": "2026-02-09T00:09:22.578052"
+      "last_attempt": "2026-02-09T06:21:18.855249"
     },
     "untappd-grifter-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:28:53.583595",
-      "last_attempt": "2026-02-09T00:09:24.034508"
+      "last_attempt": "2026-02-09T06:21:19.705088"
     },
     "untappd-the-rocks-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:28:55.775430",
-      "last_attempt": "2026-02-09T00:09:24.922674"
+      "last_attempt": "2026-02-09T06:21:20.412485"
     },
     "untappd-bracket-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:28:58.586052",
-      "last_attempt": "2026-02-09T00:09:25.666929"
+      "last_attempt": "2026-02-09T06:21:21.029581"
     },
     "untappd-future-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:00.750783",
-      "last_attempt": "2026-02-09T00:09:26.585397"
+      "last_attempt": "2026-02-09T06:21:21.657547"
     },
     "untappd-range-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:02.336067",
-      "last_attempt": "2026-02-09T00:09:27.726694"
+      "last_attempt": "2026-02-09T06:21:22.873894"
     },
     "untappd-mountain-culture": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:04.144668",
-      "last_attempt": "2026-02-09T00:09:29.959854"
+      "last_attempt": "2026-02-09T06:21:24.186805"
     },
     "untappd-kicks-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:05.574643",
-      "last_attempt": "2026-02-09T00:09:30.768873"
+      "last_attempt": "2026-02-09T06:21:24.988578"
     },
     "untappd-4-pines": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:07.349272",
-      "last_attempt": "2026-02-09T00:09:32.105504"
+      "last_attempt": "2026-02-09T06:21:25.679695"
     },
     "untappd-white-bay": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:08.737727",
-      "last_attempt": "2026-02-09T00:09:33.453312"
+      "last_attempt": "2026-02-09T06:21:26.693728"
     },
     "untappd-the-tilbury": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:10.615630",
-      "last_attempt": "2026-02-09T00:09:41.181664"
+      "last_attempt": "2026-02-09T06:21:32.756563"
     },
     "untappd-tiva": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:12.708821",
-      "last_attempt": "2026-02-09T00:09:42.633619"
+      "last_attempt": "2026-02-09T06:21:34.108229"
     },
     "untappd-hotel-sweeneys": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:14.216319",
-      "last_attempt": "2026-02-09T00:09:43.530331"
+      "last_attempt": "2026-02-09T06:21:35.108298"
     },
     "untappd-jb-and-sons": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:15.621790",
-      "last_attempt": "2026-02-09T00:09:44.665302"
+      "last_attempt": "2026-02-09T06:21:36.096257"
     },
     "untappd-jb-and-sons-manly": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:17.351428",
-      "last_attempt": "2026-02-09T00:09:46.531018"
+      "last_attempt": "2026-02-09T06:21:37.630735"
     },
     "untappd-noble-hops": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:17.947528",
-      "last_attempt": "2026-02-09T00:09:46.728354"
+      "last_attempt": "2026-02-09T06:21:37.818148"
     },
     "untappd-union-hotel": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:19.373542",
-      "last_attempt": "2026-02-09T00:09:47.805352"
+      "last_attempt": "2026-02-09T06:21:38.579064"
     },
     "untappd-bitter-phew": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
+      "attempts": 32,
+      "successes": 32,
       "items_found": 0,
       "errors": [],
       "first_seen": "2026-02-04T23:29:20.809732",
-      "last_attempt": "2026-02-09T00:09:48.679097"
+      "last_attempt": "2026-02-09T06:21:39.466855"
     },
     "untappd-harts-pub": {
       "technique": "untappd-checkins",
-      "attempts": 31,
-      "successes": 31,
-      "items_found": 155,
+      "attempts": 32,
+      "successes": 32,
+      "items_found": 160,
       "errors": [],
       "first_seen": "2026-02-04T23:29:22.587611",
-      "last_attempt": "2026-02-09T00:09:49.422709"
+      "last_attempt": "2026-02-09T06:21:40.131501"
     },
     "instagram-seekerbrew": {
       "technique": "instagram-apify",
@@ -788,193 +788,51 @@
     },
     "untappd-mountain-culture-redfern": {
       "technique": "untappd-checkins",
-      "attempts": 16,
-      "successes": 16,
-      "items_found": 80,
+      "attempts": 17,
+      "successes": 17,
+      "items_found": 85,
       "errors": [],
       "first_seen": "2026-02-05T06:19:10.105378",
-      "last_attempt": "2026-02-09T00:09:34.739358"
+      "last_attempt": "2026-02-09T06:21:27.331499"
     },
     "untappd-seeker-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 16,
-      "successes": 16,
-      "items_found": 80,
+      "attempts": 17,
+      "successes": 17,
+      "items_found": 85,
       "errors": [],
       "first_seen": "2026-02-05T06:19:12.618477",
-      "last_attempt": "2026-02-09T00:09:36.534481"
+      "last_attempt": "2026-02-09T06:21:29.137778"
     },
     "untappd-ekim-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 16,
-      "successes": 16,
-      "items_found": 80,
+      "attempts": 17,
+      "successes": 17,
+      "items_found": 85,
       "errors": [],
       "first_seen": "2026-02-05T06:19:17.573008",
-      "last_attempt": "2026-02-09T00:09:38.192046"
+      "last_attempt": "2026-02-09T06:21:30.312017"
     },
     "untappd-philter-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 16,
-      "successes": 16,
-      "items_found": 80,
+      "attempts": 17,
+      "successes": 17,
+      "items_found": 85,
       "errors": [],
       "first_seen": "2026-02-05T06:19:23.637625",
-      "last_attempt": "2026-02-09T00:09:39.328590"
+      "last_attempt": "2026-02-09T06:21:31.116513"
     },
     "untappd-sauce-brewing": {
       "technique": "untappd-checkins",
-      "attempts": 16,
-      "successes": 16,
-      "items_found": 80,
+      "attempts": 17,
+      "successes": 17,
+      "items_found": 85,
       "errors": [],
       "first_seen": "2026-02-05T06:19:29.285695",
-      "last_attempt": "2026-02-09T00:09:40.008263"
+      "last_attempt": "2026-02-09T06:21:31.839523"
     }
   },
   "runs": [
-    {
-      "started_at": "2026-02-01T00:08:32.483655",
-      "sources": {
-        "batch-brewing-website": {
-          "success": false,
-          "items": 0,
-          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
-        },
-        "mountain-culture-website": {
-          "success": true,
-          "items": 1,
-          "error": null
-        },
-        "4-pines-website": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "white-bay-website": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-younghenrys": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-batchbrewingcompany": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-waywardbrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-grifterbrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-therocksbrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-bracketbrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-futurebrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-rangebrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-mountainculturebeerco": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-kicksbrewing": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-4pinesbeer": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-whitebaybeerco": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-bloodorangeliquorbar": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-thetilbury": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-dulciesdoveclub": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-basketballliquor": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-tivabarsyd": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-hotelsweeneys": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-jbandsons": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-noblehopsbar": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-theunionhotelnewtown": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-bitterphew": {
-          "success": true,
-          "items": 0,
-          "error": null
-        },
-        "instagram-hartspub": {
-          "success": true,
-          "items": 0,
-          "error": null
-        }
-      },
-      "ended_at": "2026-02-01T00:09:33.896019",
-      "total_items": 1
-    },
     {
       "started_at": "2026-02-01T03:00:43.879463",
       "sources": {
@@ -12616,6 +12474,188 @@
         }
       },
       "ended_at": "2026-02-09T00:09:50.072042",
+      "total_items": 104
+    },
+    {
+      "started_at": "2026-02-09T06:20:49.396786",
+      "sources": {
+        "batch-brewing-website": {
+          "success": false,
+          "items": 0,
+          "error": "HTTPSConnectionPool(host='www.batchbrewingcompany.com.au', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.batchbrewingcompany.com.au', port=443): Failed to resolve 'www.batchbrewingcompany.com.au' ([Errno -2] Name or service not known)\"))"
+        },
+        "mountain-culture-website": {
+          "success": true,
+          "items": 1,
+          "error": null
+        },
+        "4-pines-website": {
+          "success": true,
+          "items": 1,
+          "error": null
+        },
+        "white-bay-website": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "wayward-brewing-website": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "grifter-brewing-website": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "the-rocks-brewing-website": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "bracket-brewing-website": {
+          "success": true,
+          "items": 2,
+          "error": null
+        },
+        "young-henrys-website": {
+          "success": true,
+          "items": 2,
+          "error": null
+        },
+        "untappd-young-henrys": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-batch-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-wayward-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-grifter-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-the-rocks-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-bracket-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-future-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-range-brewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-mountain-culture": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-kicks-brewing": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-4-pines": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-white-bay": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-mountain-culture-redfern": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-seeker-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-ekim-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-philter-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-sauce-brewing": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-the-tilbury": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-tiva": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-hotel-sweeneys": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-jb-and-sons": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-jb-and-sons-manly": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-noble-hops": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-union-hotel": {
+          "success": true,
+          "items": 5,
+          "error": null
+        },
+        "untappd-bitter-phew": {
+          "success": true,
+          "items": 0,
+          "error": null
+        },
+        "untappd-harts-pub": {
+          "success": true,
+          "items": 5,
+          "error": null
+        }
+      },
+      "ended_at": "2026-02-09T06:21:40.754598",
       "total_items": 104
     }
   ],
