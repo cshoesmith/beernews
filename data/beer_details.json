@@ -1305,5 +1305,17 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-always-on/6457643"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-floating-on-green-citra/6506414": {
+    "name": "Floating On Green: Citra",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Sydney, NSW",
+    "style": "IPA - Milkshake",
+    "abv": 6.6,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-floating-on-green-citra/6506414"
   }
 }
