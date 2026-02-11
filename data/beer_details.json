@@ -1317,5 +1317,17 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-floating-on-green-citra/6506414"
+  },
+  "https://untappd.com/b/range-brewing-floating-on-green-citra/4868295": {
+    "name": "Floating On Green: Citra",
+    "brewery": "Range Brewing",
+    "brewery_location": "Sydney, NSW",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.6,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/range-brewing-floating-on-green-citra/4868295"
   }
 }
