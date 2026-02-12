@@ -1055,6 +1055,10 @@ select:focus {
 }
 
 @media (max-width: 768px) {
+  .mag-nav-overlay {
+    padding: 0 10px;
+  }
+  
   .content-container {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -1272,6 +1276,8 @@ select:focus {
     display: flex;
     justify-content: center;
     overflow-y: auto;
+    overflow-x: hidden; /* Hide horizontal scroll from fixed-width scale */
+    width: 100%;
 }
 
 #page-spread {

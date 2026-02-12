@@ -15,7 +15,50 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'ArrowLeft') prevPage();
         if (e.key === 'ArrowRight') nextPage();
     });
+
+    // Initial scale adjustment
+    adjustMagazineScale();
+    window.addEventListener('resize', adjustMagazineScale);
 });
+
+function adjustMagazineScale() {
+    const wrapper = document.getElementById('magazine-container');
+    const spread = document.getElementById('page-spread');
+    if (!wrapper || !spread) return;
+
+    // The desired width of the magazine page
+    const baseWidth = 770; 
+    const padding = 20; // safe zone padding
+    
+    // Available width
+    const availableWidth = wrapper.clientWidth - padding;
+    
+    // Only scale down, never up (unless we want to zoom, but pixelation risks)
+    let scale = availableWidth / baseWidth;
+    if (scale > 1) scale = 1;
+
+    // Apply scale
+    spread.style.transform = `scale(${scale})`;
+    spread.style.transformOrigin = 'top center';
+    
+    // Because scaling doesn't affect flow layout flow-size, we need to adjust margins
+    // to remove the extra whitespace created by scaling down.
+    // The height shrinks physically but visually takes less space.
+    // However, the container might scroll.
+    
+    // Actually, setting marginBottom might be enough for vertical flow,
+    // but horizontal centering is handled by the parent flex and transform-origin.
+    
+    // Note: The spread has a fixed height of 1190px.
+    // We can reduce the effective height of the container or margin to bring controls up closer.
+    const baseHeight = 1190;
+    const scaledHeight = baseHeight * scale;
+    
+    // We can explicitly set the height of the spread in flow to match visual height?
+    // No, transforms don't change layout size. 
+    // We can use a negative margin bottom to pull content up.
+    spread.style.marginBottom = `${-(baseHeight - scaledHeight)}px`;
+}
 
 async function loadIssue() {
     try {
