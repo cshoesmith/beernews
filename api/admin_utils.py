@@ -52,7 +52,8 @@ def search_untappd_venues(query):
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         }
         
-        resp = requests.get(url, headers=headers, timeout=10)
+        # Reduced timeout to 5s to avoid Vercel 10s execution limit (Hobby plan)
+        resp = requests.get(url, headers=headers, timeout=5)
         if resp.status_code != 200:
             return []
             

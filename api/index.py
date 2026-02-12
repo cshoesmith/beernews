@@ -470,9 +470,15 @@ def search_venues():
     if len(query) < 3:
         return jsonify({ 'error': 'Query too short' }), 400
     try:
+        # Check if admin module is available
+        if not admin:
+            raise ImportError("Admin module not loaded")
+            
         return jsonify(admin.search_untappd_venues(query))
     except Exception as e:
-        return jsonify({ 'error': str(e) }), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({ 'error': f"Search Error: {str(e)}" }), 500
 
 @app.route('/api/admin/venues/add', methods=['POST'])
 def add_new_venue():
