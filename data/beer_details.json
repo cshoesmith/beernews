@@ -1329,5 +1329,41 @@
     "description": "",
     "label_url": "",
     "untappd_url": "https://untappd.com/b/range-brewing-floating-on-green-citra/4868295"
+  },
+  "https://untappd.com/b/young-henrys-demo-batch-krampos/6598315": {
+    "name": "Demo Batch - Krampos",
+    "brewery": "Young Henrys",
+    "brewery_location": "Sydney, NSW",
+    "style": "IPA - Red",
+    "abv": 8.0,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/young-henrys-demo-batch-krampos/6598315"
+  },
+  "https://untappd.com/b/mountain-culture-beer-co-commit-to-the-bit/6598203": {
+    "name": "Commit To the Bit",
+    "brewery": "Mountain Culture Beer Co.",
+    "brewery_location": "Sydney, NSW",
+    "style": "IPA - New England / Hazy",
+    "abv": 6.6,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/mountain-culture-beer-co-commit-to-the-bit/6598203"
+  },
+  "https://untappd.com/b/pickled-monkey-brewing-co-cali-ipa/6348904": {
+    "name": "Cali IPA",
+    "brewery": "Pickled Monkey Brewing Co",
+    "brewery_location": "Sydney, NSW",
+    "style": "IPA - American",
+    "abv": 7.2,
+    "ibu": null,
+    "rating": null,
+    "description": "",
+    "label_url": "",
+    "untappd_url": "https://untappd.com/b/pickled-monkey-brewing-co-cali-ipa/6348904"
   }
 }
