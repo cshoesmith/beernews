@@ -464,8 +464,10 @@ def get_metrics():
 
 
 @app.route('/api/admin/venues/search')
+@app.route('/admin/venues/search') # Fallback for Vercel prefix stripping
 def search_venues():
     """Search for new venues."""
+    print(f"DEBUG: Search request path: {request.path}")
     query = request.args.get('q', '')
     if len(query) < 3:
         return jsonify({ 'error': 'Query too short' }), 400
