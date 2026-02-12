@@ -211,7 +211,7 @@ function renderTOC(page) {
     const listHtml = page.contents.map(item => `
         <div class="toc-item" onclick="renderPage(${item.page - 1})"> <!-- 0-based index -->
             <span class="toc-title">${item.title}</span>
-            <span class="toc-page">${item.page}</span>
+            <span class="toc-page-num">${item.page}</span>
         </div>
     `).join('');
     

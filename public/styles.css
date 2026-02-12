@@ -1438,8 +1438,9 @@ select:focus {
     font-weight: 700;
 }
 .toc-page-num {
-    font-family: monospace;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 1.1rem;
+    font-weight: 700;
 }
 .masthead-credits {
     margin-top: auto;
@@ -2238,7 +2239,14 @@ select:focus {
 }
 /* Reusing spotlight styles for consistency */
 .toc-page.spotlight-page .toc-title { color: white; }
-.toc-page.spotlight-page .toc-page { color: var(--mag-accent); }
+.toc-page.spotlight-page .toc-page-num { 
+    color: var(--mag-accent);
+    background: white; 
+    padding: 2px 8px;
+    font-weight: 700;
+    min-width: 30px;
+    text-align: center;
+}
 
 
 /* Dark Mode Venue List */
