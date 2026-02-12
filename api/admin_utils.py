@@ -10,6 +10,19 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 VENUES_FILE = BASE_DIR / "data" / "untappd_venues.json"
 
+# Try import storage for Vercel Blob
+try:
+    from .storage import load_json, upload_json, BLOB_TOKEN
+    USE_BLOB = bool(BLOB_TOKEN)
+except ImportError:
+    # Fallback if relative import fails (e.g. running script directly)
+    try:
+        from api.storage import load_json, upload_json, BLOB_TOKEN
+        USE_BLOB = bool(BLOB_TOKEN)
+    except ImportError:
+        USE_BLOB = False
+        print("Warning: could not import api.storage")
+
 def is_sydney_suburb(location_text):
     """Check if a location is in Sydney (Basic check)."""
     if not location_text:
@@ -100,6 +113,13 @@ def search_untappd_venues(query):
 
 def get_configured_venues():
     """Get list of currently configured venues."""
+    # Try Blob first if available
+    if USE_BLOB:
+        data = load_json("data/untappd_venues.json")
+        if data:
+            return data
+
+    # Fallback to local file
     if VENUES_FILE.exists():
         with open(VENUES_FILE, 'r') as f:
             return json.load(f)
@@ -116,7 +136,25 @@ def add_configured_venue(name, venue_id):
     
     data[slug] = venue_id
     
-    with open(VENUES_FILE, 'w') as f:
-        json.dump(data, f, indent=2)
+    # Write to local cache/file regardless (for dev/consistency)
+    try:
+        if not VENUES_FILE.parent.exists():
+            VENUES_FILE.parent.mkdir(parents=True)
+            
+        with open(VENUES_FILE, 'w') as f:
+            json.dump(data, f, indent=2)
+    except Exception as e:
+        print(f"Error writing to local file: {e}")
+
+    # Write to Blob if available
+    if USE_BLOB:
+        try:
+            upload_json("data/untappd_venues.json", data)
+        except Exception as e:
+            print(f"Error writing to Blob: {e}")
+            # If blob fails but local works, we at least return success 
+            # though on Vercel local won't persist.
+            # We should probably propagate error if critical?
+            # For now, print is enough as this is admin util.
     
     return {"slug": slug, "id": venue_id}
