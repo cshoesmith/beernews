@@ -744,11 +744,21 @@ async function searchVenues() {
     try {
         const response = await fetch(`/api/admin/venues/search?q=${encodeURIComponent(query)}`);
         if (!response.ok) {
-            let errorMsg = 'Search failed';
+            let errorMsg = `Search failed (${response.status})`;
             try { 
+                // Try to get JSON error
                 const errData = await response.json(); 
                 if (errData.error) errorMsg = errData.error;
-            } catch(e) {}
+            } catch(e) {
+                // Not JSON, probably HTML timeout page
+                // Try to get text to see if it provides a clue
+                try {
+                    const text = await response.text();
+                    if (text.includes("TIMED_OUT")) errorMsg = "Server Timed Out (Untappd Slow)";
+                    else if (text.includes("FUNCTION_INVOCATION_TIMEOUT")) errorMsg = "Vercel Function Timeout";
+                    else errorMsg = `Server Error ${response.status} (Raw Text)`;
+                } catch(textErr) {}
+            }
             throw new Error(errorMsg);
         }
         const results = await response.json();
