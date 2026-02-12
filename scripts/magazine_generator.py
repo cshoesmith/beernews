@@ -32,6 +32,30 @@ DYNAMIC_UPDATES_FILE = DATA_DIR / "dynamic_updates.json"
 
 MAGAZINE_PAGES = 16
 
+# Vercel Blob Helper
+def save_to_blob_if_available(filename, data):
+    """Save data to Vercel Blob if enabled."""
+    try:
+        # Import dynamically to avoid circular dependencies or path issues
+        try:
+            from api.storage import upload_json, BLOB_TOKEN
+            if BLOB_TOKEN:
+                print(f"Uploading {filename} to Vercel Blob...")
+                upload_json(f"data/{filename}", data)
+                return True
+        except ImportError:
+            # Try path adjustment for scripts
+            import sys
+            sys.path.append(str(Path(__file__).parent.parent))
+            from api.storage import upload_json, BLOB_TOKEN
+            if BLOB_TOKEN:
+                print(f"Uploading {filename} to Vercel Blob...")
+                upload_json(f"data/{filename}", data)
+                return True
+    except Exception as e:
+        print(f"Failed to upload to Blob: {e}")
+    return False
+
 try:
     from content_generator import calculate_beer_scores
 except ImportError:
@@ -532,7 +556,18 @@ def main(force=False):
         "pages": pages
     }
     
+    # Save locally
     save_json(CURRENT_ISSUE_FILE, issue_data)
+    
+    # Save to Vercel Blob (Critical for production)
+    # The filename in blob should match what the API expects to load
+    saved_to_blob = save_to_blob_if_available("current_issue.json", issue_data)
+    
+    if saved_to_blob:
+        print("Issue uploaded to Vercel Blob.")
+    else:
+        print("Issue saved locally only.")
+        
     print("Issue generated successfully.")
 
 if __name__ == "__main__":

@@ -174,6 +174,13 @@ def get_top_10():
 def get_latest_issue():
     """Get the full magazine issue content."""
     try:
+        # Try Blob first
+        from api.storage import load_json, USE_BLOB
+        if USE_BLOB:
+            issue = load_json("data/current_issue.json")
+            if issue:
+                return jsonify(issue)
+
         root_dir = os.path.dirname(os.path.dirname(__file__))
         data_path = os.path.join(root_dir, 'data', 'current_issue.json')
         
