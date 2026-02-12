@@ -743,7 +743,14 @@ async function searchVenues() {
     
     try {
         const response = await fetch(`/api/admin/venues/search?q=${encodeURIComponent(query)}`);
-        if (!response.ok) throw new Error('Search failed');
+        if (!response.ok) {
+            let errorMsg = 'Search failed';
+            try { 
+                const errData = await response.json(); 
+                if (errData.error) errorMsg = errData.error;
+            } catch(e) {}
+            throw new Error(errorMsg);
+        }
         const results = await response.json();
         
         if (results.length === 0) {
