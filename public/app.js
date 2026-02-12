@@ -708,7 +708,8 @@ async function loadExistingVenues() {
         const response = await fetch('/api/venues'); 
         const data = await response.json();
         
-        let html = '<ul style="max-height:150px; overflow-y:auto; padding-left:20px; color:#ccc;">';
+        // Remove scroll styles here, let css handle it
+        let html = '<ul style="padding-left:20px; color:#ccc; margin:0;">';
         
         if (Array.isArray(data)) {
              html += data.map(v => `<li>${v.name}</li>`).join('');
@@ -739,12 +740,15 @@ async function searchVenues() {
     
     if (query.length < 3) return;
 
-    resultsDiv.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">Searching...</div>';
+    // Use full path + version to debug
+    const endpoint = `/api/find_venue?q=${encodeURIComponent(query)}`;
+    resultsDiv.innerHTML = `<div style="padding:10px; color:#aaa; text-align:center;">Searching via ${endpoint}...</div>`;
     
     try {
-        const response = await fetch(`/api/admin/venues/search?q=${encodeURIComponent(query)}`);
+        // Simplified route to avoid Vercel path issues
+        const response = await fetch(endpoint);
         if (!response.ok) {
-            let errorMsg = `Search failed (${response.status})`;
+            let errorMsg = `Search failed (${response.status} at ${endpoint})`;
             try { 
                 // Try to get JSON error
                 const errData = await response.json(); 

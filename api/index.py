@@ -3,24 +3,70 @@ Vercel Serverless Function - Main API Handler
 """
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+import traceback
+from datetime import datetime
+
+# Capture startup logs
+STARTUP_LOGS = []
+STARTUP_LOGS.append(f"Init at {datetime.now()}")
+
+try:
+    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    STARTUP_LOGS.append(f"CWD: {os.getcwd()}")
+except Exception as e:
+    STARTUP_LOGS.append(f"Path setup error: {e}")
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from datetime import datetime
 import json
 
-# Local imports
-from models import Beer, Venue, SocialPost, Recommendation, UserPreference
-from recommendation_engine import RecommendationEngine
-import api.admin_utils as admin
+# safe import helper
+engine = None
+admin = None
+
+try:
+    from recommendation_engine import RecommendationEngine
+    STARTUP_LOGS.append("RecommendationEngine module imported")
+    try:
+        engine = RecommendationEngine()
+        STARTUP_LOGS.append("RecommendationEngine initialized")
+    except Exception as e:
+        STARTUP_LOGS.append(f"RecommendationEngine init failed: {e}")
+        STARTUP_LOGS.append(traceback.format_exc())
+except Exception as e:
+    STARTUP_LOGS.append(f"RecommendationEngine import failed: {e}")
+    STARTUP_LOGS.append(traceback.format_exc())
+
+try:
+    # Try package import first (for Vercel)
+    from . import admin_utils as admin_pkg
+    admin = admin_pkg
+    STARTUP_LOGS.append("Admin utils imported (relative)")
+except ImportError:
+    try:
+        # Fallback to absolute import (for local dev)
+        import api.admin_utils as admin_pkg
+        admin = admin_pkg
+        STARTUP_LOGS.append("Admin utils imported (absolute)")
+    except Exception as e:
+        STARTUP_LOGS.append(f"Admin utils import failed: {e}")
+        STARTUP_LOGS.append(traceback.format_exc())
+except Exception as e:
+    STARTUP_LOGS.append(f"Admin utils error: {e}")
 
 app = Flask(__name__)
 CORS(app)
 
-# Initialize recommendation engine
-engine = RecommendationEngine()
-
+@app.route('/api/debug')
+def debug_status():
+    """Debug endpoint to check server health and imports."""
+    return jsonify({
+        "status": "ok",
+        "startup_logs": STARTUP_LOGS,
+        "routes": [str(rule) for rule in app.url_map.iter_rules()],
+        "engine_loaded": engine is not None,
+        "admin_loaded": admin is not None
+    })
 
 @app.route('/')
 def root():
@@ -31,7 +77,10 @@ def root():
             "new_releases": "/api/beers/new",
             "venues": "/api/venues",
             "beers": "/api/beers",
-        }
+            "search": "/api/search_venues",
+            "debug": "/api/debug"
+        },
+        "status": "online"
     })
 
 
@@ -173,24 +222,39 @@ def get_top_10():
 @app.route('/api/issue/latest')
 def get_latest_issue():
     """Get the full magazine issue content."""
+    debug_info = []
     try:
         # Try Blob first
         from api.storage import load_json, USE_BLOB
+        debug_info.append(f"USE_BLOB: {USE_BLOB}")
+        
         if USE_BLOB:
             issue = load_json("data/current_issue.json")
             if issue:
                 return jsonify(issue)
+            debug_info.append("Blob load returned None")
+        else:
+            debug_info.append("Blob disabled")
 
         root_dir = os.path.dirname(os.path.dirname(__file__))
         data_path = os.path.join(root_dir, 'data', 'current_issue.json')
+        debug_info.append(f"Checking local path: {data_path}")
         
         if os.path.exists(data_path):
             with open(data_path, 'r') as f:
                 return jsonify(json.load(f))
         else:
-            return jsonify({"error": "Issue not generated yet"}), 404
+            data_dir = os.path.join(root_dir, 'data')
+            dir_contents = os.listdir(data_dir) if os.path.exists(data_dir) else "Data dir missing"
+            return jsonify({
+                "error": "Issue not generated yet", 
+                "details": debug_info,
+                "cwd": os.getcwd(),
+                "data_dir_contents": dir_contents
+            }), 404
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        import traceback
+        return jsonify({"error": str(e), "trace": traceback.format_exc(), "debug": debug_info}), 500
 
 @app.route('/api/admin/generate-magazine', methods=['POST'])
 def generate_magazine():
@@ -463,24 +527,60 @@ def get_metrics():
         })
 
 
-@app.route('/api/admin/venues/search')
-@app.route('/admin/venues/search') # Fallback for Vercel prefix stripping
+@app.route('/api/find_venue') 
+@app.route('/api/search_venues') 
 def search_venues():
     """Search for new venues."""
-    print(f"DEBUG: Search request path: {request.path}")
-    query = request.args.get('q', '')
-    if len(query) < 3:
-        return jsonify({ 'error': 'Query too short' }), 400
     try:
+        # Debug ping
+        if request.args.get('ping'):
+            return jsonify({"status": "pong", "message": "Routing works!"})
+
+        query = request.args.get('q', '')
+        print(f"DEBUG: Search request path: {request.path} query: {query}")
+        
+        # DEBUG: Return fake data for 'seeker' or 'test'
+        if query.lower() in ['seeker', 'test']:
+            return jsonify([{
+                "name": f"Debug Result: {query}", 
+                "id": "debug-123", 
+                "address": "Debug Land", 
+                "is_sydney": True
+            }])
+
+        if len(query) < 3:
+            return jsonify({ 'error': 'Query too short' }), 400
+            
         # Check if admin module is available
         if not admin:
-            raise ImportError("Admin module not loaded")
+            # Try to re-import
+            try:
+                from . import admin_utils as admin_pkg
+                global admin
+                admin = admin_pkg
+            except:
+                return jsonify({ 'error': 'Admin module failed to load', 'logs': STARTUP_LOGS }), 500
             
         return jsonify(admin.search_untappd_venues(query))
+        
     except Exception as e:
         import traceback
-        traceback.print_exc()
-        return jsonify({ 'error': f"Search Error: {str(e)}" }), 500
+        return jsonify({ 
+            'error': f"Search Critical Error: {str(e)}", 
+            'trace': traceback.format_exc()
+        }), 200 # Return 200 so we see the error JSON instead of generic 500/404
+
+# Catch-all route to debug 404s
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify({
+        "error": "404 Not Found (Flask Handler)",
+        "path": request.path,
+        "method": request.method,
+        "base_url": request.base_url,
+        "args": request.args,
+        "possible_routes": [str(rule) for rule in app.url_map.iter_rules() if 'search' in str(rule) or 'find' in str(rule)]
+    }), 404
 
 @app.route('/api/admin/venues/add', methods=['POST'])
 def add_new_venue():

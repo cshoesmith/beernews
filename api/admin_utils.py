@@ -50,12 +50,16 @@ def search_untappd_venues(query):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Referer': 'https://untappd.com/'
         }
         
         # Reduced timeout to 5s to avoid Vercel 10s execution limit (Hobby plan)
         resp = requests.get(url, headers=headers, timeout=5)
+        
+        # Debugging: Return error directly if status is bad
         if resp.status_code != 200:
-            return []
+            return [{"name": f"Error: Untappd returned {resp.status_code}", "id": "error", "address": "Try again later", "is_sydney": False}]
             
         soup = BeautifulSoup(resp.text, 'html.parser')
         
@@ -67,6 +71,10 @@ def search_untappd_venues(query):
              # Fallback to beer-item which Untappd uses for venues currently
              items = soup.find_all('div', class_='beer-item')
         
+        # Debugging: If nothing found, return info
+        if not items:
+             return [{"name": "No results found (structure might have changed)", "id": "0", "address": f"Length: {len(resp.text)}", "is_sydney": False}]
+
         for item in items[:10]:
             # Try to find name in p.name > a (current structure) or a.name (old structure)
             name_p = item.find('p', class_='name')

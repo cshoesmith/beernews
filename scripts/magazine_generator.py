@@ -37,23 +37,26 @@ def save_to_blob_if_available(filename, data):
     """Save data to Vercel Blob if enabled."""
     try:
         # Import dynamically to avoid circular dependencies or path issues
+        # Force add parent directory to path to find api module
+        import sys
+        parent_dir = str(Path(__file__).parent.parent)
+        if parent_dir not in sys.path:
+            sys.path.append(parent_dir)
+            
         try:
             from api.storage import upload_json, BLOB_TOKEN
             if BLOB_TOKEN:
-                print(f"Uploading {filename} to Vercel Blob...")
+                print(f"Uploading {filename} to Vercel Blob (Token found)...")
                 upload_json(f"data/{filename}", data)
                 return True
-        except ImportError:
-            # Try path adjustment for scripts
-            import sys
-            sys.path.append(str(Path(__file__).parent.parent))
-            from api.storage import upload_json, BLOB_TOKEN
-            if BLOB_TOKEN:
-                print(f"Uploading {filename} to Vercel Blob...")
-                upload_json(f"data/{filename}", data)
-                return True
+            else:
+                print("Warning: BLOB_TOKEN is empty/None")
+        except ImportError as ie:
+            print(f"Could not import api.storage: {ie}")
+            
     except Exception as e:
         print(f"Failed to upload to Blob: {e}")
+    return False
     return False
 
 try:
@@ -383,6 +386,9 @@ def main(force=False):
                 last_gen = datetime.datetime.fromisoformat(current_issue["generated_at"])
                 if (datetime.datetime.now() - last_gen).total_seconds() < 86400:
                     print(f"Latest issue ({current_issue.get('issue')}) is less than 24 hours old. Skipping generation.")
+                    # Force upload existing to blob
+                    print("Attempting to upload existing issue to Blob...")
+                    save_to_blob_if_available("current_issue.json", current_issue)
                     return
             except ValueError:
                 pass
