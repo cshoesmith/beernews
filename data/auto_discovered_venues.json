@@ -28,5 +28,11 @@
     "location": "Sydney, NSW",
     "discovered_at": "2026-02-07T12:06:36.684543",
     "status": "pending_review"
+  },
+  "pickled-monkey-brewing-co": {
+    "name": "Pickled Monkey Brewing Co",
+    "location": "Sydney, NSW",
+    "discovered_at": "2026-02-12T06:20:41.005067",
+    "status": "pending_review"
   }
 }
