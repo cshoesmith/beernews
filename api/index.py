@@ -8,9 +8,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import datetime
+import json
 
+# Local imports
 from models import Beer, Venue, SocialPost, Recommendation, UserPreference
 from recommendation_engine import RecommendationEngine
+import api.admin_utils as admin
 
 app = Flask(__name__)
 CORS(app)
@@ -149,6 +152,57 @@ def get_all_beers():
             "is_new_release": b.is_new_release
         } for b in beers
     ])
+
+
+
+@app.route('/api/top-10')
+def get_top_10():
+    """Get the AI-generated top 10 beer articles."""
+    try:
+        root_dir = os.path.dirname(os.path.dirname(__file__))
+        data_path = os.path.join(root_dir, 'data', 'top_10_beers.json')
+        
+        if os.path.exists(data_path):
+            with open(data_path, 'r') as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({"last_updated": None, "articles": []})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/issue/latest')
+def get_latest_issue():
+    """Get the full magazine issue content."""
+    try:
+        root_dir = os.path.dirname(os.path.dirname(__file__))
+        data_path = os.path.join(root_dir, 'data', 'current_issue.json')
+        
+        if os.path.exists(data_path):
+            with open(data_path, 'r') as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({"error": "Issue not generated yet"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/generate-magazine', methods=['POST'])
+def generate_magazine():
+    """Trigger manual magazine generation."""
+    try:
+        root_dir = os.path.dirname(os.path.dirname(__file__))
+        if root_dir not in sys.path:
+            sys.path.insert(0, root_dir)
+            
+        import scripts.magazine_generator as generator
+        
+        # Run generation with force=True
+        generator.main(force=True)
+        
+        return jsonify({"success": True, "message": "Magazine generated successfully"})
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/api/venues')
@@ -400,3 +454,28 @@ def get_metrics():
                 "success_rate": 0
             }
         })
+
+
+@app.route('/api/admin/venues/search')
+def search_venues():
+    """Search for new venues."""
+    query = request.args.get('q', '')
+    if len(query) < 3:
+        return jsonify({ 'error': 'Query too short' }), 400
+    try:
+        return jsonify(admin.search_untappd_venues(query))
+    except Exception as e:
+        return jsonify({ 'error': str(e) }), 500
+
+@app.route('/api/admin/venues/add', methods=['POST'])
+def add_new_venue():
+    """Add a venue to the configuration."""
+    data = request.json
+    if not data or 'name' not in data or 'id' not in data:
+        return jsonify({ 'error': 'Missing name or id' }), 400
+    try:
+        result = admin.add_configured_venue(data['name'], str(data['id']))
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({ 'error': str(e) }), 500
+

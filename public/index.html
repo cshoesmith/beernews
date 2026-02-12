@@ -3,259 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Sydney Beer Herald - Latest Craft Beer News & Releases</title>
+    <title>Sydney Beer Weekly</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Chomsky&family=Libre+Franklin:wght@300;400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Top Navigation Bar -->
+    <!-- Top Navigation -->
     <nav class="top-nav">
         <div class="nav-container">
             <div class="nav-left">
                 <button class="menu-btn" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </button>
-                <div class="nav-links">
-                    <a href="#" class="nav-link">U.S.</a>
-                    <a href="#" class="nav-link">International</a>
-                    <a href="#" class="nav-link">Canada</a>
-                    <a href="#" class="nav-link">Español</a>
-                    <a href="#" class="nav-link">中文</a>
-                </div>
             </div>
-            <div class="nav-right">
-                <button class="btn-subscribe">SUBSCRIBE FOR $0.50/WEEK</button>
-                <button class="btn-login">LOG IN</button>
-            </div>
+            <!-- <div class="nav-right">Removed Subscribe</div> -->
         </div>
     </nav>
 
-    <!-- Date Bar -->
-    <div class="date-bar">
-        <div class="date-container">
-            <span id="current-date"></span>
-            <span class="paper-edition">Today's Paper</span>
-        </div>
-    </div>
-
-    <!-- Masthead -->
-    <header class="masthead">
-        <div class="masthead-container">
-            <div class="masthead-top">
-                <div class="weather-widget">
-                    <span class="weather-location">Sydney</span>
-                    <span class="weather-temp">24°C</span>
-                    <span class="weather-desc">Partly cloudy</span>
-                </div>
-                <div class="masthead-logo">
-                    <a href="/" class="logo-link">
-                        <div class="logo-icon">🍺</div>
-                        <div class="logo-text">
-                            <span class="logo-small">THE SYDNEY</span>
-                            <span class="logo-large">BEER HERALD</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="stock-ticker">
-                    <span>XXXX 4.20 <span class="stock-up">+1.2%</span></span>
-                </div>
-            </div>
-            <nav class="sections-nav">
-                <a href="#" class="section-link active" data-tab="recommendations">Recommendations</a>
-                <a href="#" class="section-link" data-tab="new-releases">New Releases</a>
-                <a href="#" class="section-link" data-tab="venues">Venues</a>
-                <a href="#" class="section-link">Styles</a>
-                <a href="#" class="section-link">Breweries</a>
-                <a href="#" class="section-link">Reviews</a>
-                <a href="#" class="section-link">Events</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Breaking News Banner -->
-    <div class="breaking-banner">
-        <span class="breaking-label">BREAKING</span>
-        <span class="breaking-text" id="breaking-news">Mountain Culture releases fresh batch this week</span>
-        <span class="last-updated" id="last-updated"></span>
-    </div>
-
     <!-- Main Content -->
     <main class="main-content">
-        <div class="content-container">
-            
-            <!-- Left Rail -->
-            <aside class="left-rail">
-                <div class="rail-section">
-                    <h3>Filter By</h3>
-                    <div class="filter-group">
-                        <label>Suburb</label>
-                        <select id="suburb-filter">
-                            <option value="">All Suburbs</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>Beer Style</label>
-                        <select id="style-filter">
-                            <option value="">All Styles</option>
-                            <option value="IPA">IPA</option>
-                            <option value="DDH IPA">DDH IPA</option>
-                            <option value="NEIPA">NEIPA</option>
-                            <option value="Pale Ale">Pale Ale</option>
-                            <option value="Lager">Lager</option>
-                            <option value="Sour">Sour</option>
-                            <option value="Stout">Stout</option>
-                        </select>
-                    </div>
-                    <button id="location-toggle" class="location-btn">
-                        <span class="location-icon">📍</span>
-                        Use My Location
-                    </button>
-                    <div id="location-status" class="location-status hidden"></div>
+        <!-- Navigation Overlay -->
+        <div class="mag-nav-overlay">
+            <button id="nav-prev" class="nav-arrow" aria-label="Previous Page">
+                &lt;
+            </button>
+            <button id="nav-next" class="nav-arrow" aria-label="Next Page">
+                &gt;
+            </button>
+        </div>
+
+        <div id="magazine-container">
+            <!-- Page Display -->
+            <div id="page-spread">
+                <div class="loading-screen" style="padding:40px; text-align:center;">
+                    <h2>Sydney Beer Weekly</h2>
+                    <p>Loading Issue...</p>
                 </div>
+            </div>
+        </div>
 
-                <div class="rail-section">
-                    <h3>Quick Stats</h3>
-                    <div class="stat-item">
-                        <span class="stat-number" id="stat-venues">-</span>
-                        <span class="stat-label">Venues</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="stat-new">-</span>
-                        <span class="stat-label">New This Week</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="stat-breweries">-</span>
-                        <span class="stat-label">Breweries</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="stat-bars">-</span>
-                        <span class="stat-label">Bars</span>
-                    </div>
+        <!-- Progress Bar -->
+        <div class="mag-controls">
+            <div class="control-bar">
+                <span id="page-number-display">Cover</span>
+                <div class="progress-rail">
+                    <div id="mag-progress-bar" class="progress-fill"></div>
                 </div>
-
-                <div class="rail-section">
-                    <h3>Data Source</h3>
-                    <button class="metrics-toggle" id="metrics-toggle">
-                        📊 View Scraper Metrics
-                    </button>
-                    <div id="metrics-panel" class="metrics-panel hidden">
-                        <div id="metrics-content">Loading...</div>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Main Article Area -->
-            <section class="main-article" id="content-recommendations">
-                <article class="hero-story">
-                    <div class="hero-label">TOP STORY</div>
-                    <h2 class="headline">Discover Sydney's Best New Beer Releases</h2>
-                    <p class="deck">Our curated recommendations based on your location and preferences, featuring the freshest drops from local breweries and craft beer bars.</p>
-                    <div class="byline">
-                        <span>By Beer News Staff</span>
-                        <span class="timestamp" id="hero-timestamp"></span>
-                    </div>
-                </article>
-
-                <div class="story-grid" id="recommendations-list">
-                    <div class="loading">Loading recommendations...</div>
-                </div>
-            </section>
-
-            <!-- New Releases Section (Hidden by default) -->
-            <section class="main-article hidden" id="content-new-releases">
-                <article class="hero-story">
-                    <div class="hero-label">LATEST RELEASES</div>
-                    <h2 class="headline">New Beer Releases This Week</h2>
-                    <p class="deck">The freshest craft beers hitting Sydney taps and bottleshops, updated daily from brewery social feeds.</p>
-                    <div class="byline">
-                        <span>Compiled from brewery sources</span>
-                        <span class="timestamp"></span>
-                    </div>
-                </article>
-
-                <div class="story-list" id="beers-list">
-                    <div class="loading">Loading new releases...</div>
-                </div>
-            </section>
-
-            <!-- Venues Section (Hidden by default) -->
-            <section class="main-article hidden" id="content-venues">
-                <article class="hero-story">
-                    <div class="hero-label">VENUE GUIDE</div>
-                    <h2 class="headline">Sydney's Craft Beer Venues</h2>
-                    <p class="deck">A comprehensive guide to breweries, brewpubs, and craft beer bars across Sydney.</p>
-                    <div class="byline">
-                        <span>Sydney Beer Herald Staff</span>
-                    </div>
-                </article>
-
-                <div class="venue-grid" id="venues-list">
-                    <div class="loading">Loading venues...</div>
-                </div>
-            </section>
-
-            <!-- Right Rail -->
-            <aside class="right-rail">
-                <div class="rail-section trending">
-                    <h3>Trending <span style="font-size: 0.7rem; color: #999; font-weight: 400;">(7 days)</span></h3>
-                    <div id="trending-content">
-                        <ol class="trending-list" id="trending-list">
-                            <li>Loading...</li>
-                        </ol>
-                    </div>
-                    <div class="trending-tabs" style="margin-top: 12px; border-top: 1px solid #e2e2e2; padding-top: 8px;">
-                        <button class="trending-tab active" data-tab="beers" style="font-size: 0.75rem; padding: 4px 8px; margin-right: 4px; background: #f0f0f0; border: none; cursor: pointer;">Beers</button>
-                        <button class="trending-tab" data-tab="venues" style="font-size: 0.75rem; padding: 4px 8px; margin-right: 4px; background: transparent; border: none; cursor: pointer;">Venues</button>
-                        <button class="trending-tab" data-tab="styles" style="font-size: 0.75rem; padding: 4px 8px; background: transparent; border: none; cursor: pointer;">Styles</button>
-                    </div>
-                </div>
-
-                <div class="rail-section">
-                    <h3>Popular Suburbs</h3>
-                    <ul class="suburb-list" id="suburb-list">
-                        <li><a href="#">Marrickville</a></li>
-                        <li><a href="#">Newtown</a></li>
-                        <li><a href="#">Alexandria</a></li>
-                        <li><a href="#">Camperdown</a></li>
-                        <li><a href="#">Enmore</a></li>
-                    </ul>
-                </div>
-
-                <div class="rail-section newsletter">
-                    <h3>The Daily Pour</h3>
-                    <p>Get the latest beer news delivered to your inbox every morning.</p>
-                    <input type="email" placeholder="your@email.com" class="newsletter-input">
-                    <button class="newsletter-btn">Sign Up</button>
-                </div>
-            </aside>
-
+                <span id="total-pages-display">16 Pages</span>
+                <span onclick="toggleAdmin()" class="admin-link" style="cursor: pointer; margin-left:15px; font-size: 0.8rem;" title="Admin">Admin</span>
+            </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-container">
-            <div class="footer-logo">
-                <h2>The Sydney Beer Herald</h2>
+    <!-- Admin Modal -->
+    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; color:white; padding:20px; box-sizing:border-box; overflow-y:auto;">
+        <div style="max-width:500px; margin:50px auto; background:#222; padding:30px; border-radius:8px; border:1px solid #444;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #444; padding-bottom:10px;">
+                <h2 style="margin:0;">Mag Admin</h2>
+                  <button onclick="closeAdmin()" style="background:none; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
+            <div id="admin-login-step">
+                <p>Password Required:</p>
+                <input type="password" id="admin-pw" placeholder="Enter password" style="width:100%; padding:10px; margin-bottom:15px; background:#333; border:1px solid #555; color:white; box-sizing:border-box;">
+                <button onclick="verifyAdmin()" style="width:100%; padding:10px; background:var(--mag-accent, #ffcc00); border:none; color:black; font-weight:bold; cursor:pointer;">Login</button>
+                <p id="login-error" style="color:#ff6b6b; display:none; margin-top:10px;">Incorrect Password</p>
             </div>
-            <nav class="footer-nav">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Work with us</a>
-                <a href="#">Advertise</a>
-            </nav>
-            <div class="footer-bottom">
-                <p>&copy; 2025 The Sydney Beer Herald Company</p>
-                <p class="footer-tagline">Built for Sydney beer lovers 🍻</p>
+
+            <div id="admin-content-step" style="display:none;">
+                <div style="margin-bottom:20px; border-bottom:1px solid #444; padding-bottom:15px;">                      <h3>Actions</h3>
+                      <button id="btn-generate-mag" onclick="generateMagazine()" style="width:100%; padding:12px; background:linear-gradient(45deg, #e67e22, #f1c40f); border:none; color:black; font-weight:bold; cursor:pointer; margin-bottom:10px;">
+                          GENERATE NEW MAGAZINE
+                      </button>
+                      <div id="gen-status" style="font-size:0.8rem; color:#aaa; text-align:center;"></div>
+                  </div>
+
+                  <div style="margin-bottom:20px; border-bottom:1px solid #444; padding-bottom:15px;">                    <h3>Current Venues</h3>
+                    <div id="existing-venues-list" style="max-height:100px; overflow-y:auto; color:#ccc; font-size:0.9em; padding:5px; background:#111; border:1px solid #333;">
+                        Loading...
+                    </div>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <h3>Add New Venue</h3>
+                    <p style="font-size:0.9rem; color:#aaa;">Search for a venue to add to the next magazine edition.</p>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <input type="text" id="venue-search" placeholder="Venue Name (e.g. Mountain Culture)" style="flex:1; padding:10px; background:#333; border:1px solid #555; color:white;">
+                        <button onclick="searchVenues()" style="padding:10px 20px; background:#444; border:1px solid #555; color:white; cursor:pointer;">Search</button>
+                    </div>
+                </div>
+
+                <div id="search-results" style="margin-top:20px; max-height:300px; overflow-y:auto;">
+                    <!-- Results populate here -->
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script src="app.js"></script>
 </body>

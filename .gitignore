@@ -32,3 +32,5 @@ instance/
 # Data files
 # Note: dynamic_updates.json is now tracked for Vercel deployment
 data/scraper_cache.json
+
+.env

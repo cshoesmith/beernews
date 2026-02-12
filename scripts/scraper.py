@@ -52,6 +52,16 @@ except ImportError:
     IMGINN_AVAILABLE = False
     print("Warning: imginn_scraper not available")
 
+# Setup ScrapeGraphAI
+try:
+    from scrapegraphai.graphs import SmartScraperGraph
+    import nest_asyncio
+    nest_asyncio.apply()
+    SCRAPEGRAPH_AVAILABLE = True
+except ImportError:
+    SCRAPEGRAPH_AVAILABLE = False
+    print("Warning: scrapegraphai not installed")
+
 # Configuration
 DATA_FILE = Path(__file__).parent.parent / "data" / "dynamic_updates.json"
 CACHE_FILE = Path(__file__).parent.parent / "data" / "scraper_cache.json"
@@ -72,6 +82,95 @@ def save_cache(cache):
 def get_content_hash(content: str) -> str:
     """Get MD5 hash of content for deduplication."""
     return hashlib.md5(content.encode()).hexdigest()
+
+def scrape_instagram_scrapegraphai(username: str, venue_id: str) -> List[Dict]:
+    """Scrape Instagram (via Picuki) using ScrapeGraphAI."""
+    posts = []
+    metrics = get_metrics()
+    source_name = f"{venue_id}-scrapegraph"
+    
+    if not SCRAPEGRAPH_AVAILABLE:
+        return posts
+        
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        # Try to read from .env if not in environment
+        try:
+            from dotenv import load_dotenv
+            load_dotenv()
+            api_key = os.getenv("OPENAI_API_KEY")
+        except:
+            pass
+            
+    if not api_key:
+        print(f"  {source_name}: Skipping (No OPENAI_API_KEY)")
+        return posts
+        
+    metrics.record_source_attempt(source_name, "scrapegraphai-picuki")
+    
+    # Use Picuki as it is more scrape-friendly
+    url = f"https://www.picuki.com/profile/{username}"
+    
+    graph_config = {
+        "llm": {
+            "api_key": api_key,
+            "model": "openai/gpt-4o-mini",
+        },
+        "verbose": False,
+        "headless": True,
+        "loader_kwargs": {
+            "args": [
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            ]
+        }
+    }
+    
+    prompt = """
+    Extract the latest 3 posts.
+    For each post, I want:
+    - caption (text description)
+    - image_url (url of the photo)
+    - date (approximate date string)
+    """
+    
+    print(f"  {venue_id}: Scraping {url} with AI...")
+    
+    try:
+        smart_scraper = SmartScraperGraph(
+            prompt=prompt,
+            source=url,
+            config=graph_config
+        )
+        
+        result = smart_scraper.run()
+        
+        # Parse result
+        if isinstance(result, dict) and "content" in result:
+            content = result["content"]
+            if isinstance(content, list):
+                for item in content:
+                    caption = item.get('caption', '')
+                    if not caption:
+                        continue
+                        
+                    posts.append({
+                        "venue_id": venue_id,
+                        "platform": "instagram",
+                        "content": caption,
+                        "image_url": item.get('image_url', ''),
+                        "post_url": url,
+                        "scraped_at": datetime.now().isoformat()
+                    })
+    
+        metrics.record_source_success(source_name, len(posts))
+        print(f"  {venue_id}: Found {len(posts)} posts via ScrapeGraphAI")
+        
+    except Exception as e:
+        error_msg = str(e)
+        metrics.record_source_error(source_name, error_msg)
+        print(f"  {venue_id}: Error - {error_msg}")
+        
+    return posts
 
 # ==================== WEBSITE SCRAPERS ====================
 
@@ -863,39 +962,34 @@ def main():
     
     print()
     
-    # 3. Scrape Instagram via Imginn (no API key needed)
-    # NOTE: Imginn is currently blocking scrapers (403 Forbidden)
-    # This section is kept for when/if Imginn becomes available again
-    print("Scraping Instagram (Imginn - stories and posts)...")
-    print("  Note: Imginn is currently blocking automated access (403 Forbidden)")
-    print("  Skipping Imginn scraping - use Apify method or manual entry")
+    # 3. Scrape Instagram via ScrapeGraphAI (New AI Method)
+    print("Scraping Instagram (ScrapeGraphAI - Picuki fallback)...")
     
-    # Disabled until Imginn blocking is resolved
-    if False and IMGINN_AVAILABLE:
-        # Map instagram handles to usernames for Imginn
-        imginn_accounts = {
-            "young-henrys": "younghenrys",
-            "batch-brewing": "batchbrewingcompany",
-            "wayward-brewing": "waywardbrewing",
-            "grifter-brewing": "grifterbrewing",
-            "bracket-brewing": "bracketbrewing",
-            "future-brewing": "futurebrewing",
-            "range-brewing": "rangebrewing",
-            "mountain-culture": "mountainculturekatoomba",
-            "kicks-brewing": "kicksbrewing",
-            "4-pines": "4pinesbeer",
-            "white-bay": "whitebaybeerco",
-            "jb-and-sons-manly": "jbandsonsmanly",
-        }
-        
-        for venue_id, username in imginn_accounts.items():
+    # Map instagram handles to usernames
+    ig_accounts = {
+        "young-henrys": "younghenrys",
+        "batch-brewing": "batchbrewingcompany",
+        "wayward-brewing": "waywardbrewing",
+        "grifter-brewing": "grifterbrewing",
+        "bracket-brewing": "bracketbrewing",
+        "future-brewing": "futurebrewing",
+        "range-brewing": "rangebrewing",
+        "mountain-culture": "mountainculturekatoomba",
+        "kicks-brewing": "kicksbrewing",
+        "4-pines": "4pinesbeer",
+        "white-bay": "whitebaybeerco",
+        "jb-and-sons-manly": "jbandsonsmanly",
+    }
+    
+    if SCRAPEGRAPH_AVAILABLE and os.getenv("OPENAI_API_KEY"):
+        for venue_id, username in ig_accounts.items():
             try:
-                posts = scrape_all_imginn_content(username, venue_id)
+                posts = scrape_instagram_scrapegraphai(username, venue_id)
                 all_posts.extend(posts)
             except Exception as e:
-                print(f"  Imginn/{username}: Error - {e}")
+                print(f"  {venue_id}: Error - {e}")
     else:
-        print("  Imginn scraper not available")
+        print("  Skipping (ScrapeGraphAI not available or OPENAI_API_KEY missing)")
     
     print()
     
@@ -906,10 +1000,10 @@ def main():
         "beer-sydney": "beersydney",  # Beer reviews and news
     }
     
-    if IMGINN_AVAILABLE:
+    if SCRAPEGRAPH_AVAILABLE and os.getenv("OPENAI_API_KEY"):
         for source_id, username in enthusiast_accounts.items():
             try:
-                posts = scrape_all_imginn_content(username, source_id)
+                posts = scrape_instagram_scrapegraphai(username, source_id)
                 # For enthusiast accounts, we need to extract which brewery they're talking about
                 for post in posts:
                     # Try to detect which brewery is mentioned
@@ -923,11 +1017,10 @@ def main():
                                 post['detected_venue'] = venue.name
                                 break
                 all_posts.extend(posts)
-                print(f"  {username}: Found {len(posts)} posts")
             except Exception as e:
-                print(f"  {username}: Error - {e}")
+                print(f"  {source_id}: Error - {e}")
     else:
-        print("  Skipping (imginn_scraper not available)")
+        print("  Skipping (ScrapeGraphAI not available)")
     
     print()
     
