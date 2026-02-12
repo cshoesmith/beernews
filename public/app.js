@@ -366,12 +366,14 @@ function renderTop10Spotlight(page) {
         image = beer.details.recent_photos[0];
     }
 
-    // Technical Stats (Mock if missing)
-    const abv = (beer.details && beer.details.abv) || (Math.random() * 5 + 4).toFixed(1); 
-    const ibu = (beer.details && beer.details.ibu) || Math.floor(Math.random() * 60 + 10);
+    // Technical Stats (Use provided or placeholder)
+    const abv = (beer.details && beer.details.abv) ? beer.details.abv.toFixed(1) : '-';
     
-    const abvHeight = Math.min((abv / 15) * 100, 100);
-    const ibuHeight = Math.min((ibu / 100) * 100, 100);
+    // For visual bars, if data is missing, show 0 height
+    const abvHeight = abv === '-' ? 0 : Math.min((parseFloat(abv) / 15) * 100, 100);
+    const ibu = (beer.details && beer.details.ibu) || '-';
+    // If IBU is missing, don't fallback to random.
+    const ibuHeight = ibu === '-' ? 0 : Math.min((parseInt(ibu) / 100) * 100, 100);
     
     // Truncate overly long descriptions so they don't overflow the page
     let displayBody = article.body;
