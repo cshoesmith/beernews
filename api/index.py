@@ -529,8 +529,9 @@ def get_metrics():
 
 def get_admin_module():
     """Helper to safely get or import admin module."""
+    global admin
+    
     try:
-        global admin
         if admin:
             return admin
             
@@ -544,6 +545,8 @@ def get_admin_module():
         return admin
     except Exception as e:
         STARTUP_LOGS.append(f"get_admin_module failed: {e}")
+        import traceback
+        STARTUP_LOGS.append(traceback.format_exc())
         return None
 
 @app.route('/api/find_venue') 
