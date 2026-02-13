@@ -35,26 +35,26 @@ except OSError:
 
 IS_VERCEL = os.environ.get('VERCEL') == '1'
 
-# --- DALL-E prompts per style ---
+# --- DALL-E prompt templates per style (use {ethnicity} and {hair} placeholders) ---
 PAGE3_PROMPTS = {
     'business': (
-        "A tasteful, artistic full-body portrait of a confident professional woman "
+        "A tasteful, artistic full-body portrait of a confident {ethnicity} woman with {hair} hair, "
         "in smart business attire (blazer, pencil skirt) holding a pint of craft beer "
         "at an upscale Sydney rooftop bar after work. "
         "The lighting is golden hour, vibrant, and fun. "
         "Photorealistic style, high resolution, clean background."
     ),
     'girl_next_door': (
-        "A tasteful, artistic full-body portrait of a stylish young woman "
-        "laughing and holding a pint of craft beer in a warm, cozy Sydney pub. "
+        "A tasteful, artistic full-body portrait of a stylish {ethnicity} young woman "
+        "with {hair} hair, laughing and holding a pint of craft beer in a warm, cozy Sydney pub. "
         "She is wearing casual-chic autumn clothing (jeans, sweater). "
         "The lighting is golden hour, vibrant, and fun. "
         "Photorealistic style, high resolution, clean background."
     ),
     'lingerie': (
-        "A tasteful, artistic full-body portrait of a glamorous young woman "
-        "posing confidently in a silk robe and elegant lingerie, holding a pint of craft beer "
-        "in a stylish dimly-lit Sydney cocktail lounge. "
+        "A tasteful, artistic full-body portrait of a glamorous {ethnicity} young woman "
+        "with {hair} hair, posing confidently in a silk robe and elegant lingerie, "
+        "holding a pint of craft beer in a stylish dimly-lit Sydney cocktail lounge. "
         "The lighting is moody and cinematic with warm amber tones. "
         "Photorealistic style, high resolution, clean background."
     ),
@@ -135,13 +135,16 @@ def get_distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
 
-def _generate_base_image(client, page3_style='girl_next_door'):
+def _generate_base_image(client, page3_style='girl_next_door', appearance=None):
     """Generate the base portrait image using DALL-E 3. Returns raw bytes."""
     if not client:
         return None
 
-    prompt = PAGE3_PROMPTS.get(page3_style, PAGE3_PROMPTS['girl_next_door'])
-    print(f"Generating base image with DALL-E 3 (style: {page3_style})...")
+    ethnicity = (appearance or {}).get('ethnicity', 'Australian')
+    hair = (appearance or {}).get('hair', 'brunette')
+    prompt_template = PAGE3_PROMPTS.get(page3_style, PAGE3_PROMPTS['girl_next_door'])
+    prompt = prompt_template.format(ethnicity=ethnicity, hair=hair)
+    print(f"Generating base image with DALL-E 3 (style: {page3_style}, {ethnicity}, {hair})...")
     try:
         response = client.images.generate(
             model="dall-e-3",
@@ -280,7 +283,7 @@ def _build_mosaic(base_image_bytes, tiles, tile_size=(40, 40), overlay_alpha=0.2
     return buf.getvalue()
 
 
-def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg", page3_style='girl_next_door'):
+def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg", page3_style='girl_next_door', appearance=None):
     """
     Build a real photomosaic: beer check-in photos arranged to form a portrait.
     Works both locally and on Vercel (requires Pillow).
@@ -291,10 +294,10 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         print("ERROR: Pillow not available. Cannot build photomosaic.")
         return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
 
-    print(f"=== Building photomosaic (style: {page3_style}, force: {force_regen}) ===")
+    print(f"=== Building photomosaic (style: {page3_style}, appearance: {appearance}, force: {force_regen}) ===")
 
     # --- Step 1: Generate base portrait with DALL-E ---
-    base_image_bytes = _generate_base_image(client, page3_style)
+    base_image_bytes = _generate_base_image(client, page3_style, appearance=appearance)
     if not base_image_bytes:
         print("Failed to generate base portrait image")
         existing_url = _load_image_url_from_blob(output_filename)

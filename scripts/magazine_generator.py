@@ -394,14 +394,58 @@ def get_fresh_on_tap_data(beer_details, dynamic_updates):
     }
 
 
-def generate_page3_profile(client):
-    """Generate a fictional persona for page 3."""
-    system_prompt = "You are a creative writer for a hip craft beer magazine."
-    user_prompt = "Generate a fictional profile for our 'Page 3' feature (The Spirit of Sydney Brewing). Return ONLY valid JSON with keys: name, age, hobbies, favorite_style, quote. The persona should be fun, sophisticated, and love craft beer."
+def generate_page3_profile(client, page3_style='girl_next_door'):
+    """Generate a fictional persona for page 3, influenced by style and randomised traits."""
+    
+    # Randomise appearance traits
+    ethnicities = [
+        "Eastern European", "Western European", "Scandinavian", "Mediterranean",
+        "East Asian", "Southeast Asian", "South American", "Australian"
+    ]
+    hair_types = ["blonde", "brunette", "redhead", "platinum blonde", "dark-haired", "dyed pastel pink", "dyed electric blue"]
+    age = random.randint(19, 32)
+    ethnicity = random.choice(ethnicities)
+    hair = random.choice(hair_types)
+    
+    style_hints = {
+        'business': (
+            "She's a sharp, ambitious professional — think finance, tech startup founder, or corporate lawyer "
+            "who unwinds with craft beer after work. Hobbies should reflect her driven lifestyle: "
+            "wine & beer pairing dinners, networking rooftop events, weekend sailing, hot yoga, gallery openings. "
+            "Her quote should be witty and confident. Name should suit her background."
+        ),
+        'girl_next_door': (
+            "She's the fun, approachable girl you'd meet at a local brewery trivia night. "
+            "Hobbies should be relatable and varied: beach volleyball, thrift shopping, cooking experiments, "
+            "camping trips, vinyl record collecting, Sunday farmers markets, live gig hopping. "
+            "Her quote should be warm and cheeky. Name should be casual and friendly."
+        ),
+        'lingerie': (
+            "She's glamorous, bold, and unapologetically confident — a model, influencer, or burlesque performer. "
+            "Hobbies should be luxe and adventurous: lingerie modelling, cocktail mixology, pole fitness, "
+            "international travel, salsa dancing, vintage burlesque, late-night jazz bars. "
+            "Her quote should be flirty and self-assured. Name should sound alluring."
+        ),
+    }
+    
+    style_desc = style_hints.get(page3_style, style_hints['girl_next_door'])
+    
+    system_prompt = "You are a creative writer for an edgy, fun Australian craft beer magazine."
+    user_prompt = (
+        f"Generate a fictional profile for our 'Page 3' feature. She is a {age}-year-old {ethnicity} "
+        f"woman with {hair} hair.\n\n"
+        f"Style direction: {style_desc}\n\n"
+        f"Return ONLY valid JSON with keys: name, age, hobbies, favorite_style, quote.\n"
+        f"- 'name' should be a first name and surname that fits her {ethnicity} background\n"
+        f"- 'age' must be {age}\n"
+        f"- 'hobbies' should be 3-5 specific, interesting hobbies (comma-separated string)\n"
+        f"- 'favorite_style' should be a specific craft beer style (not just 'IPA')\n"
+        f"- 'quote' should be punchy, memorable, and match the style direction"
+    )
     
     fallback = {
         "name": "Amber Ale",
-        "age": 27,
+        "age": age,
         "hobbies": "Homebrewing, Vintage Shopping, Rooftop Bars",
         "favorite_style": "Hazy IPA",
         "quote": "Life is too short for bad beer."
@@ -416,13 +460,17 @@ def generate_page3_profile(client):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
             ],
-            max_tokens=200,
+            max_tokens=250,
             response_format={ "type": "json_object" }
         )
         data = json.loads(response.choices[0].message.content)
+        data['_ethnicity'] = ethnicity
+        data['_hair'] = hair
         return data
     except Exception as e:
         print(f"Bio Gen Error: {e}")
+        fallback['_ethnicity'] = ethnicity
+        fallback['_hair'] = hair
         return fallback
 
 def main(force=False, page3_style='girl_next_door'):
@@ -472,7 +520,7 @@ def main(force=False, page3_style='girl_next_door'):
     # Content Gen
     highlights = get_recent_highlights(dynamic_updates)
     editor_summary = generate_editor_summary(client, highlights)
-    page3_bio = generate_page3_profile(client)
+    page3_bio = generate_page3_profile(client, page3_style=page3_style)
     
     # Fresh on Tap Data
     fresh_data = get_fresh_on_tap_data(beer_details, dynamic_updates)
@@ -537,7 +585,8 @@ def main(force=False, page3_style='girl_next_door'):
     # Filename includes style so switching styles generates a fresh image
     mosaic_filename = f"page3_mosaic_{page3_style}.jpg" 
     
-    mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style)
+    mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style,
+                                appearance={'ethnicity': page3_bio.get('_ethnicity', ''), 'hair': page3_bio.get('_hair', '')})
          
     pages.append({
         "type": "full-photo-page",
