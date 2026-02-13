@@ -8,7 +8,7 @@ from datetime import datetime
 
 # Capture startup logs
 STARTUP_LOGS = []
-STARTUP_LOGS.append(f"Init at {datetime.now()}")
+STARTUP_LOGS.append(f"Init at {datetime.now()} (v2)")
 
 try:
     sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
