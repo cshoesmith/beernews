@@ -121,12 +121,11 @@ def generate_page3_image_url(client, force_regen=False, output_filename="page3_m
         response = client.images.generate(
             model="dall-e-3",
             prompt=(
-                "A stunning artistic photo-mosaic collage portrait of a stylish young woman "
-                "laughing and holding a craft beer in a warm, cozy Sydney pub. The image is "
-                "composed of hundreds of tiny square photos of beer glasses, brewery interiors, "
-                "and bar scenes that together form the larger portrait. Golden hour lighting, "
-                "vibrant colors, photorealistic mosaic art style. The tiny tiles should be "
-                "visible up close but form a cohesive portrait when viewed from afar."
+                "A tasteful, artistic full-body portrait of a stylish young woman "
+                "laughing and holding a pint of craft beer in a warm, cozy Sydney pub. "
+                "She is wearing casual-chic autumn clothing (jeans, sweater). "
+                "The lighting is golden hour, vibrant, and fun. "
+                "Photorealistic style, high resolution, clean background."
             ),
             size="1024x1024",
             quality="standard",

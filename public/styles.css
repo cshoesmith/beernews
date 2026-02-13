@@ -2077,11 +2077,39 @@ select:focus {
     width: auto;
     margin: 0 40px 40px 40px; /* Align with title bar padding */
     position: relative;
-    background-size: cover;
-    background-position: top center;
+    overflow: hidden;
     /* Small border around the photo */
     border: 1px solid #333; 
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Mosaic tile grid - real beer check-in photos */
+.mosaic-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    grid-auto-rows: 50px;
+    gap: 0;
+    z-index: 1;
+}
+
+.mosaic-tile {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Portrait overlay blended on top of the tile grid */
+.mosaic-portrait {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: top center;
+    z-index: 2;
+    opacity: 0.45;
+    mix-blend-mode: multiply;
 }
 
 .page-number-squeezed {
