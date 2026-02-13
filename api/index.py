@@ -263,6 +263,8 @@ def get_latest_issue():
 @app.route('/api/admin/generate-magazine', methods=['POST'])
 def generate_magazine():
     """Trigger manual magazine generation."""
+    import io, contextlib
+    log_capture = io.StringIO()
     try:
         root_dir = os.path.dirname(os.path.dirname(__file__))
         if root_dir not in sys.path:
@@ -270,14 +272,40 @@ def generate_magazine():
             
         import scripts.magazine_generator as generator
         
-        # Run generation with force=True
-        generator.main(force=True)
+        # Capture all print output from generator for debugging
+        with contextlib.redirect_stdout(log_capture):
+            generator.main(force=True)
         
-        return jsonify({"success": True, "message": "Magazine generated successfully"})
+        gen_logs = log_capture.getvalue()
+        
+        # Verify the issue was actually saved to Blob
+        from api.storage import load_json, USE_BLOB
+        issue = load_json("data/current_issue.json")
+        
+        if issue and "pages" in issue:
+            return jsonify({
+                "success": True, 
+                "message": "Magazine generated successfully",
+                "issue_number": issue.get("issue"),
+                "pages_count": len(issue.get("pages", [])),
+                "use_blob": USE_BLOB,
+                "logs": gen_logs[-2000:] if gen_logs else ""
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Generation ran but issue not found in storage after save",
+                "use_blob": USE_BLOB,
+                "issue_data_returned": str(issue)[:500] if issue else "None",
+                "logs": gen_logs[-2000:] if gen_logs else ""
+            }), 500
     except Exception as e:
         import traceback
-        traceback.print_exc()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "error": str(e), 
+            "trace": traceback.format_exc(),
+            "logs": log_capture.getvalue()[-2000:] if log_capture.getvalue() else ""
+        }), 500
 
 
 @app.route('/api/venues')

@@ -63,18 +63,36 @@ function adjustMagazineScale() {
 async function loadIssue() {
     try {
         const res = await fetch(`${API_BASE}/issue/latest`);
-        if (!res.ok) throw new Error('Failed to load issue');
+        if (!res.ok) {
+            // Try to parse error details
+            let errorDetails = "Unknown error";
+            try {
+                // Read text first to avoid stream locking issues
+                const textBody = await res.text();
+                try {
+                    const jsonErr = JSON.parse(textBody);
+                    // Use pretty printing if it's JSON
+                    errorDetails = JSON.stringify(jsonErr, null, 2);
+                } catch {
+                    // It was just text/HTML
+                    errorDetails = textBody.slice(0, 800); // Limit length
+                }
+            } catch(e) {
+                errorDetails = "Could not read response body: " + e.message;
+            }
+            throw new Error(`Failed to load issue (${res.status}). Details: ${errorDetails}`);
+        }
         issueData = await res.json();
         
         renderPage(0); // Start at cover
         updateControls();
     } catch (err) {
         document.getElementById('page-spread').innerHTML = `
-            <div class="error-screen">
+            <div class="error-screen" style="padding: 20px; overflow: auto; max-height: 80vh;">
                 <h2>Issue Not Found</h2>
-                <p>Please run the generator script on the backend.</p>
-                <code style="display:block; margin-top:1em;">python scripts/magazine_generator.py</code>
-                <p style="margin-top:20px; font-size: 0.8em; color: #999;">${err.message}</p>
+                <p>Please run the generator script on the backend or check deployment.</p>
+                <code style="display:block; margin:1em 0; padding:10px; background:#222;">python scripts/magazine_generator.py</code>
+                <div style="margin-top:20px; font-size: 0.8em; color: #ff6b6b; white-space: pre-wrap; text-align: left; background: #000; padding: 10px;">${err.message}</div>
             </div>
         `;
     }
@@ -809,11 +827,13 @@ async function generateMagazine() {
         const data = await response.json();
         
         if (response.ok && data.success) {
-            status.innerHTML = '<span style="color:#2ecc71">Generation Complete! refreshing...</span>';
+            status.innerHTML = `<span style="color:#2ecc71">Generation Complete! Issue #${data.issue_number || '?'}, ${data.pages_count || '?'} pages. Refreshing...</span>`;
+            console.log('Generate response:', JSON.stringify(data, null, 2));
             setTimeout(() => {
                 window.location.reload();
-            }, 2000);
+            }, 3000);
         } else {
+            console.error('Generate failed:', JSON.stringify(data, null, 2));
             throw new Error(data.error || 'Unknown error');
         }
         
