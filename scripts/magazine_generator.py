@@ -32,46 +32,37 @@ DYNAMIC_UPDATES_FILE = DATA_DIR / "dynamic_updates.json"
 
 MAGAZINE_PAGES = 16
 
-# Vercel Blob Helper
-def save_to_blob_if_available(filename, data):
-    """Save data to Vercel Blob if enabled."""
-    try:
-        # Import dynamically to avoid circular dependencies or path issues
-        # Force add parent directory to path to find api module
-        import sys
-        parent_dir = str(Path(__file__).parent.parent)
-        if parent_dir not in sys.path:
-            sys.path.append(parent_dir)
-            
-        try:
-            from api.storage import upload_json, BLOB_TOKEN
-            if BLOB_TOKEN:
-                print(f"Uploading {filename} to Vercel Blob (Token found)...")
-                upload_json(f"data/{filename}", data)
-                return True
-            else:
-                print("Warning: BLOB_TOKEN is empty/None")
-        except ImportError as ie:
-            print(f"Could not import api.storage: {ie}")
-            
-    except Exception as e:
-        print(f"Failed to upload to Blob: {e}")
-    return False
-    return False
-
 try:
-    from content_generator import calculate_beer_scores
-except ImportError:
-    pass
+    # Ensure scripts directory is in path for imports
+    import sys
+    scripts_dir = str(Path(__file__).parent)
+    if scripts_dir not in sys.path:
+        sys.path.append(scripts_dir)
+        
+    import content_generator
+    calculate_beer_scores = content_generator.calculate_beer_scores
+except Exception as e:
+    print(f"Warning: Could not import calculate_beer_scores: {e}")
+    import traceback
+    traceback.print_exc()
+    # Define a dummy function to prevent NameError if import fails
+    def calculate_beer_scores(*args, **kwargs):
+        return []
 
 # Try to import mosaic generator
 try:
-    import sys
-    sys.path.append(str(Path(__file__).parent))
     from mosaic_generator import create_mosaic
 except ImportError:
-    print("Warning: mosaic_generator not found")
-    def create_mosaic(*args, **kwargs): return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7" 
+    # If not found after adding path above, try explicitly
+    try:
+        import sys
+        scripts_dir = str(Path(__file__).parent)
+        if scripts_dir not in sys.path:
+            sys.path.append(scripts_dir)
+        from mosaic_generator import create_mosaic
+    except ImportError:
+        print("Warning: mosaic_generator not found")
+        def create_mosaic(*args, **kwargs): return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7" 
 
 def get_openai_client():
     if not OPENAI_AVAILABLE:
@@ -82,14 +73,54 @@ def get_openai_client():
     return OpenAI(api_key=api_key)
 
 def load_json(path):
+    # Try Blob loading first (for production)
+    try:
+        # Hack path to ensure imports work
+        import sys
+        parent_dir = str(Path(__file__).parent.parent)
+        if parent_dir not in sys.path: sys.path.append(parent_dir)
+        
+        from api.storage import load_json as blob_load, BLOB_TOKEN
+        if BLOB_TOKEN:
+            blob_data = blob_load(f"data/{path.name}")
+            if blob_data: 
+                print(f"Loaded {path.name} from Blob")
+                return blob_data
+    except Exception as e:
+        print(f"Blob load skipped for {path.name}: {e}")
+        
+    # Fallback to local
     if path.exists():
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return None
 
 def save_json(path, data):
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2)
+    blob_success = False
+    # Try Blob saving first
+    try:
+        import sys
+        parent_dir = str(Path(__file__).parent.parent)
+        if parent_dir not in sys.path: sys.path.append(parent_dir)
+        
+        from api.storage import upload_json, BLOB_TOKEN
+        if BLOB_TOKEN:
+            upload_json(f"data/{path.name}", data)
+            print(f"Saved {path.name} to Blob")
+            blob_success = True
+    except Exception as e:
+        print(f"Blob save skipped for {path.name}: {e}")
+
+    # Try local saving
+    try:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+    except OSError as e:
+        # Ignore read-only errors if we successfully saved to blob
+        if blob_success:
+            print(f"Local save skipped (Read-Only FS): {e}")
+        else:
+            raise e # Create fatal error if both fail
 
 def generate_ai_text(system_prompt, user_prompt, client, fallback_text=None):
     if not client:
@@ -388,7 +419,7 @@ def main(force=False):
                     print(f"Latest issue ({current_issue.get('issue')}) is less than 24 hours old. Skipping generation.")
                     # Force upload existing to blob
                     print("Attempting to upload existing issue to Blob...")
-                    save_to_blob_if_available("current_issue.json", current_issue)
+                    save_json(CURRENT_ISSUE_FILE, current_issue)
                     return
             except ValueError:
                 pass
@@ -562,17 +593,8 @@ def main(force=False):
         "pages": pages
     }
     
-    # Save locally
+    # Save (Attempts Blob first, then local)
     save_json(CURRENT_ISSUE_FILE, issue_data)
-    
-    # Save to Vercel Blob (Critical for production)
-    # The filename in blob should match what the API expects to load
-    saved_to_blob = save_to_blob_if_available("current_issue.json", issue_data)
-    
-    if saved_to_blob:
-        print("Issue uploaded to Vercel Blob.")
-    else:
-        print("Issue saved locally only.")
         
     print("Issue generated successfully.")
 
