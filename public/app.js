@@ -551,12 +551,6 @@ function renderFullAd(page) {
 
 function renderFullPhoto(page) {
     const bio = page.bio || { name: 'Unknown', age: '?', hobbies: 'Drinking beer', favorite_style: 'Lager', quote: 'Cheers!' };
-    const tiles = page.tiles || [];
-    
-    // Build mosaic tile grid HTML from real beer check-in photos
-    const tileHTML = tiles.map(t => 
-        `<div class="mosaic-tile" style="background-image: url('${t}')"></div>`
-    ).join('');
     
     return `
         <div class="magazine-page full-photo-page">
@@ -566,12 +560,9 @@ function renderFullPhoto(page) {
                 <p>${page.subcaption}</p>
             </div>
 
-            <!-- Image Container with mosaic -->
+            <!-- Photomosaic: beer check-in photos arranged to form the portrait -->
             <div class="page3-image-wrapper">
-                <!-- Layer 1: Grid of real beer check-in photos -->
-                <div class="mosaic-grid">${tileHTML}</div>
-                <!-- Layer 2: Portrait overlay -->
-                <div class="mosaic-portrait" style="background-image: url('${page.image}')"></div>
+                <img class="mosaic-image" src="${page.image}" alt="Beer Photomosaic" />
                 
                 <!-- Bio Card at Bottom Right -->
                 <div class="bio-card">
