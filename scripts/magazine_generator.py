@@ -99,28 +99,47 @@ def save_json(path, data):
     blob_success = False
     # Try Blob saving first
     try:
+        # Import dynamically to avoid circular dependencies or path issues
         import sys
         parent_dir = str(Path(__file__).parent.parent)
         if parent_dir not in sys.path: sys.path.append(parent_dir)
         
+        # Check if running on Vercel
+        is_vercel = os.environ.get('VERCEL') == '1'
+        
         from api.storage import upload_json, BLOB_TOKEN
+        
         if BLOB_TOKEN:
+            print(f"Attempting to save {path.name} to Blob storage...")
             upload_json(f"data/{path.name}", data)
-            print(f"Saved {path.name} to Blob")
+            print(f"Saved {path.name} to Blob successfully")
             blob_success = True
+        elif is_vercel:
+            print(f"CRITICAL: Running on Vercel but BLOB_TOKEN not found! Data will be lost.")
     except Exception as e:
-        print(f"Blob save skipped for {path.name}: {e}")
+        print(f"Blob save failed for {path.name}: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        # If running on Vercel and Blob fails, this is a critical error
+        if os.environ.get('VERCEL') == '1':
+            print("Raising exception because Blob save failed on Vercel environment")
+            raise e
 
-    # Try local saving
+    # Try local saving (Always do this as backup or for local dev)
     try:
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2)
+        print(f"Saved {path.name} locally")
     except OSError as e:
         # Ignore read-only errors if we successfully saved to blob
         if blob_success:
             print(f"Local save skipped (Read-Only FS): {e}")
         else:
-            raise e # Create fatal error if both fail
+            print(f"Local save failed: {e}")
+            # If both failed, raise the error
+            if not blob_success:
+                raise e
 
 def generate_ai_text(system_prompt, user_prompt, client, fallback_text=None):
     if not client:
