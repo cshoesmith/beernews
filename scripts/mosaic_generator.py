@@ -2,8 +2,8 @@
 import os
 import random
 import math
+import json
 from pathlib import Path
-from PIL import Image
 import requests
 import base64
 
@@ -14,15 +14,146 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
+# Try to import Pillow (not available on Vercel)
+try:
+    from PIL import Image
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
+
 # Paths
 DATA_DIR = Path(__file__).parent.parent / "data"
 PUBLIC_DIR = Path(__file__).parent.parent / "public"
 IMAGE_CACHE_DIR = PUBLIC_DIR / "images" / "cache"
 GENERATED_DIR = PUBLIC_DIR / "images" / "generated"
-GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+
+# Only create dirs if filesystem is writable
+try:
+    GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass
 
 TARGET_IMAGE_PATH = GENERATED_DIR / "page3_base.png"
 MOSAIC_IMAGE_PATH = GENERATED_DIR / "page3_mosaic.jpg"
+
+IS_VERCEL = os.environ.get('VERCEL') == '1'
+
+
+def _upload_image_to_blob(image_bytes, filename):
+    """Upload image bytes to Vercel Blob and return the public URL."""
+    try:
+        import sys
+        parent_dir = str(Path(__file__).parent.parent)
+        if parent_dir not in sys.path:
+            sys.path.append(parent_dir)
+        from api.storage import BLOB_TOKEN, BASE_URL
+        
+        if not BLOB_TOKEN:
+            print("No BLOB_TOKEN for image upload")
+            return None
+            
+        headers = {
+            "Authorization": f"Bearer {BLOB_TOKEN}",
+            "x-add-random-suffix": "0",
+            "content-type": "image/jpeg"
+        }
+        resp = requests.put(
+            f"{BASE_URL}/images/{filename}",
+            headers=headers,
+            data=image_bytes,
+            timeout=30
+        )
+        resp.raise_for_status()
+        blob_url = resp.json().get("url")
+        print(f"Uploaded image to Blob: {blob_url}")
+        return blob_url
+    except Exception as e:
+        print(f"Blob image upload failed: {e}")
+        return None
+
+
+def _load_image_url_from_blob(filename):
+    """Check if an image already exists in Blob and return its URL."""
+    try:
+        import sys
+        parent_dir = str(Path(__file__).parent.parent)
+        if parent_dir not in sys.path:
+            sys.path.append(parent_dir)
+        from api.storage import BLOB_TOKEN, BASE_URL
+        
+        if not BLOB_TOKEN:
+            return None
+            
+        headers = {"Authorization": f"Bearer {BLOB_TOKEN}"}
+        resp = requests.get(BASE_URL, headers=headers, params={"prefix": f"images/{filename}"}, timeout=5)
+        resp.raise_for_status()
+        
+        blobs = resp.json().get("blobs", [])
+        if blobs:
+            url = blobs[0].get("url")
+            print(f"Found existing image in Blob: {url}")
+            return url
+        return None
+    except Exception as e:
+        print(f"Blob image check failed: {e}")
+        return None
+
+
+def generate_page3_image_url(client, force_regen=False, output_filename="page3_mosaic.jpg"):
+    """
+    Generate the Page 3 image using DALL-E and upload to Blob storage.
+    Returns the public URL of the image (Blob URL or Unsplash fallback).
+    Used on Vercel where Pillow/local filesystem aren't available.
+    """
+    if not force_regen:
+        # Check Blob for existing image
+        existing_url = _load_image_url_from_blob(output_filename)
+        if existing_url:
+            print(f"Using existing Page 3 image from Blob")
+            return existing_url
+    
+    if not client:
+        print("No OpenAI client available for DALL-E generation")
+        return None
+    
+    print("Generating Page 3 image with DALL-E 3...")
+    try:
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=(
+                "A stunning artistic photo-mosaic collage portrait of a stylish young woman "
+                "laughing and holding a craft beer in a warm, cozy Sydney pub. The image is "
+                "composed of hundreds of tiny square photos of beer glasses, brewery interiors, "
+                "and bar scenes that together form the larger portrait. Golden hour lighting, "
+                "vibrant colors, photorealistic mosaic art style. The tiny tiles should be "
+                "visible up close but form a cohesive portrait when viewed from afar."
+            ),
+            size="1024x1024",
+            quality="standard",
+            n=1,
+        )
+        
+        image_url = response.data[0].url
+        print(f"DALL-E image generated: {image_url}")
+        
+        # Download the image
+        img_data = requests.get(image_url, timeout=30).content
+        
+        # Upload to Blob
+        blob_url = _upload_image_to_blob(img_data, output_filename)
+        if blob_url:
+            return blob_url
+        
+        # If Blob upload failed, return the temporary DALL-E URL
+        # (it expires after ~1 hour, but better than nothing)
+        print("Warning: Using temporary DALL-E URL (expires in ~1hr)")
+        return image_url
+        
+    except Exception as e:
+        print(f"DALL-E Page 3 generation failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 def get_average_color(image):
     """Calculate the average color of an image."""
@@ -62,8 +193,22 @@ def generate_base_image(client):
         return None
 
 def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg"):
-    """Main function to create the mosaic."""
+    """Main function to create the mosaic.
+    On Vercel: Uses DALL-E to generate a mosaic-style image and uploads to Blob.
+    Locally: Uses Pillow to build a real photomosaic from cached tiles.
+    """
     
+    # === Vercel Path: DALL-E + Blob ===
+    if IS_VERCEL or not PIL_AVAILABLE:
+        print("Using DALL-E generation path (Vercel/no-Pillow mode)")
+        url = generate_page3_image_url(client, force_regen=force_regen, output_filename=output_filename)
+        if url:
+            return url
+        # Fallback
+        print("DALL-E path failed, using fallback image")
+        return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
+    
+    # === Local Path: Pillow Photomosaic ===
     mosaic_out_path = GENERATED_DIR / output_filename
     
     # Check if exists (and not force regen)
