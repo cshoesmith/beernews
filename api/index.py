@@ -531,6 +531,8 @@ def get_metrics():
 @app.route('/api/search_venues') 
 def search_venues():
     """Search for new venues."""
+    global admin
+    
     try:
         # Debug ping
         if request.args.get('ping'):
@@ -539,14 +541,8 @@ def search_venues():
         query = request.args.get('q', '')
         print(f"DEBUG: Search request path: {request.path} query: {query}")
         
-        # DEBUG: Return fake data for 'seeker' or 'test'
-        if query.lower() in ['seeker', 'test']:
-            return jsonify([{
-                "name": f"Debug Result: {query}", 
-                "id": "debug-123", 
-                "address": "Debug Land", 
-                "is_sydney": True
-            }])
+        # Remove debug override so real searches for 'seeker' work
+        # if query.lower() in ['seeker', 'test']: ...
 
         if len(query) < 3:
             return jsonify({ 'error': 'Query too short' }), 400
@@ -556,7 +552,6 @@ def search_venues():
             # Try to re-import
             try:
                 from . import admin_utils as admin_pkg
-                global admin
                 admin = admin_pkg
             except:
                 return jsonify({ 'error': 'Admin module failed to load', 'logs': STARTUP_LOGS }), 500
