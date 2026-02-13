@@ -527,12 +527,29 @@ def get_metrics():
         })
 
 
+def get_admin_module():
+    """Helper to safely get or import admin module."""
+    try:
+        global admin
+        if admin:
+            return admin
+            
+        try:
+            from . import admin_utils as pkg
+            admin = pkg
+        except ImportError:
+            import api.admin_utils as pkg
+            admin = pkg
+            
+        return admin
+    except Exception as e:
+        STARTUP_LOGS.append(f"get_admin_module failed: {e}")
+        return None
+
 @app.route('/api/find_venue') 
 @app.route('/api/search_venues') 
 def search_venues():
     """Search for new venues."""
-    global admin
-    
     try:
         # Debug ping
         if request.args.get('ping'):
@@ -547,16 +564,12 @@ def search_venues():
         if len(query) < 3:
             return jsonify({ 'error': 'Query too short' }), 400
             
-        # Check if admin module is available
-        if not admin:
-            # Try to re-import
-            try:
-                from . import admin_utils as admin_pkg
-                admin = admin_pkg
-            except:
-                return jsonify({ 'error': 'Admin module failed to load', 'logs': STARTUP_LOGS }), 500
+        # Get admin module safely
+        admin_mod = get_admin_module()
+        if not admin_mod:
+             return jsonify({ 'error': 'Admin module failed to load', 'logs': STARTUP_LOGS }), 500
             
-        return jsonify(admin.search_untappd_venues(query))
+        return jsonify(admin_mod.search_untappd_venues(query))
         
     except Exception as e:
         import traceback
@@ -584,7 +597,11 @@ def add_new_venue():
     if not data or 'name' not in data or 'id' not in data:
         return jsonify({ 'error': 'Missing name or id' }), 400
     try:
-        result = admin.add_configured_venue(data['name'], str(data['id']))
+        admin_mod = get_admin_module()
+        if not admin_mod:
+            raise Exception("Admin module not available")
+            
+        result = admin_mod.add_configured_venue(data['name'], str(data['id']))
         return jsonify(result)
     except Exception as e:
         return jsonify({ 'error': str(e) }), 500
