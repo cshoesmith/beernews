@@ -340,9 +340,9 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         return blob_url or "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
 
     # --- Step 3: Build the real photomosaic ---
-    # 40px tiles on 1024px image = 25x25 grid = 625 tiles (each beer photo clearly visible)
-    # overlay_alpha=0.25 keeps portrait recognizable while beer photos stay clear
-    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(40, 40), overlay_alpha=0.25)
+    # 80px tiles on 1024px image = 12x12 grid = 144 tiles (beer photos clearly visible when zoomed)
+    # overlay_alpha=0.12 = very subtle portrait hint, beer photos dominate
+    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(80, 80), overlay_alpha=0.12)
 
     if not mosaic_bytes:
         print("Mosaic build failed - returning raw DALL-E portrait")
