@@ -229,10 +229,11 @@ def get_latest_issue():
     debug_info = []
     try:
         # Try Blob first
-        from api.storage import load_json, USE_BLOB
-        debug_info.append(f"USE_BLOB: {USE_BLOB}")
+        from api.storage import load_json, BLOB_TOKEN
+        use_blob = bool(BLOB_TOKEN)
+        debug_info.append(f"USE_BLOB: {use_blob}")
         
-        if USE_BLOB:
+        if use_blob:
             issue = load_json("data/current_issue.json")
             if issue:
                 return jsonify(issue)
@@ -279,7 +280,8 @@ def generate_magazine():
         gen_logs = log_capture.getvalue()
         
         # Verify the issue was actually saved to Blob
-        from api.storage import load_json, USE_BLOB
+        from api.storage import load_json, BLOB_TOKEN
+        use_blob = bool(BLOB_TOKEN)
         issue = load_json("data/current_issue.json")
         
         if issue and "pages" in issue:
@@ -288,14 +290,14 @@ def generate_magazine():
                 "message": "Magazine generated successfully",
                 "issue_number": issue.get("issue"),
                 "pages_count": len(issue.get("pages", [])),
-                "use_blob": USE_BLOB,
+                "use_blob": use_blob,
                 "logs": gen_logs[-2000:] if gen_logs else ""
             })
         else:
             return jsonify({
                 "success": False,
                 "error": "Generation ran but issue not found in storage after save",
-                "use_blob": USE_BLOB,
+                "use_blob": use_blob,
                 "issue_data_returned": str(issue)[:500] if issue else "None",
                 "logs": gen_logs[-2000:] if gen_logs else ""
             }), 500
