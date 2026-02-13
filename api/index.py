@@ -22,7 +22,7 @@ import json
 
 # safe import helper
 engine = None
-admin = None
+admin_backend_module = None
 
 try:
     from recommendation_engine import RecommendationEngine
@@ -39,20 +39,24 @@ except Exception as e:
 
 try:
     # Try package import first (for Vercel)
-    from . import admin_utils as admin_pkg
-    admin = admin_pkg
+    from . import admin_utils as pkg
+    admin_backend_module = pkg
     STARTUP_LOGS.append("Admin utils imported (relative)")
 except ImportError:
     try:
         # Fallback to absolute import (for local dev)
-        import api.admin_utils as admin_pkg
-        admin = admin_pkg
+        import api.admin_utils as pkg
+        admin_backend_module = pkg
         STARTUP_LOGS.append("Admin utils imported (absolute)")
     except Exception as e:
         STARTUP_LOGS.append(f"Admin utils import failed: {e}")
         STARTUP_LOGS.append(traceback.format_exc())
 except Exception as e:
     STARTUP_LOGS.append(f"Admin utils error: {e}")
+
+# Ensure logs are visible in console even if API fails
+for log in STARTUP_LOGS:
+    print(f"STARTUP: {log}")
 
 app = Flask(__name__)
 CORS(app)
@@ -65,7 +69,7 @@ def debug_status():
         "startup_logs": STARTUP_LOGS,
         "routes": [str(rule) for rule in app.url_map.iter_rules()],
         "engine_loaded": engine is not None,
-        "admin_loaded": admin is not None
+        "admin_loaded": admin_backend_module is not None
     })
 
 @app.route('/')
@@ -529,20 +533,20 @@ def get_metrics():
 
 def get_admin_module():
     """Helper to safely get or import admin module."""
-    global admin
+    global admin_backend_module
     
     try:
-        if admin:
-            return admin
+        if admin_backend_module:
+            return admin_backend_module
             
         try:
             from . import admin_utils as pkg
-            admin = pkg
+            admin_backend_module = pkg
         except ImportError:
             import api.admin_utils as pkg
-            admin = pkg
+            admin_backend_module = pkg
             
-        return admin
+        return admin_backend_module
     except Exception as e:
         STARTUP_LOGS.append(f"get_admin_module failed: {e}")
         import traceback
