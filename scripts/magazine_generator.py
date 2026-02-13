@@ -538,7 +538,7 @@ def main(force=False, page3_style='girl_next_door'):
     # For Testing: Use fixed filename to save API tokens.
     mosaic_filename = f"page3_mosaic_{page3_style}.jpg" 
     
-    mosaic_path = create_mosaic(client, output_filename=mosaic_filename, page3_style=page3_style)
+    mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style)
     
     # Collect beer check-in tile images for CSS mosaic grid
     tile_images = []
