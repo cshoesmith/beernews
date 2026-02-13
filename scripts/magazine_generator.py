@@ -232,7 +232,7 @@ def get_brewery_image(brewer_name, beer_details, dynamic_updates):
         "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80",
         "https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1200&q=80",
         "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=1200&q=80",
-        "https://images.unsplash.com/photo-1600788886242-5c96aabe3757?w=1200&q=80" 
+        "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1200&q=80"
     ]
     
     # Hash the name to pick a consistent image for a specific brewer if we don't have a real one
@@ -542,9 +542,30 @@ def main(force=False):
     
     # Collect beer check-in tile images for CSS mosaic grid
     tile_images = []
-    cache_dir = Path(__file__).parent.parent / "public" / "images" / "cache"
-    if cache_dir.exists():
-        tile_images = [f"images/cache/{f.name}" for f in sorted(cache_dir.glob("*.jpg"))]
+    # 1. Try tile manifest (works on Vercel where filesystem glob is empty)
+    manifest_path = Path(__file__).parent.parent / "data" / "tile_manifest.json"
+    try:
+        if manifest_path.exists():
+            with open(manifest_path) as f:
+                tile_images = json.load(f).get("tiles", [])
+            print(f"Loaded {len(tile_images)} tiles from manifest")
+    except Exception:
+        pass
+    # 2. Try Blob-stored manifest if local file empty/missing
+    if not tile_images:
+        try:
+            manifest_data = load_json("data/tile_manifest.json")
+            if manifest_data:
+                tile_images = manifest_data.get("tiles", [])
+                print(f"Loaded {len(tile_images)} tiles from Blob manifest")
+        except Exception:
+            pass
+    # 3. Fallback: glob local cache directory
+    if not tile_images:
+        cache_dir = Path(__file__).parent.parent / "public" / "images" / "cache"
+        if cache_dir.exists():
+            tile_images = [f"images/cache/{f.name}" for f in sorted(cache_dir.glob("*.jpg"))]
+            print(f"Loaded {len(tile_images)} tiles from local cache glob")
     # Shuffle for variety each issue
     random.shuffle(tile_images)
          
