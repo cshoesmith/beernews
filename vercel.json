@@ -5,6 +5,10 @@
       "src": "api/index.py",
       "use": "@vercel/python",
       "config": { "maxDuration": 60 }
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -14,7 +18,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "/public/$1"
     }
   ]
 }
