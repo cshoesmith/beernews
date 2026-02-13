@@ -830,8 +830,14 @@ async function generateMagazine() {
     status.innerText = 'Running AI generation script...';
     
     try {
+        const styleIdx = document.getElementById('page3-style')?.value || '1';
+        const styleMap = ['business', 'girl_next_door', 'lingerie'];
+        const page3Style = styleMap[parseInt(styleIdx)] || 'girl_next_door';
+
         const response = await fetch('/api/admin/generate-magazine', {
-            method: 'POST'
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ page3_style: page3Style })
         });
         
         const data = await response.json();

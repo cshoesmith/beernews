@@ -99,7 +99,32 @@ def _load_image_url_from_blob(filename):
         return None
 
 
-def generate_page3_image_url(client, force_regen=False, output_filename="page3_mosaic.jpg"):
+PAGE3_PROMPTS = {
+    'business': (
+        "A tasteful, artistic full-body portrait of a confident professional woman "
+        "in smart business attire (blazer, pencil skirt) holding a pint of craft beer "
+        "at an upscale Sydney rooftop bar after work. "
+        "The lighting is golden hour, vibrant, and fun. "
+        "Photorealistic style, high resolution, clean background."
+    ),
+    'girl_next_door': (
+        "A tasteful, artistic full-body portrait of a stylish young woman "
+        "laughing and holding a pint of craft beer in a warm, cozy Sydney pub. "
+        "She is wearing casual-chic autumn clothing (jeans, sweater). "
+        "The lighting is golden hour, vibrant, and fun. "
+        "Photorealistic style, high resolution, clean background."
+    ),
+    'lingerie': (
+        "A tasteful, artistic full-body portrait of a glamorous young woman "
+        "posing confidently in a silk robe and elegant lingerie, holding a pint of craft beer "
+        "in a stylish dimly-lit Sydney cocktail lounge. "
+        "The lighting is moody and cinematic with warm amber tones. "
+        "Photorealistic style, high resolution, clean background."
+    ),
+}
+
+
+def generate_page3_image_url(client, force_regen=False, output_filename="page3_mosaic.jpg", page3_style='girl_next_door'):
     """
     Generate the Page 3 image using DALL-E and upload to Blob storage.
     Returns the public URL of the image (Blob URL or Unsplash fallback).
@@ -116,17 +141,12 @@ def generate_page3_image_url(client, force_regen=False, output_filename="page3_m
         print("No OpenAI client available for DALL-E generation")
         return None
     
-    print("Generating Page 3 image with DALL-E 3...")
+    prompt = PAGE3_PROMPTS.get(page3_style, PAGE3_PROMPTS['girl_next_door'])
+    print(f"Generating Page 3 image with DALL-E 3 (style: {page3_style})...")
     try:
         response = client.images.generate(
             model="dall-e-3",
-            prompt=(
-                "A tasteful, artistic full-body portrait of a stylish young woman "
-                "laughing and holding a pint of craft beer in a warm, cozy Sydney pub. "
-                "She is wearing casual-chic autumn clothing (jeans, sweater). "
-                "The lighting is golden hour, vibrant, and fun. "
-                "Photorealistic style, high resolution, clean background."
-            ),
+            prompt=prompt,
             size="1024x1024",
             quality="standard",
             n=1,
@@ -191,7 +211,7 @@ def generate_base_image(client):
         print(f"DALL-E Generation failed: {e}")
         return None
 
-def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg"):
+def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg", page3_style='girl_next_door'):
     """Main function to create the mosaic.
     On Vercel: Uses DALL-E to generate a mosaic-style image and uploads to Blob.
     Locally: Uses Pillow to build a real photomosaic from cached tiles.
@@ -199,8 +219,8 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
     
     # === Vercel Path: DALL-E + Blob ===
     if IS_VERCEL or not PIL_AVAILABLE:
-        print("Using DALL-E generation path (Vercel/no-Pillow mode)")
-        url = generate_page3_image_url(client, force_regen=force_regen, output_filename=output_filename)
+        print(f"Using DALL-E generation path (Vercel/no-Pillow mode, style: {page3_style})")
+        url = generate_page3_image_url(client, force_regen=force_regen, output_filename=output_filename, page3_style=page3_style)
         if url:
             return url
         # Fallback

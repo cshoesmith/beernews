@@ -886,34 +886,52 @@ def load_beer_details() -> Dict:
     return {}
 
 # Create lookup by beer name for quick access
-_BEER_DETAILS_CACHE = load_beer_details()
+_BEER_DETAILS_CACHE = {} # Loaded lazily
 BEER_DETAILS_BY_NAME: Dict[str, Dict] = {}
-for url, details in _BEER_DETAILS_CACHE.items():
-    if details.get('name'):
-        BEER_DETAILS_BY_NAME[details['name'].lower()] = details
 
-# Load beers from Untappd checkins
-_UNTAPPD_BEERS = load_beers_from_untappd()
+def initialize_data():
+    """Lazy initialization of data to prevent import-time network blocking."""
+    global _BEER_DETAILS_CACHE, BEER_DETAILS_BY_NAME
+    
+    if _BEER_DETAILS_CACHE:
+        return # Already initialized
+        
+    print("[Data] Initializing data lazy load...")
+    
+    _BEER_DETAILS_CACHE = load_beer_details()
+    for url, details in _BEER_DETAILS_CACHE.items():
+        if details.get('name'):
+            BEER_DETAILS_BY_NAME[details['name'].lower()] = details
 
-# Add Untappd beers to list
-_existing_ids = {b.id for b in SYDNEY_BEERS}
-for beer in _UNTAPPD_BEERS:
-    if beer.id not in _existing_ids:
-        SYDNEY_BEERS.append(beer)
+    # Load beers from Untappd checkins
+    _untappd_beers = load_beers_from_untappd()
 
-# Merge dynamic data (manual entries and scraped posts)
-_DYNAMIC_BEERS, _DYNAMIC_POSTS = load_dynamic_data()
+    # Add Untappd beers to list
+    _existing_ids = {b.id for b in SYDNEY_BEERS}
+    for beer in _untappd_beers:
+        if beer.id not in _existing_ids:
+            SYDNEY_BEERS.append(beer)
+            _existing_ids.add(beer.id)
 
-# Add dynamic beers to list (avoiding duplicates by ID)
-_existing_ids = {b.id for b in SYDNEY_BEERS}
-for beer in _DYNAMIC_BEERS:
-    if beer.id not in _existing_ids:
-        SYDNEY_BEERS.append(beer)
+    # Merge dynamic data (manual entries and scraped posts)
+    # This might make a network call to Vercel Blob
+    _dynamic_beers, _dynamic_posts = load_dynamic_data()
 
-# Add dynamic posts to list
-_existing_post_ids = {p.id for p in SYDNEY_POSTS}
-for post in _DYNAMIC_POSTS:
-    if post.id not in _existing_post_ids:
-        SYDNEY_POSTS.append(post)
+    # Add dynamic beers to list (avoiding duplicates by ID)
+    for beer in _dynamic_beers:
+        if beer.id not in _existing_ids:
+            SYDNEY_BEERS.append(beer)
+            _existing_ids.add(beer.id)
 
-print(f"[Data] Loaded {len(_UNTAPPD_BEERS)} beers from Untappd, {len(_DYNAMIC_BEERS)} dynamic beers, {len(_DYNAMIC_POSTS)} dynamic posts, {len(BEER_DETAILS_BY_NAME)} beer details")
+    # Add dynamic posts to list
+    _existing_post_ids = {p.id for p in SYDNEY_POSTS}
+    for post in _dynamic_posts:
+        if post.id not in _existing_post_ids:
+            SYDNEY_POSTS.append(post)
+            _existing_post_ids.add(post.id)
+
+    print(f"[Data] Loaded {len(_untappd_beers)} beers from Untappd, {len(_dynamic_beers)} dynamic beers, {len(_dynamic_posts)} dynamic posts, {len(BEER_DETAILS_BY_NAME)} beer details")
+
+# Auto-initialize only if running as script, NOT when imported by API
+if __name__ == "__main__":
+    initialize_data()

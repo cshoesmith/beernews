@@ -2108,7 +2108,7 @@ select:focus {
     background-size: cover;
     background-position: top center;
     z-index: 2;
-    opacity: 0.45;
+    opacity: 0.30;
     mix-blend-mode: multiply;
 }
 

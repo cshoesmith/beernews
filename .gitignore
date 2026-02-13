@@ -35,3 +35,4 @@ data/scraper_cache.json
 
 .env
 .vercel
+.env*.local

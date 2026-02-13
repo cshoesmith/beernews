@@ -425,9 +425,9 @@ def generate_page3_profile(client):
         print(f"Bio Gen Error: {e}")
         return fallback
 
-def main(force=False):
+def main(force=False, page3_style='girl_next_door'):
 
-    print("Checking for existing issue...")
+    print(f"Checking for existing issue... (page3_style={page3_style})")
     if not force:
         # Check for existing recent issue
         current_issue = load_json(CURRENT_ISSUE_FILE)
@@ -536,9 +536,9 @@ def main(force=False):
     # Page 3: The Mosaic (Page 3 Girl)
     # For Production: Use f"page3_mosaic_issue_{issue_number}.jpg" to force unique images per issue.
     # For Testing: Use fixed filename to save API tokens.
-    mosaic_filename = "page3_mosaic.jpg" 
+    mosaic_filename = f"page3_mosaic_{page3_style}.jpg" 
     
-    mosaic_path = create_mosaic(client, output_filename=mosaic_filename)
+    mosaic_path = create_mosaic(client, output_filename=mosaic_filename, page3_style=page3_style)
     
     # Collect beer check-in tile images for CSS mosaic grid
     tile_images = []

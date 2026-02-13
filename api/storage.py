@@ -5,6 +5,7 @@ from pathlib import Path
 
 # Try to find the token in expected env vars
 BLOB_TOKEN = os.environ.get("BLOB_READ_WRITE_TOKEN") or os.environ.get("BEERNEWS_TOKEN_130226_READ_WRITE_TOKEN")
+USE_BLOB = bool(BLOB_TOKEN)
 
 BASE_URL = "https://blob.vercel-storage.com"
 
@@ -31,7 +32,7 @@ def upload_json(filename, data):
         json_str = json.dumps(data, indent=2)
         
         # PUT /filename
-        resp = requests.put(f"{BASE_URL}/{filename}", headers=headers, data=json_str)
+        resp = requests.put(f"{BASE_URL}/{filename}", headers=headers, data=json_str, timeout=9)
         resp.raise_for_status()
         return resp.json()
     except Exception as e:
@@ -46,7 +47,7 @@ def load_json(filename):
     try:
         headers = get_headers()
         # List blobs to find the URL
-        resp = requests.get(BASE_URL, headers=headers, params={"prefix": filename})
+        resp = requests.get(BASE_URL, headers=headers, params={"prefix": filename}, timeout=5)
         resp.raise_for_status()
         
         blobs = resp.json().get("blobs", [])
@@ -58,7 +59,7 @@ def load_json(filename):
         latest_url = blobs[0]['url']
         
         # Download content
-        file_resp = requests.get(latest_url)
+        file_resp = requests.get(latest_url, timeout=5)
         file_resp.raise_for_status()
         
         return file_resp.json()

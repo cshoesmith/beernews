@@ -6,6 +6,13 @@ from data import SYDNEY_VENUES, SYDNEY_BEERS, SYDNEY_POSTS
 
 class RecommendationEngine:
     def __init__(self):
+        # Ensure data is initialized
+        try:
+            from data import initialize_data
+            initialize_data()
+        except ImportError:
+            pass # data.py might not have the function if older version or circular dep
+            
         self.venues = {v.id: v for v in SYDNEY_VENUES}
         self.beers = {b.id: b for b in SYDNEY_BEERS}
         self.posts = SYDNEY_POSTS
