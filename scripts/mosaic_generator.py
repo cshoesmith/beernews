@@ -187,19 +187,78 @@ def _load_tiles_local():
 
 
 def _load_tiles_from_paths(tile_paths):
-    """Load tile images from file paths relative to public dir."""
+    """
+    Load tile images from file paths relative to public dir.
+    If local file access fails (e.g. Vercel function), try fetching from current domain or Blob.
+    """
     tiles = []
-    for tp in tile_paths:
+    
+    # Use session for faster connection reuse
+    session = requests.Session()
+    
+    # Try different base URLs
+    base_urls = []
+    # 1. Env Var (set by Vercel for preview/prod)
+    env_url = os.environ.get('VERCEL_URL') 
+    if env_url:
+        base_urls.append(f"https://{env_url}")
+    
+    # 2. Hardcoded Prod URL (Fallback)
+    base_urls.append("https://beernews-git-main-cshoesmiths-projects.vercel.app") 
+    base_urls.append("https://beernews-vercel.vercel.app")
+
+    print(f"Loading tiles... (Trying URLs: {base_urls})")
+
+    # Limit failures to avoid timeouts if network is bad
+    failures = 0
+    max_failures = 10
+
+    for i, tp in enumerate(tile_paths):
+        if failures > max_failures:
+            print("Too many download failures, stopping tile load.")
+            break
+            
+        success = False
+        
+        # 1. Try Local Filesystem first (fastest)
         local_path = PUBLIC_DIR / tp
         if local_path.exists():
             try:
-                img = Image.open(local_path).convert('RGB')
-                tiles.append(img)
+                with Image.open(local_path) as img:
+                    img = img.convert('RGB')
+                    tiles.append(img.copy()) # Copy to ensure file handle closed
+                success = True
             except Exception:
                 pass
+        
+        if success: continue
+        
+        # 2. Try Fetching via HTTP
+        for base_url in base_urls:
+            try:
+                url = f"{base_url}/{tp}"
+                # Short timeout
+                resp = session.get(url, timeout=3)
+                if resp.status_code == 200:
+                    img = Image.open(io.BytesIO(resp.content)).convert('RGB')
+                    tiles.append(img)
+                    success = True
+                    break
+            except Exception:
+                pass
+        
+        if not success:
+            failures += 1
 
     if tiles:
-        print(f"Loaded {len(tiles)} tiles from public directory paths")
+        print(f"Loaded {len(tiles)} tiles (mixed local/remote)")
+    else:
+        print("Warning: Failed to load any tiles.")
+        
+    return tiles
+
+    if tiles:
+        print(f"Loaded {len(tiles)} tiles (mixed local/remote)")
     return tiles
 
 
