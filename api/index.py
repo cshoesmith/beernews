@@ -275,15 +275,17 @@ def generate_magazine():
         
         # Get Page 3 style from request body
         page3_style = 'girl_next_door'
+        page3_mode = 'mosaic'
         try:
             body = request.get_json(silent=True) or {}
             page3_style = body.get('page3_style', 'girl_next_door')
+            page3_mode = body.get('page3_mode', 'mosaic')
         except Exception:
             pass
         
         # Capture all print output from generator for debugging
         with contextlib.redirect_stdout(log_capture):
-            generator.main(force=True, page3_style=page3_style)
+            generator.main(force=True, page3_style=page3_style, page3_mode=page3_mode)
         
         gen_logs = log_capture.getvalue()
         

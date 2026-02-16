@@ -283,20 +283,27 @@ def _build_mosaic(base_image_bytes, tiles, tile_size=(40, 40), overlay_alpha=0.2
     return buf.getvalue()
 
 
-def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg", page3_style='girl_next_door', appearance=None):
+def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.jpg", page3_style='girl_next_door', appearance=None, use_mosaic=True):
     """
     Build a real photomosaic: beer check-in photos arranged to form a portrait.
     Works both locally and on Vercel (requires Pillow).
     Returns a URL (Blob) or relative path (local).
+    
+    If use_mosaic is False, returns the high-quality base portrait directly.
     """
 
     if not PIL_AVAILABLE:
         print("ERROR: Pillow not available. Cannot build photomosaic.")
+        if not use_mosaic:
+             # Try to generate base image anyway even if PIL missing (though base gen needs PIL to save bytes usually? 
+             # actually _generate_base_image returns bytes, so we can just upload those)
+             pass 
         return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
 
-    print(f"=== Building photomosaic (style: {page3_style}, appearance: {appearance}, force: {force_regen}) ===")
+    print(f"=== Generating Page 3 Image (style: {page3_style}, appearance: {appearance}, mode: {'mosaic' if use_mosaic else 'natural'}) ===")
 
     # --- Step 1: Generate base portrait with DALL-E ---
+    # We always need the base image
     base_image_bytes = _generate_base_image(client, page3_style, appearance=appearance)
     if not base_image_bytes:
         print("Failed to generate base portrait image")
@@ -304,6 +311,21 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         if existing_url:
             return existing_url
         return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
+
+    # If Natural mode (no mosaic), just save/upload the base image
+    if not use_mosaic:
+        print("Mode is Natural: Skipping mosaic generation, using base portrait.")
+        blob_url = _upload_image_to_blob(base_image_bytes, output_filename)
+        
+        # Save locally too
+        try:
+            local_path = GENERATED_DIR / output_filename
+            with open(local_path, 'wb') as f:
+                f.write(base_image_bytes)
+        except OSError:
+            pass
+            
+        return blob_url or f"images/generated/{output_filename}"
 
     # --- Step 2: Load beer tile images ---
     tiles = _load_tiles_local()

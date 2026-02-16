@@ -82,6 +82,18 @@
                           <span style="font-size:0.75rem; color:#aaa; white-space:nowrap;">Lingerie</span>
                       </div>
                       <div id="page3-style-label" style="text-align:center; font-size:0.8rem; color:#f1c40f; margin-bottom:12px;">Girl Next Door</div>
+                      
+                      <!-- Page 3 Mode Selector -->
+                      <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:#ccc;">Mosaic/Natural:</label>
+                      <div style="display:flex; justify-content: space-around; margin-bottom: 20px;">
+                          <label style="display:flex; align-items:center; gap:5px; font-size:0.8rem; color:#ccc; cursor:pointer">
+                              <input type="radio" name="page3-mode" value="mosaic" checked> Mosaic
+                          </label>
+                          <label style="display:flex; align-items:center; gap:5px; font-size:0.8rem; color:#ccc; cursor:pointer">
+                              <input type="radio" name="page3-mode" value="natural"> Natural
+                          </label>
+                      </div>
+
                       <script>
                           document.getElementById('page3-style').addEventListener('input', function() {
                               const labels = ['Business / Office Girl', 'Girl Next Door', 'Lingerie Model'];
