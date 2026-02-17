@@ -747,7 +747,7 @@ function formatBody(text) {
 // === Admin Logic ===
 function toggleAdmin() {
     const modal = document.getElementById('admin-modal');
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 

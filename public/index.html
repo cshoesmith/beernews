@@ -58,8 +58,18 @@
     </main>
 
     <!-- Admin Modal -->
-    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; color:white; padding:20px; box-sizing:border-box; overflow-y:auto;">
-        <div style="max-width:500px; margin:50px auto; background:#222; padding:30px; border-radius:8px; border:1px solid #444;">
+    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; color:white; padding:0; box-sizing:border-box; align-items: center; justify-content: center;">
+        <div style="width: 100%; max-width:500px; margin:0; background:#222; padding:20px; border-radius:0; border:none; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;">
+            <style>
+                @media (min-width: 501px) {
+                    #admin-modal > div {
+                        height: 90vh !important;
+                        margin: 20px auto !important;
+                        border-radius: 8px !important;
+                        border: 1px solid #444 !important;
+                    }
+                }
+            </style>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #444; padding-bottom:10px;">
                 <h2 style="margin:0;">Mag Admin</h2>
                 <button onclick="closeAdmin()" style="background:none; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
@@ -72,58 +82,55 @@
                 <p id="login-error" style="color:#ff6b6b; display:none; margin-top:10px;">Incorrect Password</p>
             </div>
 
-            <div id="admin-content-step" style="display:none;">
-                <div style="margin-bottom:20px; border-bottom:1px solid #444; padding-bottom:15px;">                      <h3>Actions</h3>
-                      <!-- Page 3 Style Selector -->
-                      <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:#ccc;">Page 3 Style:</label>
-                      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                          <span style="font-size:0.75rem; color:#aaa; white-space:nowrap;">Business</span>
-                          <input type="range" id="page3-style" min="0" max="2" value="1" style="flex:1; accent-color:#f1c40f;">
-                          <span style="font-size:0.75rem; color:#aaa; white-space:nowrap;">Lingerie</span>
-                      </div>
-                      <div id="page3-style-label" style="text-align:center; font-size:0.8rem; color:#f1c40f; margin-bottom:12px;">Girl Next Door</div>
-                      
-                      <!-- Page 3 Mode Selector -->
-                      <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:#ccc;">Mosaic/Natural:</label>
-                      <div style="display:flex; justify-content: space-around; margin-bottom: 20px;">
-                          <label style="display:flex; align-items:center; gap:5px; font-size:0.8rem; color:#ccc; cursor:pointer">
-                              <input type="radio" name="page3-mode" value="mosaic" checked> Mosaic
-                          </label>
-                          <label style="display:flex; align-items:center; gap:5px; font-size:0.8rem; color:#ccc; cursor:pointer">
-                              <input type="radio" name="page3-mode" value="natural"> Natural
-                          </label>
-                      </div>
+            <div id="admin-content-step" style="display:none; display: flex; flex-direction: column; height: 80vh;">
+                
+                <!-- Actions Panel -->
+                <div style="background: #333; padding: 15px; border-radius: 6px; margin-bottom: 15px; flex-shrink: 0;">
+                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 4px;">STYLE: <span id="page3-style-label" style="color: #f1c40f;">Girl Next Door</span></label>
+                            <input type="range" id="page3-style" min="0" max="2" value="1" style="width: 100%; accent-color: #f1c40f;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                            <label style="font-size:0.75rem; color:#ccc; cursor:pointer"><input type="radio" name="page3-mode" value="mosaic" checked> Mosaic</label>
+                            <label style="font-size:0.75rem; color:#ccc; cursor:pointer"><input type="radio" name="page3-mode" value="natural"> Natural</label>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-generate-mag" onclick="generateMagazine()" style="width:100%; padding: 10px; background: #e67e22; border:none; color: white; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 0.9rem;">
+                        GENERATE NEW MAGAZINE
+                    </button>
+                    <div id="gen-status" style="font-size:0.75rem; color:#aaa; text-align:center; margin-top: 5px; height: 1em;"></div>
+                </div>
 
-                      <script>
-                          document.getElementById('page3-style').addEventListener('input', function() {
-                              const labels = ['Business / Office Girl', 'Girl Next Door', 'Lingerie Model'];
-                              document.getElementById('page3-style-label').textContent = labels[this.value];
-                          });
-                      </script>
+                <script>
+                    document.getElementById('page3-style').addEventListener('input', function() {
+                        const labels = ['Business', 'Girl Next Door', 'Lingerie'];
+                        document.getElementById('page3-style-label').textContent = labels[this.value];
+                    });
+                </script>
 
-                      <button id="btn-generate-mag" onclick="generateMagazine()" style="width:100%; padding:12px; background:linear-gradient(45deg, #e67e22, #f1c40f); border:none; color:black; font-weight:bold; cursor:pointer; margin-bottom:10px;">
-                          GENERATE NEW MAGAZINE
-                      </button>
-                      <div id="gen-status" style="font-size:0.8rem; color:#aaa; text-align:center;"></div>
-                  </div>
-
-                  <div style="margin-bottom:20px; border-bottom:1px solid #444; padding-bottom:15px;">                    <h3>Current Venues</h3>
-                    <div id="existing-venues-list" style="max-height:100px; overflow-y:auto; color:#ccc; font-size:0.9em; padding:5px; background:#111; border:1px solid #333;">
-                        Loading...
+                <!-- Venues List (Expands) -->
+                <div style="display: flex; flex-direction: column; flex: 1; overflow: hidden; margin-bottom: 15px; border: 1px solid #444; border-radius: 6px; background: #111;">
+                    <div style="padding: 10px; border-bottom: 1px solid #333; background: #222; font-weight: bold; font-size: 0.9rem;">
+                        Managed Venues
+                    </div>
+                    <div id="existing-venues-list" style="flex: 1; overflow-y: auto; padding: 0;">
+                        <!-- Content populated by JS -->
+                        <div style="padding: 10px; color: #666;">Loading...</div>
                     </div>
                 </div>
 
-                <div style="margin-bottom:20px;">
-                    <h3>Add New Venue</h3>
-                    <p style="font-size:0.9rem; color:#aaa;">Search for a venue to add to the next magazine edition.</p>
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <input type="text" id="venue-search" placeholder="Venue Name (e.g. Mountain Culture)" style="flex:1; padding:10px; background:#333; border:1px solid #555; color:white;">
-                        <button onclick="searchVenues()" style="padding:10px 20px; background:#444; border:1px solid #555; color:white; cursor:pointer;">Search</button>
+                <!-- Add Venue (Fixed Bottom) -->
+                <div style="flex-shrink: 0;">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 5px; color: #aaa;">Add New Venue</h3>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="venue-search" placeholder="Search (e.g. Mountain Culture)" style="flex:1; padding:10px; background:#333; border:1px solid #555; color:white; border-radius: 4px;">
+                        <button onclick="searchVenues()" style="padding:10px 15px; background:#444; border:1px solid #555; color:white; cursor:pointer; border-radius: 4px;">Go</button>
                     </div>
-                </div>
-
-                <div id="search-results" style="margin-top:20px; max-height:300px; overflow-y:auto;">
-                    <!-- Results populate here -->
+                    <div id="search-results" style="margin-top:10px; max-height:150px; overflow-y:auto; background: #1a1a1a; position: absolute; width: calc(100% - 60px); z-index: 100;">
+                        <!-- Search results overlay -->
+                    </div>
                 </div>
             </div>
         </div>
