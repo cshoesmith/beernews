@@ -166,7 +166,7 @@ def _generate_base_image(client, page3_style='girl_next_door', appearance=None):
             model="dall-e-3",
             prompt=prompt,
             size="1024x1024",
-            quality="hd",  # Use HD for better details to guide the mosaic
+            quality="standard",  # Revert to standard for speed/reliability on Vercel
             n=1,
         )
 
@@ -405,7 +405,9 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         existing_url = _load_image_url_from_blob(output_filename)
         if existing_url:
             return existing_url
-        return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
+        # Fallback to a reliable portrait if generation fails, NOT a beer texture
+        # Using a placeholder portrait from Unsplash that matches the vibe better than beer bubbles
+        return "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1024&q=80"
 
     # If Natural mode (no mosaic), just save/upload the base image
     if not use_mosaic:
@@ -458,9 +460,9 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         return blob_url or "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
 
     # --- Step 3: Build the real photomosaic ---
-    # Extremely small tiles (10px) = High Definition Mosaic (100x100 grid)
-    # overlay_alpha=0.30 helps maintain coherence with such fine detail
-    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(10, 10), overlay_alpha=0.30)
+    # Ultra-fine tiles (8px) = High Definition Mosaic (128x128 grid)
+    # overlay_alpha=0.35 brings out the facial features clearly
+    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(8, 8), overlay_alpha=0.35)
 
     if not mosaic_bytes:
         print("Mosaic build failed - returning raw DALL-E portrait")
