@@ -754,4 +754,10 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
     print("Issue generated successfully.")
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--page3_style", default="girl_next_door", help="Style of page 3 girl")
+    parser.add_argument("--page3_mode", default="mosaic", help="mosaic or natural")
+    args = parser.parse_args()
+    
+    main(force=True, page3_style=args.page3_style, page3_mode=args.page3_mode)

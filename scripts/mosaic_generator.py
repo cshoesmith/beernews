@@ -60,11 +60,10 @@ PAGE3_PROMPTS = {
     ),
     'playboy': (
         "A stunning, high-glamour artistic portrait of a {ethnicity} woman with {hair} hair, "
-        "posing in a classic 90s Playboy centerfold style at a {setting}. "
-        "She is wearing only bikini bottoms, partially covering her chest with a craft beer pint or her arm "
-        "in a teaseful, confident way. "
-        "Implied topless, soft focus, golden hour lighting, cinematic film grain. "
-        "Tasteful, adult-oriented but not explicit. "
+        "posing in a classic 90s glamour style at a {setting}. "
+        "She is wearing a silk robe or bikini bottoms, looking confident and playful. "
+        "Warm, golden hour lighting with cinematic film grain. "
+        "Tasteful, adult-oriented aesthetic, high fashion photography. "
         "Photorealistic style, high resolution."
     ),
 }
