@@ -187,6 +187,8 @@ def _generate_base_image(client, page3_style='girl_next_door', appearance=None):
         return None
 
 # --- Local file loading ---
+
+def _load_tiles_local():
     """Load tile images from local cache directory."""
     tiles = []
     source_files = list(IMAGE_CACHE_DIR.glob('*.jpg'))
