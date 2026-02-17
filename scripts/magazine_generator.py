@@ -472,6 +472,17 @@ def generate_page3_profile(client, page3_style='girl_next_door'):
                 "luxury spa days", "perfume collecting", "pilates", "yacht parties"
             ]
         },
+        'playboy': {
+            "desc": (
+                "She represents the classic, high-glamour Playboy aesthetic — elegant, sultry, and devastatingly photogenic. "
+                "Think silk robes, mansion parties, and an air of timeless, playful seduction. Her quote should be cheeky, provocative, and fun."
+            ),
+            "hobbies": [
+                "hosting lavish parties", "vintage sports car collecting", "lounging by the grotto", 
+                "champagne tasting", "high-stakes poker", "sunbathing in Monaco", "collecting silk kimonos",
+                "private jet travel", "sculpting", "midnight swims", "studying art history"
+            ]
+        },
     }
     
     style_info = style_hints.get(page3_style, style_hints['girl_next_door'])

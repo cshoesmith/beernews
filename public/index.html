@@ -101,7 +101,7 @@
                     <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
                         <div style="flex: 1;">
                             <label style="font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 4px;">STYLE: <span id="page3-style-label" style="color: #f1c40f;">Girl Next Door</span></label>
-                            <input type="range" id="page3-style" min="0" max="2" value="1" style="width: 100%; accent-color: #f1c40f;">
+                            <input type="range" id="page3-style" min="0" max="3" value="1" style="width: 100%; accent-color: #f1c40f;">
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 5px;">
                             <label style="font-size:0.75rem; color:#ccc; cursor:pointer"><input type="radio" name="page3-mode" value="mosaic" checked> Mosaic</label>
@@ -117,7 +117,7 @@
 
                 <script>
                     document.getElementById('page3-style').addEventListener('input', function() {
-                        const labels = ['Business', 'Girl Next Door', 'Lingerie'];
+                        const labels = ['Business', 'Girl Next Door', 'Lingerie', 'Playboy'];
                         document.getElementById('page3-style-label').textContent = labels[this.value];
                     });
                 </script>

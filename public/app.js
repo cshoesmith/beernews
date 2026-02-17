@@ -946,7 +946,7 @@ async function generateMagazine() {
     
     try {
         const styleIdx = document.getElementById('page3-style')?.value || '1';
-        const styleMap = ['business', 'girl_next_door', 'lingerie'];
+        const styleMap = ['business', 'girl_next_door', 'lingerie', 'playboy'];
         const page3Style = styleMap[parseInt(styleIdx)] || 'girl_next_door';
         
         // Get mode (Mosaic vs Natural)
