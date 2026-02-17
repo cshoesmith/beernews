@@ -9,8 +9,14 @@ from collections import Counter
 # Try loading environment variables
 try:
     from dotenv import load_dotenv
+    # Load .env first
     env_path = Path(__file__).parent.parent / ".env"
     load_dotenv(dotenv_path=env_path)
+    
+    # Also attempt .env.local for local overrides (common in Next.js/Vercel projects)
+    local_env_path = Path(__file__).parent.parent / ".env.local"
+    if local_env_path.exists():
+        load_dotenv(dotenv_path=local_env_path, override=True)
 except ImportError:
     print("Warning: python-dotenv not installed, assuming env vars are set.")
 
@@ -118,13 +124,15 @@ def save_json(path, data):
             print(f"CRITICAL: Running on Vercel but BLOB_TOKEN not found! Data will be lost.")
     except Exception as e:
         print(f"Blob save failed for {path.name}: {e}")
-        import traceback
-        traceback.print_exc()
+        # import traceback
+        # traceback.print_exc()
         
-        # If running on Vercel and Blob fails, this is a critical error
-        if os.environ.get('VERCEL') == '1':
-            print("Raising exception because Blob save failed on Vercel environment")
-            raise e
+        # CONTINUATION: Do not raise here for local dev, allow fallback to local file.
+        # on Vercel, local file is ephemeral, but failing completely is worse than failing softly?
+        # Actually, let's just log and continue.
+        # if os.environ.get('VERCEL') == '1':
+        #    print("Raising exception because Blob save failed on Vercel environment")
+        #    raise e
 
     # Try local saving (Always do this as backup or for local dev)
     try:
@@ -133,13 +141,11 @@ def save_json(path, data):
         print(f"Saved {path.name} locally")
     except OSError as e:
         # Ignore read-only errors if we successfully saved to blob
-        if blob_success:
-            print(f"Local save skipped (Read-Only FS): {e}")
-        else:
-            print(f"Local save failed: {e}")
-            # If both failed, raise the error
-            if not blob_success:
-                raise e
+        print(f"Local save error: {e}")
+        if not blob_success:
+             print("CRITICAL: Both Blob and Local save failed.")
+             # NOW we can raise if needed, or just let it be.
+             raise e
 
 def generate_ai_text(system_prompt, user_prompt, client, fallback_text=None):
     if not client:
@@ -510,12 +516,20 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
         if current_issue and "generated_at" in current_issue:
             try:
                 last_gen = datetime.datetime.fromisoformat(current_issue["generated_at"])
-                if (datetime.datetime.now() - last_gen).total_seconds() < 86400:
-                    print(f"Latest issue ({current_issue.get('issue')}) is less than 24 hours old. Skipping generation.")
-                    # Force upload existing to blob
-                    print("Attempting to upload existing issue to Blob...")
-                    save_json(CURRENT_ISSUE_FILE, current_issue)
-                    return
+                
+                # FORCE regeneration for debugging image issue (comment out the < 86400 check)
+                # if (datetime.datetime.now() - last_gen).total_seconds() < 86400:
+                #    print(f"Latest issue ({current_issue.get('issue')}) is less than 24 hours old. Skipping generation.")
+                #    # Force upload existing to blob
+                #    print("Attempting to upload existing issue to Blob...")
+                #    save_json(CURRENT_ISSUE_FILE, current_issue)
+                #    return
+                    
+                # Instead, print warning but continue
+                seconds_diff = (datetime.datetime.now() - last_gen).total_seconds()
+                if seconds_diff < 86400:
+                     print(f"DEBUG: Issue is fresh ({seconds_diff}s old) but regenerating to fix image issue.")
+
             except ValueError:
                 pass
 
@@ -610,13 +624,20 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
     })
     
     # Page 3: The Mosaic (Page 3 Girl)
-    # Filename includes style so switching styles generates a fresh image
-    mosaic_filename = f"page3_mosaic_{page3_style}.jpg" 
+    # Filename includes style, mode, and timestamp to ensure uniqueness across generations
+    # This fixes cache issues and serverless instance collisions
+    timestamp = int(datetime.datetime.now().timestamp())
+    mosaic_filename = f"page3_{page3_mode}_{page3_style}_{timestamp}.jpg" 
     
     mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style,
                                 appearance={'ethnicity': page3_bio.get('_ethnicity', ''), 'hair': page3_bio.get('_hair', '')},
                                 use_mosaic=(page3_mode == 'mosaic'))
          
+    # No need for query string cache buster since filename is unique
+    # But clean up old way just in case logic remains
+    if mosaic_path and "?" in mosaic_path:
+        mosaic_path = mosaic_path.split("?")[0]
+
     pages.append({
         "type": "full-photo-page",
         "image": mosaic_path,

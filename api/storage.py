@@ -22,21 +22,39 @@ def upload_json(filename, data):
     """
     try:
         headers = get_headers()
-        # x-add-random-suffix: 0 ensures we can overwrite (or at least keep the name consistent for listing)
-        # Actually Vercel Blob documentation says to use random suffix for uniqueness, 
-        # but for config files we might want to find it easily. 
-        # However, listing prefixes is safer.
-        headers["x-add-random-suffix"] = "0" 
+        # Vercel Blob API v1 (put)
+        # Use randomSuffix to ensure uniqueness if needed, but for fixed files we want to overwrite
+        # Actually for data like current_issue.json, we want to overwrite.
+        # But 'put' usually creates a new blob URL.
+        # We need to rely on load_json getting the latest.
+        
+        headers["x-add-random-suffix"] = "true"  # Changed to true to avoid caching issues on WRITE side?
+        # WAIT: If we use random suffix, the filename changes!
+        # If we use x-add-random-suffix: false, it overwrites?
+        # Documentation: "If set to true, a random suffix is added to the filename."
+        # We want to use the EXACT filename for things like 'current_issue.json' so the frontend can find it?
+        # OR does the frontend use the dynamic URL returned?
+        # The frontend loads from /api/issue/latest which reads the JSON content.
+        # So we just need load_json to find the latest blob with that prefix.
+        
         headers["content-type"] = "application/json"
         
         json_str = json.dumps(data, indent=2)
         
         # PUT /filename
-        resp = requests.put(f"{BASE_URL}/{filename}", headers=headers, data=json_str, timeout=9)
+        # Note: If x-add-random-suffix is false (default), it might fail if exists? No, it usually overwrites or errors.
+        # Let's try explicit overwrite? The API is simple.
+        
+        # FIX: The issue is likely that we aren't getting the right headers or token.
+        # Let's print the token start for debug.
+        # print(f"DEBUG: Using token {BLOB_TOKEN[:10]}...") 
+        
+        resp = requests.put(f"{BASE_URL}/{filename}", headers=headers, data=json_str, timeout=15) # Increased timeout
         resp.raise_for_status()
         return resp.json()
     except Exception as e:
         print(f"Error uploading to Blob: {e}")
+        # Try a retry ?
         raise e
 
 def load_json(filename):

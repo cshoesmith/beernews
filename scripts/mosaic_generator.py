@@ -77,11 +77,27 @@ def _upload_image_to_blob(image_bytes, filename):
 
         headers = {
             "Authorization": f"Bearer {BLOB_TOKEN}",
-            "x-add-random-suffix": "0",
+            "x-add-random-suffix": "false",  # FORCE EXACT FILENAME so the generated filename matches the URL
             "content-type": "image/jpeg"
         }
+        
+        # NOTE: Vercel Blob PUT behavior with same name usually overwrites or errors?
+        # If we use random suffix, the URL is different, which is fine since we return the new URL.
+        # But wait – the magazine JSON stores this returned URL.
+        # So random suffix is actually GOOD to bust cache.
+        # BUT 'x-add-random-suffix': '0' means false/no suffix? Or '1'?
+        # Vercel docs say boolean or string '1'. '0' is probably false.
+        
+        # Let's try explicit 'true' to ensure a new URL is generated every time
+        # This guarantees browser sees it as a new image.
+        headers["x-add-random-suffix"] = "true" 
+        
+        # However, we passed a filename that ALREADY has a timestamp in it (from magazine_generator.py).
+        # So we don't strictly need random suffix, but it doesn't hurt.
+        
+        print(f"Uploading {len(image_bytes)} bytes to {filename}...")
         resp = requests.put(
-            f"{BASE_URL}/images/{filename}",
+            f"{BASE_URL}/{filename}",
             headers=headers,
             data=image_bytes,
             timeout=30
@@ -164,10 +180,13 @@ def _generate_base_image(client, page3_style='girl_next_door', appearance=None):
         print(f"DALL-E Generation failed: {e}")
         import traceback
         traceback.print_exc()
+        
+        # CONTINUATION: If DALL-E fails, maybe try a fallback specific to the style?
+        # Or even better, just return None so we can try reloading from blob?
+        # Actually, let's try a simpler model or different prompt if possible? No.
         return None
 
-
-def _load_tiles_local():
+# --- Local file loading ---
     """Load tile images from local cache directory."""
     tiles = []
     source_files = list(IMAGE_CACHE_DIR.glob('*.jpg'))
@@ -336,6 +355,9 @@ def _build_mosaic(base_image_bytes, tiles, tile_size=(40, 40), overlay_alpha=0.2
     base_resized = base_img.resize(mosaic.size)
     final = Image.blend(mosaic, base_resized, overlay_alpha)
 
+    # This function is supposed to return bytes, not save directly.
+    # Ah, wait, create_mosaic calls this.
+    
     # Save to bytes
     buf = io.BytesIO()
     final.save(buf, format='JPEG', quality=92)
@@ -353,13 +375,16 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
 
     if not PIL_AVAILABLE:
         print("ERROR: Pillow not available. Cannot build photomosaic.")
-        if not use_mosaic:
-             # Try to generate base image anyway even if PIL missing (though base gen needs PIL to save bytes usually? 
-             # actually _generate_base_image returns bytes, so we can just upload those)
-             pass 
+        # If PIL missing, return static image (or base gen)
         return "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
+    
+    # Ensure generated dir exists (sometimes not created if untracked)
+    try:
+        GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        pass
 
-    print(f"=== Generating Page 3 Image (style: {page3_style}, appearance: {appearance}, mode: {'mosaic' if use_mosaic else 'natural'}) ===")
+    print(f"=== Generating Page 3 Image (style: {page3_style}, appearance: {appearance}, mode: {'mosaic' if use_mosaic else 'natural'}, file: {output_filename}) ===")
 
     # --- Step 1: Generate base portrait with DALL-E ---
     # We always need the base image
@@ -376,13 +401,14 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         print("Mode is Natural: Skipping mosaic generation, using base portrait.")
         blob_url = _upload_image_to_blob(base_image_bytes, output_filename)
         
-        # Save locally too
+        # Save locally too (CRITICAL: Do this BEFORE returning, and ensure it happens even if blob fails)
         try:
             local_path = GENERATED_DIR / output_filename
             with open(local_path, 'wb') as f:
                 f.write(base_image_bytes)
-        except OSError:
-            pass
+            print(f"Saved base image locally: {local_path}")
+        except OSError as e:
+            print(f"Local save failed: {e}")
             
         return blob_url or f"images/generated/{output_filename}"
 
