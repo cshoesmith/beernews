@@ -746,9 +746,19 @@ function formatBody(text) {
 
 // === Admin Logic ===
 function toggleAdmin() {
-    const modal = document.getElementById('admin-modal');
-    modal.style.display = 'flex';
+    // Show login modal instead of admin modal directly
+    const loginModal = document.getElementById('login-modal');
+    // Ensure input is cleared
+    document.getElementById('admin-pw').value = '';
+    document.getElementById('login-error').style.display = 'none';
+    
+    loginModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+}
+
+function closeLogin() {
+    document.getElementById('login-modal').style.display = 'none';
+    document.body.style.overflow = '';
 }
 
 function closeAdmin() {
@@ -842,13 +852,22 @@ async function deleteVenue(source, id, name) {
 }
 
 function verifyAdmin() {
-    const pass = document.getElementById('admin-pw').value;
-    if (pass === 'Admin_123') {
-        document.getElementById('admin-login-step').style.display = 'none';
-        document.getElementById('admin-content-step').style.display = 'block';
+    const pwInput = document.getElementById('admin-pw');
+    const pass = pwInput.value;
+    
+    // Check against hardcoded password (or ideally fetch)
+    if (pass === 'Admin_123') { // This should be environmental, but for now...
+        // Close login modal
+        document.getElementById('login-modal').style.display = 'none';
+        
+        // Open Admin modal
+        document.getElementById('admin-modal').style.display = 'flex';
+        
+        // Load data content
         loadExistingVenues();
     } else {
         document.getElementById('login-error').style.display = 'block';
+        pwInput.value = ''; // Clear password
     }
 }
 
