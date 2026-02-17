@@ -58,6 +58,15 @@ PAGE3_PROMPTS = {
         "The lighting is moody and cinematic. "
         "Photorealistic style, high resolution, clean background."
     ),
+    'playboy': (
+        "A stunning, high-glamour artistic portrait of a {ethnicity} woman with {hair} hair, "
+        "posing in a classic 90s Playboy centerfold style at a {setting}. "
+        "She is wearing only bikini bottoms, partially covering her chest with a craft beer pint or her arm "
+        "in a teaseful, confident way. "
+        "Implied topless, soft focus, golden hour lighting, cinematic film grain. "
+        "Tasteful, adult-oriented but not explicit. "
+        "Photorealistic style, high resolution."
+    ),
 }
 
 # --- Blob helpers ---
