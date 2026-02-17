@@ -40,22 +40,22 @@ PAGE3_PROMPTS = {
     'business': (
         "A tasteful, artistic full-body portrait of a confident {ethnicity} woman with {hair} hair, "
         "in smart business attire (blazer, pencil skirt) holding a pint of craft beer "
-        "at an upscale Sydney rooftop bar after work. "
-        "The lighting is golden hour, vibrant, and fun. "
+        "at a {setting}. "
+        "The lighting is natural, vibrant, and fun. "
         "Photorealistic style, high resolution, clean background."
     ),
     'girl_next_door': (
         "A tasteful, artistic full-body portrait of a stylish {ethnicity} young woman "
-        "with {hair} hair, laughing and holding a pint of craft beer in a warm, cozy Sydney pub. "
+        "with {hair} hair, laughing and holding a pint of craft beer at a {setting}. "
         "She is wearing casual-chic autumn clothing (jeans, sweater). "
-        "The lighting is golden hour, vibrant, and fun. "
+        "The lighting is natural, vibrant, and fun. "
         "Photorealistic style, high resolution, clean background."
     ),
     'lingerie': (
         "A tasteful, artistic full-body portrait of a glamorous {ethnicity} young woman "
         "with {hair} hair, posing confidently in a silk robe and elegant lingerie, "
-        "holding a pint of craft beer in a stylish dimly-lit Sydney cocktail lounge. "
-        "The lighting is moody and cinematic with warm amber tones. "
+        "holding a pint of craft beer at a {setting}. "
+        "The lighting is moody and cinematic. "
         "Photorealistic style, high resolution, clean background."
     ),
 }
@@ -158,8 +158,9 @@ def _generate_base_image(client, page3_style='girl_next_door', appearance=None):
 
     ethnicity = (appearance or {}).get('ethnicity', 'Australian')
     hair = (appearance or {}).get('hair', 'brunette')
+    setting = (appearance or {}).get('setting', 'Sydney pub')
     prompt_template = PAGE3_PROMPTS.get(page3_style, PAGE3_PROMPTS['girl_next_door'])
-    prompt = prompt_template.format(ethnicity=ethnicity, hair=hair)
+    prompt = prompt_template.format(ethnicity=ethnicity, hair=hair, setting=setting)
     print(f"Generating base image with DALL-E 3 (style: {page3_style}, {ethnicity}, {hair})...")
     try:
         response = client.images.generate(

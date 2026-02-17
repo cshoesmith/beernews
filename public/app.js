@@ -582,8 +582,11 @@ function toggleMosaicZoom(e, img) {
 }
 
 function renderFullPhoto(page) {
-    const bio = page.bio || { name: 'Unknown', age: '?', hobbies: 'Drinking beer', favorite_style: 'Lager', quote: 'Cheers!' };
+    const bio = page.bio || { name: 'Unknown', age: '?', hobbies: ['Drinking beer'], favorite_style: 'Lager', quote: 'Cheers!', star_sign: 'Leo' };
     
+    // Format hobbies as list if array, or string if string
+    const hobbiesText = Array.isArray(bio.hobbies) ? bio.hobbies.join(', ') : bio.hobbies;
+
     return `
         <div class="magazine-page full-photo-page">
             <!-- Title Bar "Outside" the picture -->
@@ -600,10 +603,13 @@ function renderFullPhoto(page) {
                 <div class="bio-card">
                     <div class="bio-header">
                         <h2 class="bio-name">${bio.name}, ${bio.age}</h2>
+                        <div class="bio-subhead">
+                            <span class="bio-starsign">⭐ ${bio.star_sign || 'Leo'}</span>
+                        </div>
                         <div class="bio-quote">"${bio.quote}"</div>
                     </div>
                     <div class="bio-details">
-                        <div class="bio-row"><strong>Hobbies:</strong> ${bio.hobbies}</div>
+                        <div class="bio-row"><strong>Hobbies:</strong> ${hobbiesText}</div>
                         <div class="bio-row"><strong>Fave Style:</strong> ${bio.favorite_style}</div>
                     </div>
                 </div>

@@ -2133,6 +2133,15 @@ select:focus {
     margin-bottom: 5px;
     color: var(--mag-black);
 }
+.bio-subhead {
+    margin-bottom: 15px;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--mag-accent);
+    letter-spacing: 1px;
+}
 .bio-quote {
     font-family: var(--font-serif);
     font-style: italic;

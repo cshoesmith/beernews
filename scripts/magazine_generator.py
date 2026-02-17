@@ -406,18 +406,37 @@ def generate_page3_profile(client, page3_style='girl_next_door'):
     # Randomise appearance traits
     ethnicities = [
         "Eastern European", "Western European", "Scandinavian", "Mediterranean",
-        "East Asian", "Southeast Asian", "South American", "Australian"
+        "East Asian", "Southeast Asian", "South American", "Australian", "African American", "Indian", "Middle Eastern"
     ]
     hair_types = ["blonde", "brunette", "redhead", "platinum blonde", "dark-haired", "dyed pastel pink", "dyed electric blue"]
+    
+    settings = [
+        "golden hour seaside beach", "bustling city rooftop bar", "cozy dive bar with neon signs", 
+        "chic restaurant bar", "rustic craft brewery taproom", "sunny vineyard terrace",
+        "lively music festival grounds", "warm beach bonfire at twilight", "trendy industrial warehouse party",
+        "botanical garden picnic", "luxury yacht deck at sunset"
+    ]
+    
+    star_signs = [
+        "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", 
+        "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+    ]
+    
     age = random.randint(19, 32)
     ethnicity = random.choice(ethnicities)
     hair = random.choice(hair_types)
+    setting = random.choice(settings)
+    star_sign = random.choice(star_signs)
     
-    # Expanded hobby lists for variety
+    # Expanded hobby lists for variety - MORE DIVERSITY
     base_hobbies = [
         "craft beer tasting", "urban gardening", "live music", "traveling", "photography", 
         "hiking", "cooking", "yoga", "painting", "reading sci-fi", "video gaming", 
-        "vintage shopping", "cycling", "surfing", "pottery", "mixology", "baking sourdough"
+        "vintage shopping", "cycling", "surfing", "pottery", "mixology", "baking sourdough",
+        "astrology", "tattoo collecting", "rock climbing", "stand-up comedy", "film photography",
+        "tarot reading", "plant parenting", "karaoke", "thrifting 90s fashion", "collecting sneakers",
+        "learning languages", "playing bass guitar", "fostering kittens", "bird watching", 
+        "roller skating", "calligraphy", "soap making", "drone racing"
     ]
 
     style_hints = {
@@ -466,23 +485,25 @@ def generate_page3_profile(client, page3_style='girl_next_door'):
     system_prompt = "You are a creative writer for an edgy, fun Australian craft beer magazine."
     user_prompt = (
         f"Generate a fictional profile for our 'Page 3' feature. She is a {age}-year-old {ethnicity} "
-        f"woman with {hair} hair.\n\n"
+        f"woman with {hair} hair, the star sign {star_sign}, pictured at a {setting}.\n\n"
         f"Style direction: {style_desc}\n\n"
         f"Ensure her hobbies are unique and NOT repetitive. Here are some suggestions to mix in: {hobby_str}.\n"
-        f"Return ONLY valid JSON with keys: name, age, hobbies, favorite_style, quote.\n"
-        f"- 'name' should be a first name and surname that fits her {ethnicity} background\n"
+        f"Return ONLY valid JSON with keys: name, age, star_sign, hobbies, favorite_style, quote.\n"
+        f"- 'name' MUST be a culturally authentic first name and surname that strongly matches her {ethnicity} background\n"
         f"- 'age' must be {age}\n"
-        f"- 'hobbies' should be exactly 4 unique, specific, interesting hobbies as a LIST of strings (e.g. ['Hobby 1', 'Hobby 2', ...])\n"
+        f"- 'star_sign' must be '{star_sign}'\n"
+        f"- 'hobbies' should be exactly 4 unique, specific, interesting hobbies as a LIST of strings (e.g. ['Hobby 1', 'Hobby 2', ...]). Be creative!\n"
         f"- 'favorite_style' should be a specific craft beer style (not just 'IPA')\n"
-        f"- 'quote' should be punchy, memorable, and match the style direction"
+        f"- 'quote' MUST be unique, punchy, memorable, and related to her personality or the setting ({setting}). DO NOT use cliches like 'Life is too short for bad beer'. Make it sound like something a real person would say in an interview."
     )
     
     fallback = {
         "name": "Amber Ale",
         "age": age,
+        "star_sign": star_sign,
         "hobbies": suggested_hobbies,
         "favorite_style": "Hazy IPA",
-        "quote": "Life is too short for bad beer."
+        "quote": "Good vibes and great hops."
     }
     
     if not client: return fallback
@@ -500,11 +521,13 @@ def generate_page3_profile(client, page3_style='girl_next_door'):
         data = json.loads(response.choices[0].message.content)
         data['_ethnicity'] = ethnicity
         data['_hair'] = hair
+        data['_setting'] = setting
         return data
     except Exception as e:
         print(f"Bio Gen Error: {e}")
         fallback['_ethnicity'] = ethnicity
         fallback['_hair'] = hair
+        fallback['_setting'] = setting
         return fallback
 
 def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
@@ -630,7 +653,11 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
     mosaic_filename = f"page3_{page3_mode}_{page3_style}_{timestamp}.jpg" 
     
     mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style,
-                                appearance={'ethnicity': page3_bio.get('_ethnicity', ''), 'hair': page3_bio.get('_hair', '')},
+                                appearance={
+                                    'ethnicity': page3_bio.get('_ethnicity', ''), 
+                                    'hair': page3_bio.get('_hair', ''),
+                                    'setting': page3_bio.get('_setting', 'Sydney pub')
+                                },
                                 use_mosaic=(page3_mode == 'mosaic'))
          
     # No need for query string cache buster since filename is unique
