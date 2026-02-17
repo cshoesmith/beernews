@@ -166,7 +166,7 @@ def _generate_base_image(client, page3_style='girl_next_door', appearance=None):
             model="dall-e-3",
             prompt=prompt,
             size="1024x1024",
-            quality="standard",
+            quality="hd",  # Use HD for better details to guide the mosaic
             n=1,
         )
 
@@ -458,9 +458,9 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         return blob_url or "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
 
     # --- Step 3: Build the real photomosaic ---
-    # Very small tiles (15px) on 1024px image (~68x68 grid) provides high detail/realism
-    # overlay_alpha=0.25 helps smooth out the tiles and defines features better
-    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(15, 15), overlay_alpha=0.25)
+    # Extremely small tiles (10px) = High Definition Mosaic (100x100 grid)
+    # overlay_alpha=0.30 helps maintain coherence with such fine detail
+    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(10, 10), overlay_alpha=0.30)
 
     if not mosaic_bytes:
         print("Mosaic build failed - returning raw DALL-E portrait")
