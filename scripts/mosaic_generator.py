@@ -225,6 +225,7 @@ def _load_tiles_from_paths(tile_paths):
         base_urls.append(f"https://{env_url}")
     
     # 2. Hardcoded Prod URL (Fallback)
+    base_urls.append("https://insta-beer-aggregator.vercel.app")
     base_urls.append("https://beernews-git-main-cshoesmiths-projects.vercel.app") 
     base_urls.append("https://beernews-vercel.vercel.app")
 
