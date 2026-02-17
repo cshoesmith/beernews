@@ -299,11 +299,19 @@ def _prepare_tiles(raw_tiles, tile_size):
             # Resize to tile size 
             img = img.resize(tile_size, Image.Resampling.LANCZOS)
 
-            analyzed.append({"img": img, "avg": get_average_color(img)})
+            # Generate variations: Original, Flipped, Rotated
+            variations = [img, img.transpose(Image.FLIP_LEFT_RIGHT)]
+            
+            # Add rotations for even better color matching options
+            # (90, 180, 270 degrees)
+            for angle in [90, 180, 270]:
+                rotated = img.rotate(angle)
+                variations.append(rotated)
+                variations.append(rotated.transpose(Image.FLIP_LEFT_RIGHT))
 
-            # Add horizontal flip for more variety
-            flipped = img.transpose(Image.FLIP_LEFT_RIGHT)
-            analyzed.append({"img": flipped, "avg": get_average_color(flipped)})
+            for var in variations:
+                analyzed.append({"img": var, "avg": get_average_color(var)})
+
         except Exception:
             pass
 
@@ -450,9 +458,9 @@ def create_mosaic(client=None, force_regen=False, output_filename="page3_mosaic.
         return blob_url or "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1024&q=80"
 
     # --- Step 3: Build the real photomosaic ---
-    # 80px tiles on 1024px image = 12x12 grid = 144 tiles (beer photos clearly visible when zoomed)
-    # overlay_alpha=0.12 = very subtle portrait hint, beer photos dominate
-    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(80, 80), overlay_alpha=0.12)
+    # Smaller tiles (25px) on 1024px image (~40x40 grid) provides much better detail
+    # overlay_alpha=0.18 gives a nice balance where you can see the beer but the face is clear
+    mosaic_bytes = _build_mosaic(base_image_bytes, tiles, tile_size=(25, 25), overlay_alpha=0.18)
 
     if not mosaic_bytes:
         print("Mosaic build failed - returning raw DALL-E portrait")
