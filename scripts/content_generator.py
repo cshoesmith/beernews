@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Dict, Optional
 import requests
+import time
+from bs4 import BeautifulSoup
 
 # Try to import openai, but fail gracefully if not available (though it should be)
 try:
@@ -36,6 +38,75 @@ def load_data():
             posts = data.get('posts', [])
             
     return beer_details, posts
+
+
+def scrape_untappd_details(untappd_url: str) -> Optional[Dict]:
+    """Scrape detailed beer info from Untappd page."""
+    if not untappd_url or 'untappd.com/b/' not in untappd_url:
+        return None
+        
+    print(f"Scraping Untappd details: {untappd_url}")
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Referer': 'https://untappd.com/'
+        }
+        
+        resp = requests.get(untappd_url, headers=headers, timeout=10)
+        if resp.status_code != 200:
+            print(f"Failed to fetch Untappd URL: {resp.status_code}")
+            return None
+            
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        # Extract details
+        data = {}
+        
+        # ABV
+        abv_elem = soup.select_one('.abv')
+        if abv_elem:
+            try:
+                txt = abv_elem.get_text().strip().replace('% ABV', '').strip()
+                data['abv'] = float(txt) if txt and txt != 'N/A' else 0
+            except: pass
+            
+        # IBU
+        ibu_elem = soup.select_one('.ibu')
+        if ibu_elem:
+            try:
+                txt = ibu_elem.get_text().strip().replace(' IBU', '').strip()
+                data['ibu'] = int(txt) if txt and txt != 'N/A' else 0
+            except: pass
+            
+        # Rating
+        rating_elem = soup.select_one('.capsule .num')
+        if rating_elem:
+            try:
+                txt = rating_elem.get_text().strip('()')
+                data['rating'] = float(txt)
+            except: pass
+            
+        # Description
+        desc_elem = soup.select_one('.beer-descrption-read-more')
+        if not desc_elem:
+            desc_elem = soup.select_one('.desc .more') # fallback
+        if desc_elem:
+            data['description'] = desc_elem.get_text().strip()
+            
+        # Style
+        style_elem = soup.select_one('.style')
+        if style_elem:
+            data['style'] = style_elem.get_text().strip()
+            
+        # Wait a bit to avoid rate limiting if called in loop
+        time.sleep(1)
+            
+        return data
+        
+    except Exception as e:
+        print(f"Error scraping Untappd: {e}")
+        return None
 
 def calculate_beer_scores(beer_details: Dict, posts: List[Dict]) -> List[Dict]:
     """
@@ -239,6 +310,7 @@ def run_content_generation():
         except:
             pass
             
+
     client = None
     if OPENAI_AVAILABLE and api_key:
         client = OpenAI(api_key=api_key)
@@ -259,6 +331,35 @@ def run_content_generation():
             pass
 
     results = []
+    
+    # 2. Scrape Untappd metadata (description, ABV, ratings) for Top 10 FIRST
+    print("Scraping Untappd Details for Top 10...")
+    for beer in top_beers:
+        beer_id = beer.get('id')
+        if not beer_id or not beer_id.startswith('http'):
+            continue
+            
+        details = beer.get('details', {})
+        # Only scrape if data is missing or looks incomplete
+        should_scrape = not details.get('description') or not details.get('abv') or not details.get('rating')
+        if should_scrape:
+            scraped_data = scrape_untappd_details(beer_id)
+            if scraped_data:
+                # Merge scraped data into existing details, prioritizing scraped
+                for k, v in scraped_data.items():
+                    if v is not None:
+                        details[k] = v
+                print(f"  -> Updated {beer['name']}: ABV {details.get('abv')}, Rating {details.get('rating')}")
+                
+    # Save back to beer_details.json so we don't have to scrape again next time
+    try:
+        if BEER_DETAILS_FILE.exists():
+            with open(BEER_DETAILS_FILE, 'w') as f:
+                json.dump(beer_details, f, indent=2)
+            print("Saved cached Untappd details.")
+    except: pass
+
+    # 3. Generate articles
     for rank, beer in enumerate(top_beers, 1):
         print(f"  Processing #{rank}: {beer['name']}")
         
