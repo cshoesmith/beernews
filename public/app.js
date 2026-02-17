@@ -884,25 +884,31 @@ async function searchVenues() {
     try {
         // Simplified route to avoid Vercel path issues
         const response = await fetch(endpoint);
+        const text = await response.text();
+
         if (!response.ok) {
             let errorMsg = `Search failed (${response.status} at ${endpoint})`;
             try { 
                 // Try to get JSON error
-                const errData = await response.json(); 
+                const errData = JSON.parse(text); 
                 if (errData.error) errorMsg = errData.error;
             } catch(e) {
                 // Not JSON, probably HTML timeout page
-                // Try to get text to see if it provides a clue
-                try {
-                    const text = await response.text();
-                    if (text.includes("TIMED_OUT")) errorMsg = "Server Timed Out (Untappd Slow)";
-                    else if (text.includes("FUNCTION_INVOCATION_TIMEOUT")) errorMsg = "Vercel Function Timeout";
-                    else errorMsg = `Server Error ${response.status} (Raw Text)`;
-                } catch(textErr) {}
+                if (text.includes("TIMED_OUT")) errorMsg = "Server Timed Out (Untappd Slow)";
+                else if (text.includes("FUNCTION_INVOCATION_TIMEOUT")) errorMsg = "Vercel Function Timeout";
+                else errorMsg = `Server Error ${response.status}: ${text.substring(0, 100)}`;
             }
             throw new Error(errorMsg);
         }
-        const results = await response.json();
+        
+        let results;
+        try {
+            results = JSON.parse(text);
+        } catch (e) {
+            console.error("JSON Parse Error:", e);
+            console.error("Raw Response:", text);
+            throw new Error(`Invalid JSON response (${text.substring(0, 50)}...)`);
+        }
         
         if (results.length === 0) {
             resultsDiv.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">No venues found near Sydney.</div>';
