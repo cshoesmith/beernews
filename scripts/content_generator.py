@@ -162,18 +162,29 @@ def generate_article(beer: Dict, client: 'OpenAI') -> Dict:
     brewery = beer['brewery']
     style = beer['style']
     details = beer['details']
-    abv = details.get('abv', '?')
+    abv = details.get('abv')
+    
+    # Handle missing/zero ABV explicitly
+    abv_str = f"{abv}%" if (abv is not None and abv != 0) else "ABV Unknown"
+    
+    # Research mode (Mocked via prompt instruction) - Ask AI to be factual
     desc = details.get('description', '')
     
     prompt = f"""
     Write a newspaper review of exactly 180 words for a new craft beer release.
     The length must be consistent to ensure uniform layout on the magazine page.
-    Title: Catchy headline for "{name}" by {brewery}.
-    Subject: {name} ({style}, {abv}% ABV).
-    Context: {desc}
     
-    Tone: Sophisticated, enthusiastic, sensory, slightly opinionated but fair. Like a New York Times food critic reviewing a beer.
-    Include tasting notes (implied from style if not provided) and why it's a "Must Drink".
+    SUBJECT: "{name}" by {brewery}
+    STYLE: {style}
+    ABV DATA: {abv if abv else 'Not provided'} 
+    CONTEXT: {desc}
+    
+    CRITICAL INSTRUCTIONS:
+    1. If the ABV is 0 or missing, DO NOT assume it is non-alcoholic unless the Style or Description explicitly says "Non-Alcoholic", "AF", or "Zero". 
+    2. If the ABV is missing, try to infer the likely strength from the beer style (e.g. Hazy IPA is usually 6-7%, Imperial Stout 9%+) or avoid mentioning specific ABV numbers if unsure.
+    3. Do NOT invent a "0% ABV" claim. If the data is missing, focus on the flavor profile purely.
+    4. Write in the tone of a sophisticated city food critic: witty, sensory, enthusiastic.
+    5. Title format: Catchy Headline using a pun or play on words related to the beer name.
     """
     
     try:
