@@ -333,6 +333,215 @@ def generate_magazine():
         }), 500
 
 
+@app.route('/api/admin/venues-list', methods=['GET'])
+def get_admin_venues_list():
+    """Get all venues (Untappd & Auto-discovered) for admin management."""
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+        
+        # Helper to load JSON (blob or local)
+        def load_data(filename):
+            try:
+                # Local import to avoid circular dep issues early on
+                from api.storage import load_json, BLOB_TOKEN
+                if BLOB_TOKEN:
+                    res = load_json(f"data/{filename}")
+                    if res: return res
+            except ImportError as e:
+                print(f"Import error in load_data: {e}")
+                pass
+            except Exception as e:
+                print(f"Blob load error: {e}")
+                pass
+            
+            # Fallback local
+            path = os.path.join(data_dir, filename)
+            if os.path.exists(path):
+                try:
+                    with open(path, 'r', encoding='utf-8') as f:
+                        return json.load(f)
+                except Exception:
+                    return {}
+            return {}
+
+        untappd_data = load_data('untappd_venues.json') or {}
+        auto_data = load_data('auto_discovered_venues.json') or {}
+        
+        # Format for frontend
+        untappd_list = []
+        if isinstance(untappd_data, dict):
+            for k, v in untappd_data.items():
+                untappd_list.append({
+                    "id": k,
+                    "name": k.replace('-', ' ').title(),
+                    "untappd_id": v,
+                    "source": "untappd"
+                })
+            
+        auto_list = []
+        if isinstance(auto_data, dict):
+            for k, v in auto_data.items():
+                auto_list.append({
+                    "id": k,
+                    "name": v.get('name', k),
+                    "location": v.get('location', 'Unknown'),
+                    "status": v.get('status', 'unknown'),
+                    "source": "auto"
+                })
+            
+        return jsonify({
+            "untappd": untappd_list,
+            "auto": auto_list
+        })
+    except Exception as e:
+        import traceback
+        return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
+
+
+@app.route('/api/admin/venues/<source>/<venue_id>', methods=['DELETE'])
+def delete_admin_venue(source, venue_id):
+    """Delete a venue from the specified source file."""
+    try:
+        filename = ""
+        if source == 'untappd':
+            filename = 'untappd_venues.json'
+        elif source == 'auto':
+            filename = 'auto_discovered_venues.json'
+        else:
+            return jsonify({"error": "Invalid source"}), 400
+            
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+        
+        # Load existing data
+        # We need to load full data first to modify it
+        try:
+            from api.storage import load_json, upload_json, BLOB_TOKEN
+            use_blob = bool(BLOB_TOKEN)
+        except ImportError:
+            use_blob = False
+            
+        current_data = {}
+        blob_path = f"data/{filename}"
+        
+        if use_blob:
+            current_data = load_json(blob_path)
+            
+        # Fallback load local if blob failed or disabled
+        if not current_data:
+             path = os.path.join(data_dir, filename)
+             if os.path.exists(path):
+                with open(path, 'r', encoding='utf-8') as f:
+                    current_data = json.load(f)
+        
+        if not current_data:
+             current_data = {} # Should probably init empty if file missing
+             
+        # Check if exists
+        if venue_id not in current_data:
+            return jsonify({"error": f"Venue ID '{venue_id}' not found in {filename}"}), 404
+            
+        # Delete
+        del current_data[venue_id]
+        print(f"Deleted {venue_id} from {filename}")
+        
+        # Save both places for consistency
+        
+        # 1. Save Blob
+        if use_blob:
+            try:
+                upload_json(blob_path, current_data)
+                print(f"Updated blob {blob_path}")
+            except Exception as e:
+                print(f"Blob upload failed: {e}")
+        
+        # 2. Save Local
+        try:
+            local_path = os.path.join(data_dir, filename)
+            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+            with open(local_path, 'w', encoding='utf-8') as f:
+                json.dump(current_data, f, indent=2)
+            print(f"Updated local file {local_path}")
+        except Exception as e:
+            print(f"Warning: Failed to save local backup: {e}")
+            
+        return jsonify({"success": True, "message": f"Deleted {venue_id} from {source}"})
+        
+    except Exception as e:
+        import traceback
+        return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
+
+
+
+@app.route('/api/admin/venues/add', methods=['POST'])
+def add_admin_venue():
+    """Add a new venue to untappd_venues.json."""
+    try:
+        data = request.get_json()
+        if not data or 'id' not in data or 'name' not in data:
+            return jsonify({"error": "Missing id or name"}), 400
+            
+        untappd_id = str(data['id'])
+        name = data['name']
+        
+        # Generate slug
+        import re
+        slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+        
+        filename = "untappd_venues.json"
+        
+        # Load existing
+        try:
+            from api.storage import load_json, upload_json, BLOB_TOKEN
+            use_blob = bool(BLOB_TOKEN)
+        except ImportError:
+            use_blob = False
+            
+        current_data = {}
+        blob_path = f"data/{filename}"
+        
+        if use_blob:
+            current_data = load_json(blob_path) or {}
+            
+        if not current_data:
+             data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+             path = os.path.join(data_dir, filename)
+             if os.path.exists(path):
+                with open(path, 'r', encoding='utf-8') as f:
+                    current_data = json.load(f)
+        
+        # Check duplicate by ID
+        for k, v in current_data.items():
+            if str(v) == untappd_id:
+                return jsonify({"error": f"Venue already exists as '{k}'"}), 400
+                
+        # Check duplicate by Slug
+        if slug in current_data:
+            slug = f"{slug}-{untappd_id}" # De-dupe
+            
+        # Add
+        current_data[slug] = untappd_id
+        
+        # Save
+        if use_blob:
+            upload_json(blob_path, current_data)
+        
+        # Local save
+        try:
+            data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+            local_path = os.path.join(data_dir, filename)
+            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+            with open(local_path, 'w', encoding='utf-8') as f:
+                json.dump(current_data, f, indent=2)
+        except Exception:
+            pass
+            
+        return jsonify({"success": True, "slug": slug})
+        
+    except Exception as e:
+        import traceback
+        return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
+
+
 @app.route('/api/venues')
 def get_venues():
     """Get all venues (breweries and bars)."""

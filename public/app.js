@@ -754,23 +754,84 @@ async function loadExistingVenues() {
     const listDiv = document.getElementById('existing-venues-list');
     if (!listDiv) return;
     
-    listDiv.innerHTML = 'Loading...';
+    listDiv.innerHTML = '<div style="padding:10px; color:#aaa;">Loading venues...</div>';
     try {
-        const response = await fetch('/api/venues'); 
+        // Use the new admin endpoint
+        const response = await fetch('/api/admin/venues-list'); 
+        if (!response.ok) throw new Error("Failed to fetch admin list");
+        
         const data = await response.json();
+        const { untappd, auto } = data;
         
-        // Remove scroll styles here, let css handle it
-        let html = '<ul style="padding-left:20px; color:#ccc; margin:0;">';
+        let html = '<div style="display:flex; flex-direction:column; gap:8px;">';
         
-        if (Array.isArray(data)) {
-             html += data.map(v => `<li>${v.name}</li>`).join('');
-        } else {
-             html += Object.keys(data).map(k => `<li>${k} (ID: ${data[k]})</li>`).join('');
+        // Auto-discovered (Pending/New)
+        if (auto && auto.length > 0) {
+            html += '<div style="font-size:0.8rem; color:#f1c40f; margin-top:5px; margin-bottom:2px; font-weight:bold; border-bottom:1px solid #444;">New / Auto-Discovered</div>';
+            html += auto.map(v => `
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#222; padding:5px; border-radius:4px; margin-bottom:2px;">
+                    <div style="overflow:hidden; padding-right:10px;">
+                        <div style="font-size:0.85rem; font-weight:bold; color:#ddd; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${v.name}">${v.name}</div>
+                        <div style="font-size:0.75rem; color:#888;">${v.location || 'Unknown'} (${v.status})</div>
+                    </div>
+                    <button onclick="deleteVenue('auto', '${v.id}', '${v.name.replace(/'/g, "\\'")}')" 
+                            style="background:#c0392b; color:white; border:none; border-radius:3px; padding:3px 8px; font-size:0.7rem; cursor:pointer;">
+                        DEL
+                    </button>
+                </div>
+            `).join('');
         }
-        html += '</ul>';
+        
+        // Confirmed (Untappd)
+        if (untappd && untappd.length > 0) {
+             html += '<div style="font-size:0.8rem; color:#3498db; margin-top:10px; margin-bottom:2px; font-weight:bold; border-bottom:1px solid #444;">Tracked Venues (Untappd)</div>';
+             html += untappd.map(v => `
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#222; padding:5px; border-radius:4px; margin-bottom:2px;">
+                    <div style="overflow:hidden; padding-right:10px;">
+                        <div style="font-size:0.85rem; font-weight:bold; color:#ddd; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${v.name}">${v.name}</div>
+                        <div style="font-size:0.75rem; color:#888;">ID: ${v.untappd_id}</div>
+                    </div>
+                    <button onclick="deleteVenue('untappd', '${v.id}', '${v.name.replace(/'/g, "\\'")}')" 
+                            style="background:#c0392b; color:white; border:none; border-radius:3px; padding:3px 8px; font-size:0.7rem; cursor:pointer;">
+                        DEL
+                    </button>
+                </div>
+             `).join('');
+        }
+        
+        html += '</div>';
         listDiv.innerHTML = html;
+        
     } catch (e) {
-        listDiv.innerHTML = 'Error loading venues';
+        console.error(e);
+        listDiv.innerHTML = '<div style="color:red; padding:10px;">Error loading venues. Check console.</div>';
+    }
+}
+
+async function deleteVenue(source, id, name) {
+    if (!confirm(`Are you sure you want to delete "${name}" from the ${source} list? This will prevent it from appearing in future issues.`)) return;
+    
+    // Optimistic UI update could be done here, but reload is safer
+    const listDiv = document.getElementById('existing-venues-list');
+    const originalContent = listDiv.innerHTML;
+    listDiv.innerHTML = '<div style="padding:10px; color:#aaa;">Deleting...</div>';
+    
+    try {
+        const response = await fetch(`/api/admin/venues/${source}/${id}`, {
+            method: 'DELETE'
+        });
+        
+        if (response.ok) {
+            // Success
+            loadExistingVenues(); // Reload list
+        } else {
+            const data = await response.json();
+            alert('Delete failed: ' + (data.error || 'Unknown error'));
+            listDiv.innerHTML = originalContent;
+        }
+    } catch (e) {
+        alert('Error: ' + e.message);
+        listDiv.innerHTML = originalContent;
     }
 }
 
