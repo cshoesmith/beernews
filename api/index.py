@@ -227,6 +227,8 @@ def get_top_10():
 def get_latest_issue():
     """Get the full magazine issue content."""
     debug_info = []
+    response_data = None
+    
     try:
         # Try Blob first
         from api.storage import load_json, BLOB_TOKEN
@@ -236,18 +238,29 @@ def get_latest_issue():
         if use_blob:
             issue = load_json("data/current_issue.json")
             if issue:
-                return jsonify(issue)
-            debug_info.append("Blob load returned None")
+                response_data = issue
+            else:
+                debug_info.append("Blob load returned None")
         else:
             debug_info.append("Blob disabled")
 
-        root_dir = os.path.dirname(os.path.dirname(__file__))
-        data_path = os.path.join(root_dir, 'data', 'current_issue.json')
-        debug_info.append(f"Checking local path: {data_path}")
-        
-        if os.path.exists(data_path):
-            with open(data_path, 'r') as f:
-                return jsonify(json.load(f))
+        if not response_data:
+            root_dir = os.path.dirname(os.path.dirname(__file__))
+            data_path = os.path.join(root_dir, 'data', 'current_issue.json')
+            debug_info.append(f"Checking local path: {data_path}")
+            
+            if os.path.exists(data_path):
+                with open(data_path, 'r') as f:
+                    response_data = json.load(f)
+                    
+        if response_data:
+            # Force no-cache headers
+            resp = jsonify(response_data)
+            resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+            resp.headers['Pragma'] = 'no-cache'
+            resp.headers['Expires'] = '0'
+            return resp
+            
         else:
             data_dir = os.path.join(root_dir, 'data')
             dir_contents = os.listdir(data_dir) if os.path.exists(data_dir) else "Data dir missing"
