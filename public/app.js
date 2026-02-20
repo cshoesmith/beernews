@@ -69,13 +69,19 @@ async function loadIssue() {
             try {
                 // Read text first to avoid stream locking issues
                 const textBody = await res.text();
+                console.error("API Error Body:", textBody); // Log the raw error
                 try {
                     const jsonErr = JSON.parse(textBody);
                     // Use pretty printing if it's JSON
                     errorDetails = JSON.stringify(jsonErr, null, 2);
                 } catch {
-                    // It was just text/HTML
-                    errorDetails = textBody.slice(0, 800); // Limit length
+                    // It was just text/HTML. Extract title or body if possible.
+                    if (textBody.includes('<title>')) {
+                        const titleMatch = textBody.match(/<title>(.*?)<\/title>/);
+                        if (titleMatch) errorDetails = `Server Error: ${titleMatch[1]}`;
+                    } else {
+                        errorDetails = textBody.slice(0, 800); // Limit length
+                    }
                 }
             } catch(e) {
                 errorDetails = "Could not read response body: " + e.message;
