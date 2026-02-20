@@ -59,11 +59,12 @@ PAGE3_PROMPTS = {
         "Photorealistic style, high resolution, clean background."
     ),
     'playboy': (
-        "A stunning, high-glamour artistic portrait of a {ethnicity} woman with {hair} hair, "
-        "posing in a classic 90s glamour style at a {setting}. "
-        "She is wearing a silk robe or bikini bottoms, looking confident and playful. "
-        "Warm, golden hour lighting with cinematic film grain. "
-        "Tasteful, adult-oriented aesthetic, high fashion photography. "
+        "A sophisticated, high-glamour editorial portrait of a {ethnicity} woman with {hair} hair, "
+        "posing in a classic 90s men's magazine style at a {setting}. "    
+        "She is wearing a luxurious silk robe or elegant lingerie, holding a craft beer pint "
+        "with a confident, playful expression. "
+        "Soft focus, golden hour lighting, cinematic film grain, retro aesthetic. "
+        "Tasteful, pin-up style, boudoir photography. "
         "Photorealistic style, high resolution."
     ),
 }
