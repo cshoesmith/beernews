@@ -35,6 +35,7 @@ TOP_10_FILE = DATA_DIR / "top_10_beers.json"
 MAGAZINE_HISTORY_FILE = DATA_DIR / "magazine_history.json"
 CURRENT_ISSUE_FILE = DATA_DIR / "current_issue.json"
 DYNAMIC_UPDATES_FILE = DATA_DIR / "dynamic_updates.json"
+VENUE_EVENTS_FILE = DATA_DIR / "venue_events.json"
 
 MAGAZINE_PAGES = 16
 
@@ -737,6 +738,26 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
         "headline": "Fresh on Tap",
         "background_image": "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80",
         "data": fresh_data
+    })
+    
+    # Page 17: Culture & Events
+    events_data = []
+    if VENUE_EVENTS_FILE.exists():
+        with open(VENUE_EVENTS_FILE, 'r', encoding='utf-8') as f:
+            try:
+                events_json = json.load(f)
+                events_data = events_json.get('events', [])
+                # Ensure we have absolute URLs for images if needed, or just pass them through
+            except:
+                print("Warning: Could not load venue_events.json")
+                pass
+
+    pages.append({
+        "type": "events-collage",
+        "headline": "Culture & Events",
+        "subhead": "What's Happening in the Scene",
+        "background_image": "https://images.unsplash.com/photo-1514525253440-b393452e8d26?w=1200&q=80", 
+        "data": events_data
     })
     
     # Ad Page REMOVED by user request

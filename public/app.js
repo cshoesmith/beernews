@@ -142,6 +142,9 @@ function renderPage(index) {
         case 'fresh-on-tap':
             html = renderFreshOnTap(page);
             break;
+        case 'events-collage':
+            html = renderEventsCollage(page);
+            break;
         case 'list-page':
             html = renderListPage(page); // Needed separate fetch? Or static?
             break;
@@ -717,6 +720,44 @@ function renderFreshOnTap(page) {
             
             </div>
         </div>
+    `;
+}
+
+function renderEventsCollage(page) {
+    const events = page.data || [];
+    const bgImage = page.background_image || '';
+    
+    // Just a basic list for now if empty
+    if (!events.length) {
+        return `<div class="magazine-page"><div class="center-msg"><h1>Coming Soon</h1><p>No events found.</p></div></div>`;
+    }
+
+    const cards = events.map(e => {
+        const img = e.image || 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?w=600&q=80';
+        return `
+        <div class="event-card">
+            <div class="event-img" style="background-image: url('${img}');"></div>
+            <div class="event-info">
+                <div class="event-date">${e.date}</div>
+                <h3 class="event-title">${e.title}</h3>
+                <div class="event-venue">${e.venue}</div>
+                <div class="event-loc">${e.location}</div>
+            </div>
+        </div>
+        `;
+    }).join('');
+
+    return `
+    <div class="magazine-page events-page" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${bgImage}'); background-size: cover;">
+        <div class="events-container">
+            <h2 class="section-title">${page.headline}</h2>
+            <p class="section-subtitle">${page.subhead}</p>
+            
+            <div class="events-grid">
+                ${cards}
+            </div>
+        </div>
+    </div>
     `;
 }
 

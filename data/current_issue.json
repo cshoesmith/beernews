@@ -1,15 +1,15 @@
 {
-  "issue": 82,
-  "generated_at": "2026-02-16T20:32:13.704695",
-  "brewer_of_week": "Seeker Brewing",
+  "issue": 134,
+  "generated_at": "2026-02-20T13:51:50.089144",
+  "brewer_of_week": "Young Henrys",
   "pages": [
     {
       "type": "cover",
       "title": "Sydney Beer Weekly",
-      "issue": 82,
-      "date": "February 16, 2026",
-      "cover_story": "FOCUS: Seeker Brewing",
-      "main_image": "https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1200&q=80"
+      "issue": 134,
+      "date": "February 20, 2026",
+      "cover_story": "FOCUS: Young Henrys",
+      "main_image": "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?w=1200&q=80"
     },
     {
       "type": "toc",
@@ -24,7 +24,7 @@
           "page": 4
         },
         {
-          "title": "Focus: Seeker Brewing",
+          "title": "Focus: Young Henrys",
           "page": 5
         },
         {
@@ -43,52 +43,54 @@
     },
     {
       "type": "full-photo-page",
-      "image": "https://qxr0psqlm8hdmdsa.public.blob.vercel-storage.com/images/page3_mosaic_girl_next_door_1771234312.jpg",
+      "image": "https://zefp7rososs7hpog.public.blob.vercel-storage.com/page3_natural_girl_next_door_1771555891.jpg",
       "caption": "The Spirit of Sydney Brewing",
       "subcaption": "A photomosaic of 100+ local beer check-ins.",
       "bio": {
-        "name": "Sofia Romano",
-        "age": 22,
+        "name": "Astrid Lindgren",
+        "age": 29,
+        "star_sign": "Taurus",
         "hobbies": [
-          "Craft cocktail creation",
-          "Live ukulele performances at local cafes",
-          "Exploring food stalls at Sunday farmers markets",
-          "Documenting her beer tasting adventures on Instagram"
+          "Navigating thrift stores for quirky vinyl records",
+          "Creating gourmet sourdough bread with unconventional flavours like lavender and lemon",
+          "Strumming sea shanties on her ukulele while camping under the stars",
+          "Practicing yoga in the middle of a wildflower field"
         ],
-        "favorite_style": "Sour Cherry Ale",
-        "quote": "Life\u2019s too short to drink boring beer\u2014let\u2019s make it fun and fuzzy!",
-        "_ethnicity": "Mediterranean",
-        "_hair": "platinum blonde"
+        "favorite_style": "Saison",
+        "quote": "Life\u2019s like a great wine\u2014full of surprises and best savoured in the sun with good friends and even better brew!",
+        "_ethnicity": "Scandinavian",
+        "_hair": "dyed electric blue",
+        "_setting": "sunny vineyard terrace"
       }
     },
     {
       "type": "article",
       "layout": "single-col",
       "headline": "Editor's Summary of the Week",
-      "body": "This week in Sydney's vibrant beer scene, a delightful wave of freshness sweeps through our local venues, beckoning us to sip and savor. Mountain Culture kicks things off with a fresh release, while the star from 4 Pines shines bright, flaunting its AIBA Gold in the Hazy & Freshy. Just a hop, skip, and a jump away, Wayward Brewing celebrates the quintessential Aussie lager\u2014crisp, clean, and undeniably sessionable\u2014ready for on-tap enjoyment or a growler-to-go. Meanwhile, their reimagined Dry & Refreshing Sour Ale, aptly dubbed the \u201cformerly known as Sourpuss,\u201d is captivating palates as the weather warms.\n\nBatch Brewing Company also throws their hat in the ring, teasing followers with monthly new releases full of diverse styles, ensuring no two visits are ever alike. And let\u2019s not forget Young Henrys, who are busy modernizing legends\u2014Newtowner now boasts a fresh look alongside the beloved taste. The buzz doesn\u2019t stop there; whether it's sipping on a Cold XPA or marveling at demo batches at various taprooms, the choices are simply too tempting to resist. As the sunny days unfold, Sydney\u2019s beer mood is unmistakably spirited, ensuring each pint is a celebration of local craft and camaraderie. Cheers to a week filled with discovery!",
+      "body": "This week in Sydney's vibrant beer scene, there\u2019s a palpable excitement brewing across local venues. Mountain Culture is tantalizing taste buds with their fresh releases, while 4 Pines is basking in the glory of their Hazy & Freshy, freshly minted with an AIBA Gold medal\u2014a true badge of honor for any brewery. Over at Wayward Brewing, the offerings are as diverse as ever. Their super sessionable Aussie lager promises crisp refreshment, perfect for those balmy afternoons. Plus, their Dry & Refreshing Sour Ale\u2014previously known as Sourpuss\u2014pays homage to the Berliner Weisse style, adding an intriguing twist to the lineup.\n\nNot to be outdone, Batch Brewing Company introduces their Hazty Decisions Vol. 9 and Afterglow\u2014perfectly timed for those who enjoy a hoppy adventure or a refreshing sour. Meanwhile, Young Henrys is celebrating nostalgia with a fresh twist on their iconic Newtowner, now boasting a bright new look at iconic venues like the Opera Bar.\n\nWith all these delightful innovations occurring within our city\u2019s craft breweries, Sydney is firmly in the grip of a seasonal beer mood\u2014one that celebrates creativity and camaraderie in every sip. Raise your glass, Sydney; the week is looking refreshingly promising.",
       "image": "https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?w=800&q=80",
       "background_image": "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=1200&q=80",
       "footer": "Sydney Beer Weekly - Est. 2026"
     },
     {
       "type": "brewery-spotlight",
-      "headline": "Seeker Brewing: Crafting Flavor Journeys",
-      "subhead": "A Dive into the Innovative Brews of Seeker Brewing",
-      "body": "Nestled in the heart of craft beer culture, Seeker Brewing is a haven for hop enthusiasts and flavor adventurers alike. Known for its unique approach to brewing, Seeker's beers have been making waves across the industry, with notable creations like the refreshing 'Lil' Juicy' and the decadent 'Big Red Milkshake' captivating beer lovers far and wide. The brewery's current standout, the 'Quintuple IPA,' showcases an impressive balance of hop character and malt sweetness, while the 'Big Reds Magic Raspberry Milkshake IPA' adds a delightful fruity twist. Not to be missed, 'Riff's Festiv-ale' promises a cozy seasonal experience that beckons with layers of warmth and spice. With a commitment to quality and innovation, Seeker Brewing continues to push the boundaries of craft brewing, inviting drinkers to embark on a journey of taste and discovery.",
-      "image": "https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1200&q=80",
+      "headline": "Brewery in Focus: Young Henrys",
+      "subhead": "Crafting a Fresh Identity in Sydney\u2019s Beer Scene",
+      "body": "In the vibrant heart of Newtown, Young Henrys is making waves with its bold approach to brewing and spirited community engagement. Established in 2012, this independent brewery has captivated beer lovers with its refreshing beers that highlight local ingredients and unique flavors. Notable for their Natural Lager\u2014a crisp, clean offering that stands as the brewery's flagship\u2014Young Henrys also delights the palate with the fruity Cold XPA and the tropical-infused Hopic Thunder. A recent fan favorite, the Coco Crush, is a smooth Australian-style beer that perfectly balances chocolate and coconut, while the limited-edition Demo Batch \u2013 Juiced Up Baddie showcases their commitment to innovation. The brewery\u2019s ethos centers on quality, sustainability, and local collaboration; it's a place where creativity flows as freely as the beer. This community-centric approach has made Young Henrys a staple of Sydney's craft beer culture, inviting both locals and visitors to experience the refreshing essence of Australian brewing.",
+      "image": "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?w=1200&q=80",
       "sidebar": {
         "title": "Fast Facts",
         "data": {
-          "address": "123 Craft Lane, Hopsville, CA 90210",
-          "phone": "(123) 456-7890",
-          "head_brewer": "Jordan Crafton",
-          "known_for": "Innovative IPAs and Milkshake Ales"
+          "address": "76 Wilford Street, Newtown, NSW 2042, Australia",
+          "phone": "+61 2 9519 1389",
+          "head_brewer": "Megan Goh",
+          "known_for": "Natural Lager, Hopic Thunder, Cold XPA"
         },
         "list_title": "Local Vibes",
         "list": [
-          "Community-focused with regular events celebrating local artists and musicians.",
-          "Innovative tasting sessions that encourage patrons to explore unique flavor pairings.",
-          "A cozy outdoor patio that fosters connections among craft beer enthusiasts."
+          "Intimate brewery tours offer a behind-the-scenes look at the brewing process.",
+          "A local favorite hangout spot with beer tastings and live music events.",
+          "Strong commitment to sustainability and supporting local businesses."
         ]
       }
     },
@@ -646,6 +648,23 @@
           }
         ]
       }
+    },
+    {
+      "type": "events-collage",
+      "headline": "Culture & Events",
+      "subhead": "What's Happening in the Scene",
+      "background_image": "https://images.unsplash.com/photo-1514525253440-b393452e8d26?w=1200&q=80",
+      "data": [
+        {
+          "venue_id": "hotel-sweeneys",
+          "title": "Seeker Brewing Co. Tap Takeover",
+          "date": "Thu, Feb 19th \u2022 12:00 PM AEDT - Sun, Feb 22nd \u2022 10:00 PM AEDT",
+          "image": "https://utfb-images.untappd.com/el7e52kfnq4mqcxmjy802o5yvtyr?auto=compress%2Cformat&fill=solid&fillcolor=000000&fit=fill&h=320&q=80&w=570",
+          "url": "https://untappd.com/v/hotel-sweeneys/107565/event/943279",
+          "location": "Hotel Sweeneys \u2022 Sydney , NSW",
+          "scraped_at": "2026-02-20T13:45:32.271593"
+        }
+      ]
     }
   ]
 }
