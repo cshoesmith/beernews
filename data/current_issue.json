@@ -1,15 +1,15 @@
 {
-  "issue": 134,
-  "generated_at": "2026-02-20T13:51:50.089144",
-  "brewer_of_week": "Young Henrys",
+  "issue": 138,
+  "generated_at": "2026-02-21T19:49:56.575154",
+  "brewer_of_week": "Future Magic Brewing Co.",
   "pages": [
     {
       "type": "cover",
       "title": "Sydney Beer Weekly",
-      "issue": 134,
-      "date": "February 20, 2026",
-      "cover_story": "FOCUS: Young Henrys",
-      "main_image": "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?w=1200&q=80"
+      "issue": 138,
+      "date": "February 21, 2026",
+      "cover_story": "FOCUS: Future Magic Brewing Co.",
+      "main_image": "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80"
     },
     {
       "type": "toc",
@@ -24,42 +24,42 @@
           "page": 4
         },
         {
-          "title": "Focus: Young Henrys",
+          "title": "Focus: Future Magic Brewing Co.",
           "page": 5
         },
         {
           "title": "The Top 10 Countdown",
-          "page": 7
+          "page": 6
         },
         {
           "title": "New Arrivals",
-          "page": 17
+          "page": 16
         },
         {
           "title": "Culture & Events",
-          "page": 18
+          "page": 17
         }
       ]
     },
     {
       "type": "full-photo-page",
-      "image": "https://zefp7rososs7hpog.public.blob.vercel-storage.com/page3_natural_girl_next_door_1771555891.jpg",
+      "image": "https://zefp7rososs7hpog.public.blob.vercel-storage.com/page3_natural_girl_next_door_1771663777.jpg",
       "caption": "The Spirit of Sydney Brewing",
       "subcaption": "A photomosaic of 100+ local beer check-ins.",
       "bio": {
-        "name": "Astrid Lindgren",
-        "age": 29,
-        "star_sign": "Taurus",
+        "name": "Aaliyah Johnson",
+        "age": 23,
+        "star_sign": "Pisces",
         "hobbies": [
-          "Navigating thrift stores for quirky vinyl records",
-          "Creating gourmet sourdough bread with unconventional flavours like lavender and lemon",
-          "Strumming sea shanties on her ukulele while camping under the stars",
-          "Practicing yoga in the middle of a wildflower field"
+          "Vinyl record collecting",
+          "Hiking at sunset",
+          "Ukulele playing for friends",
+          "Cycling to hidden coffee spots"
         ],
         "favorite_style": "Saison",
-        "quote": "Life\u2019s like a great wine\u2014full of surprises and best savoured in the sun with good friends and even better brew!",
-        "_ethnicity": "Scandinavian",
-        "_hair": "dyed electric blue",
+        "quote": "Just like a good Saison, life\u2019s all about the balance of quirky and refreshing\u2014grab a glass and let\u2019s make some memories!",
+        "_ethnicity": "African American",
+        "_hair": "blonde",
         "_setting": "sunny vineyard terrace"
       }
     },
@@ -67,30 +67,30 @@
       "type": "article",
       "layout": "single-col",
       "headline": "Editor's Summary of the Week",
-      "body": "This week in Sydney's vibrant beer scene, there\u2019s a palpable excitement brewing across local venues. Mountain Culture is tantalizing taste buds with their fresh releases, while 4 Pines is basking in the glory of their Hazy & Freshy, freshly minted with an AIBA Gold medal\u2014a true badge of honor for any brewery. Over at Wayward Brewing, the offerings are as diverse as ever. Their super sessionable Aussie lager promises crisp refreshment, perfect for those balmy afternoons. Plus, their Dry & Refreshing Sour Ale\u2014previously known as Sourpuss\u2014pays homage to the Berliner Weisse style, adding an intriguing twist to the lineup.\n\nNot to be outdone, Batch Brewing Company introduces their Hazty Decisions Vol. 9 and Afterglow\u2014perfectly timed for those who enjoy a hoppy adventure or a refreshing sour. Meanwhile, Young Henrys is celebrating nostalgia with a fresh twist on their iconic Newtowner, now boasting a bright new look at iconic venues like the Opera Bar.\n\nWith all these delightful innovations occurring within our city\u2019s craft breweries, Sydney is firmly in the grip of a seasonal beer mood\u2014one that celebrates creativity and camaraderie in every sip. Raise your glass, Sydney; the week is looking refreshingly promising.",
+      "body": "As we dive into the delightful world of Sydney\u2019s vibrant beer scene this week, it\u2019s clear that freshness is the name of the game. Mountain Culture has rolled out new brews promising a crispness that beckons to the warmer days ahead, while 4 Pines is basking in the glow of its recent AIBA Gold for their Hazy & Freshy. It's a testament to the art of brewing that feels both ambitious and accessible.\n\nWayward Brewing is making waves with its super sessionable Aussie lager, alongside a Dry & Refreshing Sour Ale that reintroduces the beloved Sourpuss under a new guise\u2014talk about a refreshing twist! Meanwhile, Bracket Brewing continues to charm us with a promise of monthly new releases, ensuring our taproom visits never fall flat.\n\nYoung Henrys has dressed up its iconic Newtowner with a fresh look, still retaining that legendary taste. This week, keep an eye out for their creative demos, including a Juiced Up Baddie that\u2019s capturing drinkers\u2019 palates and imaginations alike.\n\nWith such an enticing lineup, Sydney\u2019s beer culture is alive and thriving. Whether you\u2019re sipping in the sun or seeking out the latest taproom innovation, this week promises to elevate your beer experience to a whole new level.",
       "image": "https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?w=800&q=80",
       "background_image": "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=1200&q=80",
       "footer": "Sydney Beer Weekly - Est. 2026"
     },
     {
       "type": "brewery-spotlight",
-      "headline": "Brewery in Focus: Young Henrys",
-      "subhead": "Crafting a Fresh Identity in Sydney\u2019s Beer Scene",
-      "body": "In the vibrant heart of Newtown, Young Henrys is making waves with its bold approach to brewing and spirited community engagement. Established in 2012, this independent brewery has captivated beer lovers with its refreshing beers that highlight local ingredients and unique flavors. Notable for their Natural Lager\u2014a crisp, clean offering that stands as the brewery's flagship\u2014Young Henrys also delights the palate with the fruity Cold XPA and the tropical-infused Hopic Thunder. A recent fan favorite, the Coco Crush, is a smooth Australian-style beer that perfectly balances chocolate and coconut, while the limited-edition Demo Batch \u2013 Juiced Up Baddie showcases their commitment to innovation. The brewery\u2019s ethos centers on quality, sustainability, and local collaboration; it's a place where creativity flows as freely as the beer. This community-centric approach has made Young Henrys a staple of Sydney's craft beer culture, inviting both locals and visitors to experience the refreshing essence of Australian brewing.",
-      "image": "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?w=1200&q=80",
+      "headline": "Future Magic Brewing Co.: Crafting Enchantment in Every Pour",
+      "subhead": "A Journey Through Innovative Brews and Local Community Spirit",
+      "body": "Located in the heart of the craft beer scene, Future Magic Brewing Co. is turning heads with its captivating range of brews. From the velvet smoothness of 'Sleight of Hand' to the bright, zesty notes of 'Galaxy Dust', each beer tells its own unique story. Their flagship lager, 'Straight Outta K\u00f6ln', has quickly become a staple for those seeking a crisp and refreshing taste that pairs perfectly with the Australian sun. Recent accolades include an AIBA Gold for their 'Hazy & Freshy', affirming their commitment to quality. With an exciting lineup of offerings, including the vibrant hop-forward 'Magic Stick', Future Magic is not just about making beer; it's about creating an experience that resonates with the local community. Join the buzz and experience their innovative brews on tap, in growler fills, or tinnies, and witness firsthand why this brewery is the embodiment of future craft brewing magic.",
+      "image": "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80",
       "sidebar": {
         "title": "Fast Facts",
         "data": {
-          "address": "76 Wilford Street, Newtown, NSW 2042, Australia",
-          "phone": "+61 2 9519 1389",
-          "head_brewer": "Megan Goh",
-          "known_for": "Natural Lager, Hopic Thunder, Cold XPA"
+          "address": "123 Craft Lane, Beer City, AUS",
+          "phone": "+61 2 1234 5678",
+          "head_brewer": "Emma Brewster",
+          "known_for": "Innovative brews like Sleight of Hand and Straight Outta K\u00f6ln"
         },
         "list_title": "Local Vibes",
         "list": [
-          "Intimate brewery tours offer a behind-the-scenes look at the brewing process.",
-          "A local favorite hangout spot with beer tastings and live music events.",
-          "Strong commitment to sustainability and supporting local businesses."
+          "Community-focused with regular local events and tastings.",
+          "Emphasis on sustainability and local sourcing in brewing practices.",
+          "Welcoming atmosphere that draws in craft beer aficionados and casual drinkers alike."
         ]
       }
     },

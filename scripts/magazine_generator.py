@@ -232,14 +232,13 @@ def get_brewery_image(brewer_name, beer_details, dynamic_updates):
     # Use a deterministic query based on name
     # source.unsplash.com is deprecated/unreliable, use a hardcoded list of high-quality beer shots
     images = [
-        "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1200&q=80",
-        "https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?w=1200&q=80",
-        "https://images.unsplash.com/photo-1567696911980-2eed69a46042?w=1200&q=80",
-        "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?w=1200&q=80",
-        "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80",
-        "https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1200&q=80",
-        "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=1200&q=80",
-        "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1200&q=80"
+        "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=1200&q=80", # Hops/Pint
+        "https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?w=1200&q=80", # Taps
+        "https://images.unsplash.com/photo-1567696911980-2eed69a46042?w=1200&q=80", # Pour
+        "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=1200&q=80", # Glass
+        "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1200&q=80", # Tasting Flight
+        "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?w=1200&q=80", # Brewery Tanks
+        "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=1200&q=80"  # Dark Beer
     ]
     
     # Hash the name to pick a consistent image for a specific brewer if we don't have a real one
@@ -652,9 +651,9 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
             {"title": "The Mosaic", "page": 3},
             {"title": "Editor's Summary", "page": 4},
             {"title": f"Focus: {brewer_of_week}", "page": 5},
-            {"title": "The Top 10 Countdown", "page": 7},
-            {"title": "New Arrivals", "page": 17},
-            {"title": "Culture & Events", "page": 18}
+            {"title": "The Top 10 Countdown", "page": 6},
+            {"title": "New Arrivals", "page": 16},
+            {"title": "Culture & Events", "page": 17}
         ]
     })
     
