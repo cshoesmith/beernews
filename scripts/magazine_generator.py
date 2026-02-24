@@ -206,12 +206,36 @@ def select_brewer_of_week(beer_details, history):
     return chosen
 
 def get_recent_highlights(dynamic_updates):
-    posts = dynamic_updates.get('posts', [])[:20] # Last 20 posts
+    posts = dynamic_updates.get('posts', [])
     summary_lines = []
+    
+    # Filter for posts from last 10 days only
+    cutoff = datetime.datetime.now() - datetime.timedelta(days=10)
+    
+    recent_posts = []
     for p in posts:
+        # Check date
+        scraped_at_str = p.get('scraped_at')
+        if scraped_at_str:
+            try:
+                # Handle standard ISO format
+                if '.' in scraped_at_str:
+                    scraped_at = datetime.datetime.strptime(scraped_at_str, "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    scraped_at = datetime.datetime.strptime(scraped_at_str, "%Y-%m-%dT%H:%M:%S")
+                
+                if scraped_at > cutoff:
+                    recent_posts.append(p)
+            except ValueError:
+                pass # Skip bad dates
+    
+    # Sort by date (newest first) just in case
+    # Taking top 20 of *recent* ONLY
+    for p in recent_posts[:20]:
         venue = p.get('venue_id', 'Unknown')
         content = p.get('content', '')[:100].replace('\n', ' ')
         summary_lines.append(f"- {venue}: {content}")
+        
     return "\n".join(summary_lines)
 
 def get_brewery_image(brewer_name, beer_details, dynamic_updates):
@@ -249,6 +273,12 @@ def get_brewery_image(brewer_name, beer_details, dynamic_updates):
     return images[abs(hash_val) % len(images)]
 
 def generate_editor_summary(client, highlights):
+    # If no recent highlights (scraping failed or quiet week), use generic fallback immediately
+    if not highlights or len(highlights) < 10:
+        return (f"This week in Sydney, the local brewing scene is taking a creative breather. While the digital wires are quiet on specific new releases, "
+                f"the mood across the city remains vibrant. It's a perfect week to revisit an old favorite or explore a neighborhood taproom you haven't tried yet.\n\n"
+                "Check out the 'New Arrivals' section for our top picks of what's fresh in cans and bottles.")
+
     system_prompt = "You are the sophisticated, witty editor of 'Sydney Beer Weekly', a lifestyle magazine."
     user_prompt = f"""Write 'The Editor's Summary of the Week' (approx 200 words). 
     Base it on these recent social media highlights from Sydney venues:
