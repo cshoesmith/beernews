@@ -952,9 +952,11 @@ async function searchVenues() {
     
     if (query.length < 3) return;
 
+    resultsDiv.style.display = 'block'; // Show results container
+    resultsDiv.innerHTML = `<div style="padding:10px; color:#aaa; text-align:center;">Searching...</div>`;
+    
     // Use full path + version to debug
     const endpoint = `/api/find_venue?q=${encodeURIComponent(query)}`;
-    resultsDiv.innerHTML = `<div style="padding:10px; color:#aaa; text-align:center;">Searching via ${endpoint}...</div>`;
     
     try {
         // Simplified route to avoid Vercel path issues
@@ -986,11 +988,11 @@ async function searchVenues() {
         }
         
         if (results.length === 0) {
-            resultsDiv.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">No venues found near Sydney. <button onclick="document.getElementById(\'search-results\').innerHTML=\'\'" style="margin-left:5px; padding:2px 5px;">x</button></div>';
+            resultsDiv.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">No venues found near Sydney. <button onclick="document.getElementById(\'search-results\').style.display=\'none\'" style="margin-left:5px; padding:2px 5px;">x</button></div>';
             return;
         }
 
-        const closeBtn = '<div style="text-align:right; padding:5px; background:#111; border-bottom:1px solid #333;"><button onclick="document.getElementById(\'search-results\').innerHTML=\'\'" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:0.8rem;">[Close Results]</button></div>';
+        const closeBtn = '<div style="text-align:right; padding:5px; background:#111; border-bottom:1px solid #333;"><button onclick="document.getElementById(\'search-results\').style.display=\'none\'" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:0.8rem;">[Close Results]</button></div>';
         
         resultsDiv.innerHTML = closeBtn + results.map(v => `
             <div style="padding:10px; border-bottom:1px solid #444; display:flex; justify-content:space-between; align-items:center;">

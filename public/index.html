@@ -77,13 +77,14 @@
     </div>
 
     <!-- Admin Content Modal -->
-    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9998; color:white; padding:0; box-sizing:border-box; align-items: center; justify-content: center;">
-        <div style="width: 100%; max-width:500px; margin:0; position: relative; background:#222; padding:20px; border-radius:0; border:none; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;">
+    <div id="admin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; height:100dvh; background:rgba(0,0,0,0.95); z-index:9998; color:white; padding:0; box-sizing:border-box; align-items: center; justify-content: center;">
+        <div style="width: 100%; max-width:500px; margin:0; position: relative; background:#222; padding:20px; border-radius:0; border:none; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; max-height: 100dvh;">
             <style>
                 @media (min-width: 501px) {
                     #admin-modal > div {
-                        height: 90vh !important;
-                        margin: 20px auto !important;
+                        height: 80vh !important;
+                        max-height: 800px !important;
+                        margin: 60px auto !important;
                         border-radius: 8px !important;
                         border: 1px solid #444 !important;
                     }
@@ -94,7 +95,7 @@
                 <button onclick="closeAdmin()" style="background:none; border:none; color:#aaa; font-size:24px; cursor:pointer;">&times;</button>
             </div>
             
-            <div id="admin-content-step" style="display: flex; flex-direction: column; height: 100%; overflow:hidden;">
+            <div id="admin-content-step" style="display: flex; flex-direction: column; overflow:hidden; min-height: 0; flex: 1;">
                 
                 <!-- Actions Panel -->
                 <div style="background: #333; padding: 15px; border-radius: 6px; margin-bottom: 15px; flex-shrink: 0;">
@@ -123,7 +124,7 @@
                 </script>
 
                 <!-- Venues List (Expands) -->
-                <div style="display: flex; flex-direction: column; flex: 1; overflow: hidden; margin-bottom: 15px; border: 1px solid #444; border-radius: 6px; background: #111;">
+                <div style="display: flex; flex-direction: column; flex: 1; overflow: hidden; margin-bottom: 15px; border: 1px solid #444; border-radius: 6px; background: #111; min-height: 0;">
                     <div style="padding: 10px; border-bottom: 1px solid #333; background: #222; font-weight: bold; font-size: 0.9rem;">
                         Managed Venues
                     </div>
@@ -134,14 +135,16 @@
                 </div>
 
                 <!-- Add Venue (Fixed Bottom) -->
-                <div style="flex-shrink: 0;">
+                <div style="flex-shrink: 0; padding-bottom: 20px;">
                     <h3 style="font-size: 0.9rem; margin-bottom: 5px; color: #aaa;">Add New Venue</h3>
-                    <div style="display:flex; gap:8px;">
-                        <input type="text" id="venue-search" placeholder="Search (e.g. Mountain Culture)" style="flex:1; padding:10px; background:#333; border:1px solid #555; color:white; border-radius: 4px;">
-                        <button onclick="searchVenues()" style="padding:10px 15px; background:#444; border:1px solid #555; color:white; cursor:pointer; border-radius: 4px;">Go</button>
-                    </div>
-                    <div id="search-results" style="margin-top:10px; max-height:150px; overflow-y:auto; background: #1a1a1a; position: absolute; width: calc(100% - 60px); z-index: 100;">
-                        <!-- Search results overlay -->
+                    <div style="position: relative;">
+                        <div style="display:flex; gap:8px;">
+                            <input type="text" id="venue-search" placeholder="Search (e.g. Mountain Culture)" style="flex:1; padding:10px; background:#333; border:1px solid #555; color:white; border-radius: 4px;">
+                            <button onclick="searchVenues()" style="padding:10px 15px; background:#444; border:1px solid #555; color:white; cursor:pointer; border-radius: 4px;">Go</button>
+                        </div>
+                        <div id="search-results" style="max-height:150px; overflow-y:auto; background: #1a1a1a; position: absolute; width: 100%; z-index: 100; bottom: 100%; border: 1px solid #444; border-radius: 4px; display: none;">
+                            <!-- Search results overlay -->
+                        </div>
                     </div>
                 </div>
             </div>
