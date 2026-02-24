@@ -986,18 +986,20 @@ async function searchVenues() {
         }
         
         if (results.length === 0) {
-            resultsDiv.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">No venues found near Sydney.</div>';
+            resultsDiv.innerHTML = '<div style="padding:10px; color:#aaa; text-align:center;">No venues found near Sydney. <button onclick="document.getElementById(\'search-results\').innerHTML=\'\'" style="margin-left:5px; padding:2px 5px;">x</button></div>';
             return;
         }
 
-        resultsDiv.innerHTML = results.map(v => `
+        const closeBtn = '<div style="text-align:right; padding:5px; background:#111; border-bottom:1px solid #333;"><button onclick="document.getElementById(\'search-results\').innerHTML=\'\'" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:0.8rem;">[Close Results]</button></div>';
+        
+        resultsDiv.innerHTML = closeBtn + results.map(v => `
             <div style="padding:10px; border-bottom:1px solid #444; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <strong style="color:white;">${v.name}</strong>
-                    <div style="font-size:0.8rem; color:#888;">${v.address}</div>
+                <div style="flex:1; padding-right:10px;">
+                    <strong style="color:white; display:block;">${v.name}</strong>
+                    <span style="font-size:0.75rem; color:#888; display:block; line-height:1.2;">${v.address}</span>
                 </div>
                 <button onclick="addVenue('${v.id}', '${v.name.replace(/'/g, "\\'")}')" 
-                        style="padding:5px 10px; background:var(--mag-accent); color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
+                        style="padding:5px 10px; background:var(--mag-accent); color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer; flex-shrink:0;">
                     ADD
                 </button>
             </div>
