@@ -693,13 +693,18 @@ def main(force=False, page3_style='girl_next_door', page3_mode='mosaic'):
     timestamp = int(datetime.datetime.now().timestamp())
     mosaic_filename = f"page3_{page3_mode}_{page3_style}_{timestamp}.jpg" 
     
-    mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style,
-                                appearance={
-                                    'ethnicity': page3_bio.get('_ethnicity', ''), 
-                                    'hair': page3_bio.get('_hair', ''),
-                                    'setting': page3_bio.get('_setting', 'Sydney pub')
-                                },
-                                use_mosaic=(page3_mode == 'mosaic'))
+    try:
+        mosaic_path = create_mosaic(client, force_regen=True, output_filename=mosaic_filename, page3_style=page3_style,
+                                    appearance={
+                                        'ethnicity': page3_bio.get('_ethnicity', ''), 
+                                        'hair': page3_bio.get('_hair', ''),
+                                        'setting': page3_bio.get('_setting', 'Sydney pub')
+                                    },
+                                    use_mosaic=(page3_mode == 'mosaic'))
+    except Exception as e:
+        print(f"Error generating mosaic image: {e}")
+        print("Falling back to existing mosaic image.")
+        mosaic_path = "/images/generated/page3_mosaic.jpg"
          
     # No need for query string cache buster since filename is unique
     # But clean up old way just in case logic remains

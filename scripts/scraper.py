@@ -919,6 +919,18 @@ def main():
         posts = scrape_generic_website(venue_id, url)
         all_posts.extend(posts)
         print(f"  {venue_id}: {len(posts)} posts")
+
+    # SAVE CHECKPOINT: Websites are safe, save them now in case of failure later
+    if all_posts:
+        output = {
+            "last_run": datetime.now().isoformat(),
+            "posts": all_posts,
+            "count": len(all_posts)
+        }
+        DATA_FILE.parent.mkdir(exist_ok=True)
+        with open(DATA_FILE, 'w') as f:
+            json.dump(output, f, indent=2, default=str)
+        print(f"  [Checkpoint] Saved {len(all_posts)} posts from websites to {DATA_FILE}")
     
     print()
     
@@ -1048,24 +1060,28 @@ def main():
             pass
     
     for venue in SYDNEY_VENUES:
-        untappd_id = venue.untappd_id or untappd_cache.get(venue.id)
-        
-        # Auto-discover if not cached
-        if not untappd_id:
-            print(f"  Auto-discovering Untappd ID for {venue.name}...")
-            untappd_id = find_untappd_venue_id(venue.name, venue.address)
+        try:
+            untappd_id = venue.untappd_id or untappd_cache.get(venue.id)
+            
+            # Auto-discover if not cached
+            if not untappd_id:
+                print(f"  Auto-discovering Untappd ID for {venue.name}...")
+                untappd_id = find_untappd_venue_id(venue.name, venue.address)
+                if untappd_id:
+                    untappd_cache[venue.id] = untappd_id
+                    # Save cache
+                    with open(untappd_cache_file, 'w') as f:
+                        json.dump(untappd_cache, f, indent=2)
+            
             if untappd_id:
-                untappd_cache[venue.id] = untappd_id
-                # Save cache
-                with open(untappd_cache_file, 'w') as f:
-                    json.dump(untappd_cache, f, indent=2)
-        
-        if untappd_id:
-            try:
-                posts, beer_cache = scrape_untappd_checkins(venue.id, untappd_id, beer_cache)
-                all_posts.extend(posts)
-            except Exception as e:
-                print(f"  Untappd/{venue.id}: Error - {e}")
+                try:
+                    posts, beer_cache = scrape_untappd_checkins(venue.id, untappd_id, beer_cache)
+                    all_posts.extend(posts)
+                except Exception as e:
+                    print(f"  Untappd/{venue.id}: Error - {e}")
+        except KeyboardInterrupt:
+            print("\n  Untappd scraping interrupted by user. Proceeding to save...")
+            break
     
     # Save beer details cache
     if beer_cache:

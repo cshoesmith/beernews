@@ -34,5 +34,11 @@
     "location": "Sydney, NSW",
     "discovered_at": "2026-02-12T06:20:41.005067",
     "status": "pending_review"
+  },
+  "dangerous-ales": {
+    "name": "Dangerous Ales",
+    "location": "Unanderra, NSW",
+    "discovered_at": "2026-02-24T22:39:49.992674",
+    "status": "pending_review"
   }
 }
