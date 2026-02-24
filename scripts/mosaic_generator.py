@@ -339,14 +339,15 @@ def _prepare_tiles(raw_tiles, tile_size):
     return analyzed
 
 
-def _build_mosaic(base_image_bytes, tiles, tile_size=(40, 40), overlay_alpha=0.25):
+def _build_mosaic(base_image_bytes, tiles, tile_size=(20, 20), overlay_alpha=0.3):
     """
     Build a real photomosaic: arrange beer tile images to form the portrait.
     
-    tile_size: Size of each tile in pixels (bigger = more visible beer photos)
+    tile_size: Size of each tile in pixels (smaller = higher resolution mosaic)
+               20px is good compromise between detail and tile visibility.
     overlay_alpha: How much of the original portrait to blend on top
-                   (0 = pure tiles, 1 = pure portrait)
-                   Lower = clearer beer photos, Higher = clearer portrait
+                   (0 = pure tiles, 1 = pure portrait).
+                   0.3 is usually sweet spot for readability + mosaic feel.
     """
     base_img = Image.open(io.BytesIO(base_image_bytes)).convert('RGB')
     target_w, target_h = base_img.size
