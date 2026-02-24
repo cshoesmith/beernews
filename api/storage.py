@@ -63,25 +63,49 @@ def load_json(filename):
     Finds the file by name (exact match or prefix).
     """
     try:
-        headers = get_headers()
-        # List blobs to find the URL
-        resp = requests.get(BASE_URL, headers=headers, params={"prefix": filename}, timeout=5)
-        resp.raise_for_status()
-        
-        blobs = resp.json().get("blobs", [])
-        if not blobs:
+        # Check if BLOB_TOKEN looks valid (simple check)
+        if not BLOB_TOKEN or len(BLOB_TOKEN) < 10:
             return None
             
-        # If multiple, sort by uploadedAt desc to get latest
-        blobs.sort(key=lambda x: x['uploadedAt'], reverse=True)
-        latest_url = blobs[0]['url']
+        headers = get_headers()
         
-        # Download content
-        file_resp = requests.get(latest_url, timeout=5)
-        file_resp.raise_for_status()
+        # NOTE: The list API endpoint is not officially documented as a simple GET to base URL.
+        # This might fail or timeout if the base URL is wrong.
+        # However, for now we keep it but wrap it tightly.
         
-        return file_resp.json()
+        # Try to guess the direct URL first to avoid listing?
+        # No, because the URL contains a random ID.
         
+        # Use a very short timeout for the list operation to avoid hanging
+        try:
+            resp = requests.get(BASE_URL, headers=headers, params={"prefix": filename}, timeout=3)
+            if resp.status_code != 200:
+                print(f"Blob list failed: {resp.status_code} {resp.text[:100]}")
+                return None
+            
+            data = resp.json()
+            blobs = data.get("blobs", [])
+            if not blobs:
+                return None
+                
+            # If multiple, sort by uploadedAt desc to get latest
+            blobs.sort(key=lambda x: x['uploadedAt'], reverse=True)
+            latest_url = blobs[0]['url']
+            
+            # Download content
+            file_resp = requests.get(latest_url, timeout=5)
+            if file_resp.status_code != 200:
+                return None
+                
+            return file_resp.json()
+            
+        except requests.exceptions.Timeout:
+            print("Blob API timed out (list)")
+            return None
+        except ValueError: # JSONDecodeError
+            print("Blob API returned invalid JSON")
+            return None
+            
     except Exception as e:
         print(f"Error loading from Blob: {e}")
         return None

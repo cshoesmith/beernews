@@ -231,18 +231,36 @@ def get_latest_issue():
     
     try:
         # Try Blob first
-        from api.storage import load_json, BLOB_TOKEN
-        use_blob = bool(BLOB_TOKEN)
-        debug_info.append(f"USE_BLOB: {use_blob}")
-        
-        if use_blob:
-            issue = load_json("data/current_issue.json")
-            if issue:
-                response_data = issue
+        try:
+            from api.storage import load_json, BLOB_TOKEN
+            use_blob = bool(BLOB_TOKEN)
+            debug_info.append(f"USE_BLOB: {use_blob}")
+            
+            if use_blob:
+                # Add a strict timeout inside the route handler just in case storage.py is misbehaving
+                import signal
+                
+                def handler(signum, frame):
+                    raise TimeoutError("Blob storage load timed out")
+                
+                # Only set signal on main thread/Unix (Vercel is Linux)
+                # But to be safe and cross-platform compatible (windows dev), we skip signal
+                # Instead we rely on requests timeout in storage.py being enforced.
+                
+                start_time = datetime.now()
+                issue = load_json("data/current_issue.json")
+                duration = (datetime.now() - start_time).total_seconds()
+                debug_info.append(f"Blob load took {duration:.2f}s")
+                
+                if issue:
+                    response_data = issue
+                else:
+                    debug_info.append("Blob load returned None")
             else:
-                debug_info.append("Blob load returned None")
-        else:
-            debug_info.append("Blob disabled")
+                debug_info.append("Blob disabled (no token)")
+        except Exception as e:
+            debug_info.append(f"Blob storage error: {str(e)}")
+            # Fallthrough to local file
 
         if not response_data:
             root_dir = os.path.dirname(os.path.dirname(__file__))

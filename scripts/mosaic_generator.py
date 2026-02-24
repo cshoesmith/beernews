@@ -243,11 +243,20 @@ def _load_tiles_from_paths(tile_paths):
 
     # Limit failures to avoid timeouts if network is bad
     failures = 0
-    max_failures = 10
+    max_failures = 5 # Reduced from 10 to fail faster
+    
+    # Track time to ensure we don't spend too long loading tiles
+    import time
+    start_time = time.time()
+    MAX_LOAD_TIME = 20 # Max seconds to spend loading tiles
 
     for i, tp in enumerate(tile_paths):
         if failures > max_failures:
             print("Too many download failures, stopping tile load.")
+            break
+            
+        if time.time() - start_time > MAX_LOAD_TIME:
+            print("Tile loading took too long, stopping.")
             break
             
         success = False
@@ -266,11 +275,13 @@ def _load_tiles_from_paths(tile_paths):
         if success: continue
         
         # 2. Try Fetching via HTTP
+        # Only try HTTP if local failed
+        # Use a very short timeout and fail fast
         for base_url in base_urls:
             try:
                 url = f"{base_url}/{tp}"
-                # Short timeout
-                resp = session.get(url, timeout=3)
+                # Very short timeout (1s) to fail fast on bad URLs
+                resp = session.get(url, timeout=1.0)
                 if resp.status_code == 200:
                     img = Image.open(io.BytesIO(resp.content)).convert('RGB')
                     tiles.append(img)
