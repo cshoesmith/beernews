@@ -729,31 +729,59 @@ function renderEventsCollage(page) {
     
     // Just a basic list for now if empty
     if (!events.length) {
-        return `<div class="magazine-page"><div class="center-msg"><h1>Coming Soon</h1><p>No events found.</p></div></div>`;
+        return `
+        <div class="magazine-page events-page" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('${bgImage}'); background-size: cover; display:flex; align-items:center; justify-content:center;">
+             <div class="center-msg" style="text-align:center; color:white;">
+                <h1 style="font-size: 4rem; font-family: 'Playfair Display', serif; margin-bottom: 20px;">Quiet Week on the Culture Front</h1>
+                <p style="font-size: 1.5rem; font-family: 'Libre Franklin', sans-serif;">Check back next issue for upcoming tap takeovers and festivals.</p>
+            </div>
+        </div>`;
+    }
+
+    // Determine layout mode
+    let containerClass = 'events-grid'; // Default 3-col
+    let cardClass = 'event-card';
+    
+    if (events.length === 1) {
+        containerClass = 'events-single-hero';
+        cardClass = 'event-card hero-card';
+    } else if (events.length === 2) {
+        containerClass = 'events-split-row';
     }
 
     const cards = events.map(e => {
-        const img = e.image || 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?w=600&q=80';
+        // Try to get higher res if possible (simple hack for untappd images if they follow standard params)
+        let img = e.image || 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?w=800&q=80';
+        if (img.includes('untappd.com')) {
+             img = img.replace('w=200', 'w=800').replace('w=570', 'w=1000');
+        }
+
         return `
-        <div class="event-card">
+        <div class="${cardClass}">
             <div class="event-img" style="background-image: url('${img}');"></div>
             <div class="event-info">
-                <div class="event-date">${e.date}</div>
+                <div class="event-date-badge">${e.date.split(',')[0]}</div> <!-- e.g. "Thu" or simplified -->
                 <h3 class="event-title">${e.title}</h3>
-                <div class="event-venue">${e.venue}</div>
-                <div class="event-loc">${e.location}</div>
+                <div class="event-meta">
+                    <div class="event-venue">📍 ${e.venue}</div>
+                    <div class="event-time">🕒 ${e.date}</div>
+                </div>
+                ${e.url ? `<a href="${e.url}" target="_blank" class="event-btn">View on Untappd</a>` : ''}
             </div>
         </div>
         `;
     }).join('');
 
     return `
-    <div class="magazine-page events-page" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${bgImage}'); background-size: cover;">
-        <div class="events-container">
-            <h2 class="section-title">${page.headline}</h2>
-            <p class="section-subtitle">${page.subhead}</p>
+    <div class="magazine-page events-page" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%), url('${bgImage}'); background-size: cover;">
+        <div class="events-container-wrapper">
+            <div class="events-header">
+                <h2 class="events-section-title">${page.headline}</h2>
+                <div class="events-section-line"></div>
+                <p class="events-section-subtitle">${page.subhead}</p>
+            </div>
             
-            <div class="events-grid">
+            <div class="${containerClass}">
                 ${cards}
             </div>
         </div>
