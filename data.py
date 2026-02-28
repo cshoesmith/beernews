@@ -71,9 +71,9 @@ SYDNEY_VENUES = [
         id="future-brewing",
         name="Future Brewing Co",
         type="brewery",
-        address="9-11 Milperra Rd, Banksmeadow",
-        suburb="Banksmeadow",
-        location=(-33.9391, 151.2117),
+        address="82 May St, St Peters",
+        suburb="St Peters",
+        location=(-33.9108, 151.1764),
         instagram_handle="@futurebrewing",
         tags=["craft", "experimental", "hazy"]
     ),
